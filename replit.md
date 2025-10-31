@@ -24,15 +24,17 @@ Fully functional web application with:
 ## Recent Changes
 **October 31, 2025**
 - Added company logo (Roof Recharge) to cover page top
+- Added GoNano logo with purple molecular icon to cover page (300x80 pixels)
 - Implemented custom fonts with optimized sizes for single-page sections:
   - Main titles: Montserrat Bold size 48
-  - Section headings: Montserrat size 42
+  - Section headings: Montserrat size 42 (all page titles now consistent)
   - Subsection headings: Montserrat size 28
   - Body text headings: Open Sans Bold size 22
   - Body text: Open Sans size 20
-- Created styled aerial image presentation with green bordered box
-- Added "Professional GoNano Application" header above image
-- Added "Extending Roof Life with Advanced Nanotechnology" footer below image
+- Standardized all page title fonts to Montserrat Bold size 42 for consistency
+- Fixed aerial image upload to display on page 3 (Project Description)
+- Added spacing buffer between aerial image and Project Description section
+- Removed green bordered box from cover page aerial image for cleaner design
 - Moved Company Profile section to page 2 with page breaks
 - Moved Project Description to its own page (page 3)
 - Updated property details table with green headers and white text
@@ -138,7 +140,7 @@ Fully functional web application with:
 
    **Page 3 - Project Description:**
    - Property details table with green headers
-   - "[Aerial image will be inserted here]" placeholder
+   - Aerial image of property (uploaded by user) with spacing buffer
 
    **Page 4 - Proposed GoNano Solution:**
    - Dynamic heading based on selected product

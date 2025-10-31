@@ -512,7 +512,7 @@ async function generateProposal(data, aerialImage) {
                 new TextRun({
                     text: "PROJECT DESCRIPTION",
                     bold: true,
-                    size: 20,
+                    size: 42,
                     color: "2E8B57",
                     font: "Montserrat"
                 })
@@ -629,8 +629,16 @@ async function generateProposal(data, aerialImage) {
         
         new Paragraph({
             alignment: AlignmentType.CENTER,
-            spacing: { before: 150, after: 300 },
-            children: [
+            spacing: { before: 300, after: 400 },
+            children: aerialImage && aerialImage.buffer ? [
+                new ImageRun({
+                    data: aerialImage.buffer,
+                    transformation: {
+                        width: 450,
+                        height: 300
+                    }
+                })
+            ] : [
                 new TextRun({
                     text: "[Aerial image will be inserted here]",
                     italics: true,
@@ -652,20 +660,20 @@ async function generateProposal(data, aerialImage) {
                 new TextRun({
                     text: "Proposed ",
                     bold: true,
-                    size: 20,
+                    size: 42,
                     font: "Montserrat"
                 }),
                 new TextRun({
                     text: "GoNano",
                     bold: true,
-                    size: 20,
+                    size: 42,
                     color: "2E8B57",
                     font: "Montserrat"
                 }),
                 new TextRun({
                     text: " Solution",
                     bold: true,
-                    size: 20,
+                    size: 42,
                     font: "Montserrat"
                 })
             ]
@@ -941,7 +949,7 @@ async function generateProposal(data, aerialImage) {
                 new TextRun({
                     text: "THE GONANO DIFFERENCE",
                     bold: true,
-                    size: 20,
+                    size: 42,
                     color: "2E8B57",
                     font: "Montserrat"
                 })
