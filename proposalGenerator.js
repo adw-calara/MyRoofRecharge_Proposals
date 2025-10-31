@@ -78,25 +78,25 @@ function getProductInfo(productName) {
             notes: "Customer's mid-life roof will benefit from GoNano Revive's restoration properties, filling micro-cracks and rejuvenating aged shingles for extended protection."
         },
         'GoNano BioBoost': {
-            subtitle: 'Engineered for older roofs (15+ years), combining restoration technology with powerful bio-resistance.',
-            overview: 'GoNano BioBoost is a specialized nanotechnology treatment for older asphalt shingles. It combines advanced restoration with superior bio-resistance, revitalizing aged shingles while preventing algae, moss, and biological growth.',
+            subtitle: 'The smart choice for your mature roof (15+ years old), providing cost-effective protection that delays replacement.',
+            overview: 'GoNano BioBoost is a cost-effective solution for protecting and maintaining asphalt shingle roofs. By combining nanotechnology with renewable bio-oils, it offers a balance of performance and environmental consciousness for mature roofs.',
             imagePath: null,
             features: [
-                { icon: '✓ REVITALIZE', description: 'Maximum restoration for aged roofs' },
-                { icon: '✓ BIO-RESIST', description: 'Powerful algae and moss resistance' },
-                { icon: '✓ SEAL', description: 'Waterproofs damaged areas' },
-                { icon: '✓ LONGEVITY', description: 'Extends roof life 5-10 years' }
+                { icon: '✓ BOOSTS LONGEVITY', description: 'Extends life of mature roofs' },
+                { icon: '✓ RESISTS DAMAGE', description: 'Protects against weather & UV' },
+                { icon: '✓ RESTORES VITALITY', description: 'Infuses bio-oil for flexibility' },
+                { icon: '✓ SAVES MONEY', description: 'Cost-effective protection' }
             ],
             results: [
-                '• Maximum aging reduction',
-                '• Bio-resistance protection',
-                '• Seals and waterproofs',
-                '• Prevents organic growth',
-                '• Natural flat finish',
-                '• UL & IBHS tested',
-                '• 5-10 year warranty'
+                '• Basic protection for older roofs',
+                '• Water repellent technology',
+                '• Slows oxidation process',
+                '• Eco-friendly bio-oil formula',
+                '• Natural finish maintained',
+                '• Coverage: 40-60 sq ft/liter',
+                '• Adds 3-5 years roof life'
             ],
-            notes: "Customer's older roof will benefit from GoNano BioBoost's advanced restoration and bio-resistance, sealing damaged areas and preventing further deterioration."
+            notes: "Designed for mature roofs (15+ years old). BioBoost boosts longevity and restores vitality while resisting damage from weather, UV exposure, and wear."
         }
     };
     
