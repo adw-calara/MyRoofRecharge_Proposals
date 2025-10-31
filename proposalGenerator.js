@@ -543,7 +543,7 @@ async function generateProposal(data, aerialImage) {
                 new TextRun({
                     text: "PROJECT DESCRIPTION",
                     bold: true,
-                    size: 72,
+                    size: 84,
                     color: "2E8B57",
                     font: "Montserrat"
                 })
@@ -557,11 +557,13 @@ async function generateProposal(data, aerialImage) {
                     children: [
                         new TableCell({
                             width: { size: 35, type: WidthType.PERCENTAGE },
+                            shading: { fill: "2E8B57" },
                             children: [new Paragraph({ 
                                 children: [new TextRun({ 
                                     text: "Property Address", 
                                     bold: true,
                                     size: 32,
+                                    color: "FFFFFF",
                                     font: "Open Sans"
                                 })]
                             })]
@@ -581,11 +583,13 @@ async function generateProposal(data, aerialImage) {
                 new TableRow({
                     children: [
                         new TableCell({
+                            shading: { fill: "2E8B57" },
                             children: [new Paragraph({ 
                                 children: [new TextRun({ 
                                     text: "Roof Area", 
                                     bold: true,
                                     size: 32,
+                                    color: "FFFFFF",
                                     font: "Open Sans"
                                 })]
                             })]
@@ -604,11 +608,13 @@ async function generateProposal(data, aerialImage) {
                 new TableRow({
                     children: [
                         new TableCell({
+                            shading: { fill: "2E8B57" },
                             children: [new Paragraph({ 
                                 children: [new TextRun({ 
                                     text: "Roof Type", 
                                     bold: true,
                                     size: 32,
+                                    color: "FFFFFF",
                                     font: "Open Sans"
                                 })]
                             })]
@@ -627,11 +633,13 @@ async function generateProposal(data, aerialImage) {
                 new TableRow({
                     children: [
                         new TableCell({
+                            shading: { fill: "2E8B57" },
                             children: [new Paragraph({ 
                                 children: [new TextRun({ 
                                     text: "Roof Age", 
                                     bold: true,
                                     size: 32,
+                                    color: "FFFFFF",
                                     font: "Open Sans"
                                 })]
                             })]
@@ -646,6 +654,19 @@ async function generateProposal(data, aerialImage) {
                             })]
                         })
                     ]
+                })
+            ]
+        }),
+        
+        new Paragraph({
+            alignment: AlignmentType.CENTER,
+            spacing: { before: 300, after: 300 },
+            children: [
+                new TextRun({
+                    text: "[Aerial image will be inserted here]",
+                    italics: true,
+                    size: 32,
+                    font: "Open Sans"
                 })
             ]
         }),
@@ -721,71 +742,101 @@ async function generateProposal(data, aerialImage) {
             ]
         }),
         
-        new Paragraph({
-            spacing: { before: 200, after: 200 },
-            children: [
-                new TextRun({
-                    text: "KEY FEATURES",
-                    bold: true,
-                    size: 72,
-                    color: "2E8B57",
-                    font: "Montserrat"
+        new Table({
+            width: { size: 100, type: WidthType.PERCENTAGE },
+            rows: [
+                new TableRow({
+                    children: [
+                        new TableCell({
+                            width: { size: 50, type: WidthType.PERCENTAGE },
+                            shading: { fill: "E8F5E9" },
+                            children: [
+                                new Paragraph({
+                                    children: [
+                                        new TextRun({
+                                            text: "KEY FEATURES",
+                                            bold: true,
+                                            size: 32,
+                                            color: "2E8B57",
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                })
+                            ]
+                        }),
+                        new TableCell({
+                            width: { size: 50, type: WidthType.PERCENTAGE },
+                            shading: { fill: "E8F5E9" },
+                            children: [
+                                new Paragraph({
+                                    children: [
+                                        new TextRun({
+                                            text: "PROVEN RESULTS",
+                                            bold: true,
+                                            size: 32,
+                                            color: "2E8B57",
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                })
+                            ]
+                        })
+                    ]
+                }),
+                new TableRow({
+                    children: [
+                        new TableCell({
+                            children: (() => {
+                                const featureParagraphs = [];
+                                productInfo.features.forEach(feature => {
+                                    featureParagraphs.push(
+                                        new Paragraph({
+                                            spacing: { after: 150 },
+                                            children: [
+                                                new TextRun({
+                                                    text: feature.icon,
+                                                    bold: true,
+                                                    color: "2E8B57",
+                                                    size: 28,
+                                                    font: "Open Sans"
+                                                }),
+                                                new TextRun({
+                                                    text: `\n${feature.description}`,
+                                                    size: 28,
+                                                    font: "Open Sans"
+                                                })
+                                            ]
+                                        })
+                                    );
+                                });
+                                return featureParagraphs;
+                            })()
+                        }),
+                        new TableCell({
+                            children: (() => {
+                                const resultParagraphs = [];
+                                productInfo.results.forEach(result => {
+                                    resultParagraphs.push(
+                                        new Paragraph({
+                                            spacing: { after: 100 },
+                                            children: [
+                                                new TextRun({
+                                                    text: result,
+                                                    size: 28,
+                                                    font: "Open Sans"
+                                                })
+                                            ]
+                                        })
+                                    );
+                                });
+                                return resultParagraphs;
+                            })()
+                        })
+                    ]
                 })
             ]
         })
     );
-    
-    productInfo.features.forEach(feature => {
-        children.push(
-            new Paragraph({
-                spacing: { after: 150 },
-                children: [
-                    new TextRun({
-                        text: feature.icon,
-                        bold: true,
-                        color: "2E8B57",
-                        size: 32,
-                        font: "Open Sans"
-                    }),
-                    new TextRun({
-                        text: `\n${feature.description}`,
-                        size: 32,
-                        font: "Open Sans"
-                    })
-                ]
-            })
-        );
-    });
-    
-    children.push(
-        new Paragraph({
-            spacing: { before: 300, after: 200 },
-            children: [
-                new TextRun({
-                    text: "PROVEN RESULTS",
-                    bold: true,
-                    size: 72,
-                    color: "2E8B57",
-                    font: "Montserrat"
-                })
-            ]
-        })
-    );
-    
-    productInfo.results.forEach(result => {
-        children.push(
-            new Paragraph({
-                spacing: { after: 100 },
-                children: [
-                    new TextRun({
-                        text: result,
-                        size: 32,
-                        font: "Open Sans"
-                    })
-                ]
-            })
-        );
-    });
     
     children.push(
         new Paragraph({

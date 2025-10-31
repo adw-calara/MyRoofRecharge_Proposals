@@ -30,6 +30,9 @@ Fully functional web application with:
 - Added "Professional GoNano Application" header above image
 - Added "Extending Roof Life with Advanced Nanotechnology" footer below image
 - Moved Company Profile section to page 2 with page breaks
+- Moved Project Description to its own page (page 3)
+- Updated property details table with green headers and white text
+- Converted KEY FEATURES and PROVEN RESULTS to side-by-side table layout
 - Restructured cover page to match exact template design
 - Fixed document formatting to prevent text duplication
 - Configured multer for handling file uploads
@@ -101,11 +104,12 @@ Fully functional web application with:
    - Our Commitment
 
    **Page 3 - Project Description:**
-   - Property details table
+   - Property details table with green headers
+   - "[Aerial image will be inserted here]" placeholder
    - Proposed GoNano solution
    - Product overview and features
-   - KEY FEATURES section
-   - PROVEN RESULTS section
+   - Side-by-side KEY FEATURES and PROVEN RESULTS table
+   - Additional notes
 
    **Page 4 - Investment & Savings:**
    - Application costs
@@ -179,6 +183,7 @@ Fully functional web application with:
 - Proper paragraph formatting (no mixed text/children properties)
 - Professional color scheme
 - Tables with shaded headers and formatted cells
+- Side-by-side KEY FEATURES and PROVEN RESULTS layout
 - Page breaks for section organization
 - Consistent spacing and typography
 
@@ -187,6 +192,8 @@ Fully functional web application with:
 - Custom fonts: Montserrat Bold 42 for titles, Montserrat 36 for headings, Open Sans 16 for body
 - Exact template matching for company consistency
 - Styled aerial image presentation
+- Green table headers with white text
+- Side-by-side feature comparison tables
 - Company logo on cover page
 - One-click Word document generation with image
 - Automatic calculations and live preview
