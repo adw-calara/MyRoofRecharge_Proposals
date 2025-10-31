@@ -649,6 +649,208 @@ async function generateProposal(data, aerialImage) {
         })
     );
     
+    // Process Flowchart
+    children.push(
+        new Paragraph({
+            alignment: AlignmentType.CENTER,
+            spacing: { before: 300, after: 200 },
+            children: [
+                new TextRun({
+                    text: "JOB PROCESS",
+                    bold: true,
+                    size: 28,
+                    color: "2E8B57",
+                    font: "Montserrat"
+                })
+            ]
+        }),
+        
+        new Table({
+            width: { size: 90, type: WidthType.PERCENTAGE },
+            alignment: AlignmentType.CENTER,
+            rows: [
+                new TableRow({
+                    children: [
+                        new TableCell({
+                            width: { size: 30, type: WidthType.PERCENTAGE },
+                            shading: { fill: "2E8B57" },
+                            margins: {
+                                top: 150,
+                                bottom: 150,
+                                left: 100,
+                                right: 100
+                            },
+                            children: [
+                                new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    spacing: { before: 100, after: 100 },
+                                    children: [
+                                        new TextRun({
+                                            text: "STEP 1",
+                                            bold: true,
+                                            size: 18,
+                                            color: "FFFFFF",
+                                            font: "Montserrat"
+                                        })
+                                    ]
+                                }),
+                                new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    children: [
+                                        new TextRun({
+                                            text: "Roof Inspection",
+                                            size: 20,
+                                            color: "FFFFFF",
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                })
+                            ]
+                        }),
+                        new TableCell({
+                            width: { size: 10, type: WidthType.PERCENTAGE },
+                            borders: {
+                                top: { style: BorderStyle.NONE },
+                                bottom: { style: BorderStyle.NONE },
+                                left: { style: BorderStyle.NONE },
+                                right: { style: BorderStyle.NONE }
+                            },
+                            children: [
+                                new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    children: [
+                                        new TextRun({
+                                            text: "→",
+                                            size: 36,
+                                            color: "2E8B57",
+                                            bold: true
+                                        })
+                                    ]
+                                })
+                            ]
+                        }),
+                        new TableCell({
+                            width: { size: 30, type: WidthType.PERCENTAGE },
+                            shading: { fill: "2E8B57" },
+                            margins: {
+                                top: 150,
+                                bottom: 150,
+                                left: 100,
+                                right: 100
+                            },
+                            children: [
+                                new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    spacing: { before: 100, after: 100 },
+                                    children: [
+                                        new TextRun({
+                                            text: "STEP 2",
+                                            bold: true,
+                                            size: 18,
+                                            color: "FFFFFF",
+                                            font: "Montserrat"
+                                        })
+                                    ]
+                                }),
+                                new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    children: [
+                                        new TextRun({
+                                            text: "Product Ordering",
+                                            size: 20,
+                                            color: "FFFFFF",
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                }),
+                                new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    children: [
+                                        new TextRun({
+                                            text: "& Scheduling",
+                                            size: 20,
+                                            color: "FFFFFF",
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                })
+                            ]
+                        }),
+                        new TableCell({
+                            width: { size: 10, type: WidthType.PERCENTAGE },
+                            borders: {
+                                top: { style: BorderStyle.NONE },
+                                bottom: { style: BorderStyle.NONE },
+                                left: { style: BorderStyle.NONE },
+                                right: { style: BorderStyle.NONE }
+                            },
+                            children: [
+                                new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    children: [
+                                        new TextRun({
+                                            text: "→",
+                                            size: 36,
+                                            color: "2E8B57",
+                                            bold: true
+                                        })
+                                    ]
+                                })
+                            ]
+                        }),
+                        new TableCell({
+                            width: { size: 30, type: WidthType.PERCENTAGE },
+                            shading: { fill: "2E8B57" },
+                            margins: {
+                                top: 150,
+                                bottom: 150,
+                                left: 100,
+                                right: 100
+                            },
+                            children: [
+                                new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    spacing: { before: 100, after: 100 },
+                                    children: [
+                                        new TextRun({
+                                            text: "STEP 3",
+                                            bold: true,
+                                            size: 18,
+                                            color: "FFFFFF",
+                                            font: "Montserrat"
+                                        })
+                                    ]
+                                }),
+                                new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    children: [
+                                        new TextRun({
+                                            text: "GoNano Installation",
+                                            size: 20,
+                                            color: "FFFFFF",
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                }),
+                                new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    children: [
+                                        new TextRun({
+                                            text: "& Final Inspection",
+                                            size: 20,
+                                            color: "FFFFFF",
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                })
+                            ]
+                        })
+                    ]
+                })
+            ]
+        })
+    );
+    
     children.push(
         new Paragraph({
             children: [new PageBreak()]
