@@ -1782,37 +1782,89 @@ async function generateProposal(data, aerialImage) {
         })
     );
     
-    // Create footer with page numbers and small logo
-    const footerChildren = [
-        new Paragraph({
-            alignment: AlignmentType.RIGHT,
-            children: [
-                new TextRun({
-                    children: [PageNumber.CURRENT],
-                    size: 20,
-                    font: "Open Sans"
-                })
-            ]
-        })
-    ];
+    // Create footer with page number centered on logo
+    let footerChildren;
     
-    // Add small logo to footer if available
     if (smallLogoBuffer) {
-        footerChildren.unshift(
-            new Paragraph({
-                alignment: AlignmentType.RIGHT,
-                spacing: { after: 100 },
-                children: [
-                    new ImageRun({
-                        data: smallLogoBuffer,
-                        transformation: {
-                            width: 30,
-                            height: 30
-                        }
+        footerChildren = [
+            new Table({
+                width: { size: 100, type: WidthType.PERCENTAGE },
+                alignment: AlignmentType.CENTER,
+                borders: {
+                    top: { style: BorderStyle.NONE },
+                    bottom: { style: BorderStyle.NONE },
+                    left: { style: BorderStyle.NONE },
+                    right: { style: BorderStyle.NONE },
+                    insideHorizontal: { style: BorderStyle.NONE },
+                    insideVertical: { style: BorderStyle.NONE }
+                },
+                rows: [
+                    new TableRow({
+                        children: [
+                            new TableCell({
+                                width: { size: 100, type: WidthType.PERCENTAGE },
+                                borders: {
+                                    top: { style: BorderStyle.NONE },
+                                    bottom: { style: BorderStyle.NONE },
+                                    left: { style: BorderStyle.NONE },
+                                    right: { style: BorderStyle.NONE }
+                                },
+                                children: [
+                                    new Paragraph({
+                                        alignment: AlignmentType.CENTER,
+                                        children: [
+                                            new ImageRun({
+                                                data: smallLogoBuffer,
+                                                transformation: {
+                                                    width: 40,
+                                                    height: 40
+                                                },
+                                                floating: {
+                                                    horizontalPosition: {
+                                                        relative: "page",
+                                                        align: "center"
+                                                    },
+                                                    verticalPosition: {
+                                                        relative: "paragraph",
+                                                        offset: 0
+                                                    }
+                                                }
+                                            })
+                                        ]
+                                    }),
+                                    new Paragraph({
+                                        alignment: AlignmentType.CENTER,
+                                        spacing: { before: -600 },
+                                        children: [
+                                            new TextRun({
+                                                children: [PageNumber.CURRENT],
+                                                size: 20,
+                                                bold: true,
+                                                color: "FFFFFF",
+                                                font: "Open Sans"
+                                            })
+                                        ]
+                                    })
+                                ]
+                            })
+                        ]
                     })
                 ]
             })
-        );
+        ];
+    } else {
+        footerChildren = [
+            new Paragraph({
+                alignment: AlignmentType.CENTER,
+                children: [
+                    new TextRun({
+                        children: [PageNumber.CURRENT],
+                        size: 20,
+                        font: "Open Sans"
+                    })
+                ]
+            })
+        ];
     }
     
     const doc = new Document({
