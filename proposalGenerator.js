@@ -1,7 +1,8 @@
 const { Document, Packer, Paragraph, TextRun, AlignmentType, HeadingLevel, Table, TableRow, TableCell, WidthType, BorderStyle, VerticalAlign } = require('docx');
 
 function formatCurrency(amount) {
-    return `$${parseFloat(amount).toFixed(2)}`;
+    const value = parseFloat(amount);
+    return `$${(isNaN(value) ? 0 : value).toFixed(2)}`;
 }
 
 function formatDate(dateString) {
