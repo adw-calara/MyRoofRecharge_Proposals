@@ -1782,7 +1782,7 @@ async function generateProposal(data, aerialImage) {
         })
     );
     
-    // Create footer with page number centered on logo
+    // Create footer with page number and logo centered
     let footerChildren;
     
     if (smallLogoBuffer) {
@@ -1818,27 +1818,17 @@ async function generateProposal(data, aerialImage) {
                                                 transformation: {
                                                     width: 40,
                                                     height: 40
-                                                },
-                                                floating: {
-                                                    horizontalPosition: {
-                                                        relative: "page",
-                                                        align: "center"
-                                                    },
-                                                    verticalPosition: {
-                                                        relative: "paragraph",
-                                                        offset: 0
-                                                    }
                                                 }
                                             })
                                         ]
                                     }),
                                     new Paragraph({
                                         alignment: AlignmentType.CENTER,
-                                        spacing: { before: -600 },
+                                        spacing: { before: -380 },
                                         children: [
                                             new TextRun({
                                                 children: [PageNumber.CURRENT],
-                                                size: 20,
+                                                size: 18,
                                                 bold: true,
                                                 color: "FFFFFF",
                                                 font: "Open Sans"

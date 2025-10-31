@@ -177,9 +177,11 @@ Fully functional web application with:
    - 7 comprehensive sections
    
    **Footer (All pages except cover):**
-   - Page number centered on GoNano logo circle
-   - Both centered at bottom of page in typical page number area
-   - White text on logo for visibility
+   - Page number overlaid on center of GoNano logo circle
+   - Positioned at bottom center of page in typical page number area
+   - White bold text (size 18) on logo for visibility
+   - Logo size 40x40 pixels
+   - Uses negative spacing (-380) to overlay text on logo
 
 7. **Product Information**
    
