@@ -1,25 +1,36 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const multer = require('multer');
 const { generateProposal } = require('./proposalGenerator');
 
 const app = express();
 const PORT = 5000;
 
+const storage = multer.memoryStorage();
+const upload = multer({ 
+    storage: storage,
+    limits: { fileSize: 10 * 1024 * 1024 }
+});
+
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
-app.post('/api/generate-proposal', async (req, res) => {
+app.post('/api/generate-proposal', upload.single('aerialImage'), async (req, res) => {
     try {
         const proposalData = req.body;
+        const aerialImage = req.file;
         
         console.log('Generating proposal for:', proposalData.customerName);
+        if (aerialImage) {
+            console.log('Aerial image uploaded:', aerialImage.originalname);
+        }
         
-        const buffer = await generateProposal(proposalData);
+        const buffer = await generateProposal(proposalData, aerialImage);
         
         res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-        res.setHeader('Content-Disposition', `attachment; filename="Roof_Recharge_Proposal_${proposalData.customerName.replace(/\s+/g, '_')}.docx"`);
+        res.setHeader('Content-Disposition', `attachment; filename="GoNano_Proposal_${proposalData.customerName.replace(/\s+/g, '_')}.docx"`);
         
         res.send(buffer);
         
