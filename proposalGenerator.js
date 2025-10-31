@@ -963,6 +963,77 @@ async function generateProposal(data, aerialImage) {
         
         new Paragraph({
             children: [new PageBreak()]
+        })
+    );
+    
+    // THE GONANO DIFFERENCE PAGE
+    children.push(
+        new Paragraph({
+            spacing: { before: 400, after: 400 },
+            alignment: AlignmentType.CENTER,
+            children: [
+                new TextRun({
+                    text: "THE GONANO DIFFERENCE",
+                    bold: true,
+                    size: 84,
+                    color: "2E8B57",
+                    font: "Montserrat"
+                })
+            ]
+        })
+    );
+    
+    // Comparison chart image
+    const comparisonChartPath = path.join(__dirname, 'attached_assets', 'GoNano VS Competition chart_Square Format copy_1761943938309.png');
+    let comparisonChartBuffer;
+    try {
+        comparisonChartBuffer = fs.readFileSync(comparisonChartPath);
+        children.push(
+            new Paragraph({
+                alignment: AlignmentType.CENTER,
+                spacing: { before: 300, after: 400 },
+                children: [
+                    new ImageRun({
+                        data: comparisonChartBuffer,
+                        transformation: {
+                            width: 500,
+                            height: 500
+                        }
+                    })
+                ]
+            })
+        );
+    } catch (err) {
+        console.error('Comparison chart not found:', err);
+    }
+    
+    // Authorized Reseller Banner
+    const resellerBannerPath = path.join(__dirname, 'attached_assets', 'gonano-authorized-reseller-banner_1761943967489.png');
+    let resellerBannerBuffer;
+    try {
+        resellerBannerBuffer = fs.readFileSync(resellerBannerPath);
+        children.push(
+            new Paragraph({
+                alignment: AlignmentType.CENTER,
+                spacing: { before: 400, after: 400 },
+                children: [
+                    new ImageRun({
+                        data: resellerBannerBuffer,
+                        transformation: {
+                            width: 600,
+                            height: 150
+                        }
+                    })
+                ]
+            })
+        );
+    } catch (err) {
+        console.error('Reseller banner not found:', err);
+    }
+    
+    children.push(
+        new Paragraph({
+            children: [new PageBreak()]
         }),
         
         new Paragraph({

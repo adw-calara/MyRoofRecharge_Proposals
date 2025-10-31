@@ -45,6 +45,9 @@ Fully functional web application with:
 - Restructured cover page to match exact template design
 - Fixed document formatting to prevent text duplication
 - Configured multer for handling file uploads
+- Added "The GoNano Difference" page (page 5) with:
+  - Comparison chart showing GoNano vs. Competition
+  - Authorized Reseller & Installer banner
 
 ## Project Architecture
 
@@ -63,10 +66,12 @@ Fully functional web application with:
 ├── public/
 │   └── index.html           # Frontend form with image upload
 ├── attached_assets/
-│   ├── roof-recharge-logo-new_1761941852214.png      # Company logo
-│   ├── Shingle Saver mockup_1761943502086.png        # Shingle Saver product
-│   ├── Revive label mockup_1761943502085.png         # Revive product
-│   └── Bio-boost mockup_1761943502078.png            # BioBoost product
+│   ├── roof-recharge-logo-new_1761941852214.png                      # Company logo
+│   ├── Shingle Saver mockup_1761943502086.png                        # Shingle Saver product
+│   ├── Revive label mockup_1761943502085.png                         # Revive product
+│   ├── Bio-boost mockup_1761943502078.png                            # BioBoost product
+│   ├── GoNano VS Competition chart_Square Format copy_1761943938309.png  # Comparison chart
+│   └── gonano-authorized-reseller-banner_1761943967489.png           # Authorized reseller banner
 ├── package.json             # Dependencies
 └── replit.md                # Project documentation
 ```
@@ -135,19 +140,24 @@ Fully functional web application with:
    - Side-by-side KEY FEATURES and PROVEN RESULTS table
    - Additional notes
 
-   **Page 5 - Investment & Savings:**
+   **Page 5 - The GoNano Difference:**
+   - Title: "THE GONANO DIFFERENCE" (Montserrat Bold 84)
+   - GoNano vs. Competition comparison chart
+   - Authorized Reseller & Installer banner
+
+   **Page 6 - Investment & Savings:**
    - Application costs
    - Installation costs
    - Total investment
    - Cost comparison with replacement
    - Savings calculation
 
-   **Page 6 - Authorization:**
+   **Page 7 - Authorization:**
    - Signature lines for customer
    - Representative signature
    - Date fields
 
-   **Page 7 - Terms and Conditions:**
+   **Page 8 - Terms and Conditions:**
    - 7 comprehensive sections
 
 7. **Product Information**
