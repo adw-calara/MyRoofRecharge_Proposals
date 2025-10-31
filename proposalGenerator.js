@@ -1,4 +1,4 @@
-const { Document, Packer, Paragraph, TextRun, AlignmentType, HeadingLevel, Table, TableRow, TableCell, WidthType, VerticalAlign, ImageRun, BorderStyle, PageBreak } = require('docx');
+const { Document, Packer, Paragraph, TextRun, AlignmentType, HeadingLevel, Table, TableRow, TableCell, WidthType, VerticalAlign, ImageRun, BorderStyle, PageBreak, Footer, Header, PageNumber } = require('docx');
 const fs = require('fs');
 const path = require('path');
 
@@ -116,6 +116,16 @@ async function generateProposal(data, aerialImage) {
         logoBuffer = null;
     }
     
+    // Load small GoNano logo for footer
+    const smallLogoPath = path.join(__dirname, 'attached_assets', '1758641788792_ce68f289307689cd8c46bf9217137ee4_1761945730363.png');
+    let smallLogoBuffer;
+    try {
+        smallLogoBuffer = fs.readFileSync(smallLogoPath);
+    } catch (err) {
+        console.error('Small logo not found:', err);
+        smallLogoBuffer = null;
+    }
+    
     const children = [];
     
     if (logoBuffer) {
@@ -139,12 +149,13 @@ async function generateProposal(data, aerialImage) {
     children.push(
         new Paragraph({
             alignment: AlignmentType.CENTER,
-            spacing: { after: 150 },
+            spacing: { after: 100 },
             children: [
                 new TextRun({
                     text: "PROJECT PROPOSAL",
                     bold: true,
-                    size: 20,
+                    size: 32,
+                    color: "2E8B57",
                     font: "Montserrat"
                 })
             ]
@@ -152,18 +163,25 @@ async function generateProposal(data, aerialImage) {
         
         new Paragraph({
             alignment: AlignmentType.CENTER,
-            spacing: { after: 150 },
+            spacing: { after: 50 },
             children: [
                 new TextRun({
-                    text: "GoNano",
-                    size: 22,
-                    color: "2E8B57",
+                    text: "gonano",
+                    size: 36,
+                    bold: true,
                     font: "Montserrat"
-                }),
+                })
+            ]
+        }),
+        
+        new Paragraph({
+            alignment: AlignmentType.CENTER,
+            spacing: { after: 200 },
+            children: [
                 new TextRun({
-                    text: " Roof Protection System",
-                    size: 22,
-                    font: "Montserrat"
+                    text: "Roof Protection System",
+                    size: 20,
+                    font: "Open Sans"
                 })
             ]
         })
@@ -330,43 +348,29 @@ async function generateProposal(data, aerialImage) {
     }
     
     children.push(
-        new Table({
-            width: { size: 85, type: WidthType.PERCENTAGE },
+        new Paragraph({
             alignment: AlignmentType.CENTER,
-            margins: {
-                top: 200,
-                bottom: 200,
-                left: 200,
-                right: 200
-            },
-            borders: {
-                top: { style: BorderStyle.SINGLE, size: 6, color: "2E8B57" },
-                bottom: { style: BorderStyle.SINGLE, size: 6, color: "2E8B57" },
-                left: { style: BorderStyle.SINGLE, size: 6, color: "2E8B57" },
-                right: { style: BorderStyle.SINGLE, size: 6, color: "2E8B57" }
-            },
-            rows: [
-                new TableRow({
-                    children: [
-                        new TableCell({
-                            shading: { fill: "E8F5E9" },
-                            children: [
-                                new Paragraph({
-                                    alignment: AlignmentType.CENTER,
-                                    spacing: { before: 150, after: 150 },
-                                    children: [
-                                        new TextRun({
-                                            text: "Extending Roof Life with Advanced Nanotechnology",
-                                            size: 24,
-                                            color: "2E8B57",
-                                            italics: true,
-                                            font: "Open Sans"
-                                        })
-                                    ]
-                                })
-                            ]
-                        })
-                    ]
+            spacing: { before: 150, after: 50 },
+            children: [
+                new TextRun({
+                    text: "Extending Roof Life with Advanced Nanotechnology",
+                    size: 20,
+                    color: "FFFFFF",
+                    italics: true,
+                    font: "Open Sans"
+                })
+            ]
+        }),
+        
+        new Paragraph({
+            alignment: AlignmentType.CENTER,
+            spacing: { after: 200 },
+            children: [
+                new TextRun({
+                    text: "myroofrecharge.com",
+                    size: 20,
+                    color: "FFFFFF",
+                    font: "Open Sans"
                 })
             ]
         }),
@@ -1606,9 +1610,52 @@ async function generateProposal(data, aerialImage) {
         })
     );
     
+    // Create footer with page numbers and small logo
+    const footerChildren = [
+        new Paragraph({
+            alignment: AlignmentType.RIGHT,
+            children: [
+                new TextRun({
+                    children: [PageNumber.CURRENT],
+                    size: 20,
+                    font: "Open Sans"
+                })
+            ]
+        })
+    ];
+    
+    // Add small logo to footer if available
+    if (smallLogoBuffer) {
+        footerChildren.unshift(
+            new Paragraph({
+                alignment: AlignmentType.RIGHT,
+                spacing: { after: 100 },
+                children: [
+                    new ImageRun({
+                        data: smallLogoBuffer,
+                        transformation: {
+                            width: 30,
+                            height: 30
+                        }
+                    })
+                ]
+            })
+        );
+    }
+    
     const doc = new Document({
         sections: [{
-            properties: {},
+            properties: {
+                titlePage: true
+            },
+            footers: {
+                default: new Footer({
+                    children: footerChildren
+                }),
+                first: new Footer({
+                    children: []
+                })
+            },
             children: children
         }]
     });
