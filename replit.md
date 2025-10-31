@@ -24,10 +24,12 @@ Fully functional web application with:
 ## Recent Changes
 **October 31, 2025**
 - Added company logo (Roof Recharge) to cover page top
-- Implemented custom fonts:
-  - Titles: Montserrat Bold size 42
-  - Headings: Montserrat size 36
-  - Body text: Open Sans size 16
+- Implemented custom fonts with optimized sizes for single-page sections:
+  - Main titles: Montserrat Bold size 48
+  - Section headings: Montserrat size 42
+  - Subsection headings: Montserrat size 28
+  - Body text headings: Open Sans Bold size 22
+  - Body text: Open Sans size 20
 - Created styled aerial image presentation with green bordered box
 - Added "Professional GoNano Application" header above image
 - Added "Extending Roof Life with Advanced Nanotechnology" footer below image
@@ -189,15 +191,19 @@ Fully functional web application with:
 
 ### Typography
 
-**Custom Fonts:**
-- **Titles**: Montserrat Bold, size 42pt
-  - Used for: "PROJECT PROPOSAL", section headings like "COMPANY PROFILE", "PROJECT DESCRIPTION"
-- **Headings**: Montserrat, size 36pt
-  - Used for: subsection headings, "Your Savings" callouts
-- **Body Text**: Open Sans, size 16pt
+**Custom Fonts (optimized for single-page sections):**
+- **Main Titles**: Montserrat Bold, size 48pt
+  - Used for: "PROJECT PROPOSAL", main section headings
+- **Section Headings**: Montserrat, size 42pt
+  - Used for: "COMPANY PROFILE", "PROJECT DESCRIPTION", "INVESTMENT & SAVINGS ANALYSIS"
+- **Subsection Headings**: Montserrat, size 28pt
+  - Used for: subsection headings
+- **Body Text Headings**: Open Sans Bold, size 22pt
+  - Used for: table headers, emphasis text
+- **Body Text**: Open Sans, size 20pt
   - Used for: all paragraph text, descriptions, table content
 
-**Note**: Fonts are specified in the document. Microsoft Word will use these fonts if installed on the system, or substitute similar fonts if not available.
+**Note**: Font sizes have been optimized to ensure each section fits on a single page while maintaining readability. Fonts are specified in the document. Microsoft Word will use these fonts if installed on the system, or substitute similar fonts if not available.
 
 ### Color Scheme
 - **Primary Green**: #2E8B57 (Roof Recharge brand color)
@@ -229,11 +235,12 @@ Fully functional web application with:
 
 ### Product Images
 - All three products now have professional barrel images
-- **Shingle Saver**: Purple barrel (250x250 pixels)
-- **Revive**: Orange barrel (250x250 pixels)
-- **BioBoost**: Green barrel (250x250 pixels)
+- **Shingle Saver**: Purple barrel (200x200 pixels)
+- **Revive**: Orange barrel (200x200 pixels)
+- **BioBoost**: Green barrel (200x200 pixels)
 - Images displayed in side-by-side table layout with product description
 - Professional presentation with vertical centering
+- Optimized sizes for single-page layouts
 
 ### Document Generation
 - Uses docx library for Word document creation
@@ -248,7 +255,7 @@ Fully functional web application with:
 
 ## User Preferences
 - Professional green branding (#2E8B57)
-- Custom fonts: Montserrat Bold 42 for titles, Montserrat 36 for headings, Open Sans 16 for body
+- Custom fonts optimized for single-page sections: Montserrat Bold 48 for titles, Montserrat 42 for headings, Open Sans 20 for body
 - Exact template matching for company consistency
 - Styled aerial image presentation
 - Green table headers with white text
@@ -257,4 +264,4 @@ Fully functional web application with:
 - Company logo on cover page
 - One-click Word document generation with image
 - Automatic calculations and live preview
-- Each product solution on its own page
+- Each section fits on one page for professional presentation

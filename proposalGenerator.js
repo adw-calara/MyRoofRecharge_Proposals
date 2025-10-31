@@ -122,7 +122,7 @@ async function generateProposal(data, aerialImage) {
         children.push(
             new Paragraph({
                 alignment: AlignmentType.CENTER,
-                spacing: { after: 300 },
+                spacing: { after: 150 },
                 children: [
                     new ImageRun({
                         data: logoBuffer,
@@ -139,12 +139,12 @@ async function generateProposal(data, aerialImage) {
     children.push(
         new Paragraph({
             alignment: AlignmentType.CENTER,
-            spacing: { after: 200 },
+            spacing: { after: 150 },
             children: [
                 new TextRun({
                     text: "PROJECT PROPOSAL",
                     bold: true,
-                    size: 84,
+                    size: 20,
                     font: "Montserrat"
                 })
             ]
@@ -152,17 +152,17 @@ async function generateProposal(data, aerialImage) {
         
         new Paragraph({
             alignment: AlignmentType.CENTER,
-            spacing: { after: 400 },
+            spacing: { after: 150 },
             children: [
                 new TextRun({
                     text: "GoNano",
-                    size: 48,
+                    size: 22,
                     color: "2E8B57",
                     font: "Montserrat"
                 }),
                 new TextRun({
                     text: " Roof Protection System",
-                    size: 48,
+                    size: 22,
                     font: "Montserrat"
                 })
             ]
@@ -197,7 +197,7 @@ async function generateProposal(data, aerialImage) {
                                         new TextRun({
                                             text: "Prepared For",
                                             bold: true,
-                                            size: 28,
+                                            size: 20,
                                             font: "Open Sans"
                                         })
                                     ]
@@ -208,7 +208,7 @@ async function generateProposal(data, aerialImage) {
                                     children: [
                                         new TextRun({
                                             text: data.customerName || '',
-                                            size: 32,
+                                            size: 22,
                                             bold: true,
                                             font: "Open Sans"
                                         })
@@ -220,7 +220,7 @@ async function generateProposal(data, aerialImage) {
                                     children: [
                                         new TextRun({
                                             text: data.customerAddress || '',
-                                            size: 28,
+                                            size: 20,
                                             font: "Open Sans"
                                         })
                                     ]
@@ -231,7 +231,7 @@ async function generateProposal(data, aerialImage) {
                                     children: [
                                         new TextRun({
                                             text: data.customerCity || '',
-                                            size: 28,
+                                            size: 20,
                                             font: "Open Sans"
                                         })
                                     ]
@@ -245,11 +245,11 @@ async function generateProposal(data, aerialImage) {
         
         new Paragraph({
             alignment: AlignmentType.CENTER,
-            spacing: { before: 300, after: 400 },
+            spacing: { before: 200, after: 300 },
             children: [
                 new TextRun({
                     text: `Date: ${formatDate(data.proposalDate)}`,
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
@@ -284,20 +284,20 @@ async function generateProposal(data, aerialImage) {
                                     children: [
                                         new TextRun({
                                             text: "Professional ",
-                                            size: 28,
+                                            size: 20,
                                             color: "2E8B57",
                                             font: "Open Sans"
                                         }),
                                         new TextRun({
                                             text: "GoNano",
-                                            size: 28,
+                                            size: 20,
                                             color: "2E8B57",
                                             bold: true,
                                             font: "Open Sans"
                                         }),
                                         new TextRun({
                                             text: " Application",
-                                            size: 28,
+                                            size: 20,
                                             color: "2E8B57",
                                             font: "Open Sans"
                                         })
@@ -320,7 +320,7 @@ async function generateProposal(data, aerialImage) {
                     new ImageRun({
                         data: aerialImage.buffer,
                         transformation: {
-                            width: 450,
+                            width: 400,
                             height: 300
                         }
                     })
@@ -376,12 +376,12 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            spacing: { before: 400, after: 300 },
+            spacing: { before: 200, after: 300 },
             children: [
                 new TextRun({
                     text: "COMPANY PROFILE",
                     bold: true,
-                    size: 72,
+                    size: 42,
                     color: "2E8B57",
                     font: "Montserrat"
                 })
@@ -389,23 +389,23 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            spacing: { after: 400 },
+            spacing: { after: 200 },
             children: [
                 new TextRun({
                     text: "Transforming roof protection with cutting-edge nanotechnology solutions across the Mid-Atlantic United States",
                     italics: true,
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
         }),
         
         new Paragraph({
-            spacing: { after: 300 },
+            spacing: { after: 150 },
             children: [
                 new TextRun({
                     text: "We believe that every property deserves protection that lasts. Our journey began with a commitment to bringing innovative nanotechnology solutions to property owners who demand excellence and longevity from their roofing investments.",
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
@@ -417,18 +417,18 @@ async function generateProposal(data, aerialImage) {
                 new TextRun({
                     text: "Our Experience",
                     bold: true,
-                    size: 72,
+                    size: 42,
                     font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            spacing: { after: 300 },
+            spacing: { after: 150 },
             children: [
                 new TextRun({
                     text: "Green Energy Construction & Consulting has over 15 years of experience developing and installing thousands of renewable energy projects for home and business owners. It is through this experience we recognized a clear need and our Roof Recharge division was born.",
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
@@ -440,18 +440,18 @@ async function generateProposal(data, aerialImage) {
                 new TextRun({
                     text: "Why We're Different",
                     bold: true,
-                    size: 72,
+                    size: 42,
                     font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            spacing: { after: 300 },
+            spacing: { after: 150 },
             children: [
                 new TextRun({
                     text: "We recognized that traditional roofing treatments offered short-term protection at best. We partnered with GoNano to deliver cutting-edge nanotechnology solutions that strengthen durability and extend roof lifespan by decades, providing our customers with true long-term value.",
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
@@ -463,18 +463,18 @@ async function generateProposal(data, aerialImage) {
                 new TextRun({
                     text: "Our Service Area",
                     bold: true,
-                    size: 72,
+                    size: 42,
                     font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            spacing: { after: 300 },
+            spacing: { after: 150 },
             children: [
                 new TextRun({
                     text: "Today, we serve property owners throughout the Mid-Atlantic United States, combining our construction expertise with revolutionary GoNano technology to protect investments and reduce maintenance costs for years to come.",
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
@@ -486,7 +486,7 @@ async function generateProposal(data, aerialImage) {
                 new TextRun({
                     text: "Our Commitment",
                     bold: true,
-                    size: 72,
+                    size: 42,
                     font: "Montserrat"
                 })
             ]
@@ -497,7 +497,7 @@ async function generateProposal(data, aerialImage) {
             children: [
                 new TextRun({
                     text: "✓ Authorized GoNano Installer - Fully certified and trained in advanced application techniques",
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
@@ -508,7 +508,7 @@ async function generateProposal(data, aerialImage) {
             children: [
                 new TextRun({
                     text: "✓ Proven Track Record - Thousands of successful installations over 15+ years",
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
@@ -519,18 +519,18 @@ async function generateProposal(data, aerialImage) {
             children: [
                 new TextRun({
                     text: "✓ Long-Term Protection - Solutions that extend roof life by decades, not just years",
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
         }),
         
         new Paragraph({
-            spacing: { after: 600 },
+            spacing: { after: 300 },
             children: [
                 new TextRun({
                     text: "✓ True Value - Cost-effective alternatives to premature roof replacement",
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
@@ -541,12 +541,12 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            spacing: { before: 400, after: 300 },
+            spacing: { before: 200, after: 300 },
             children: [
                 new TextRun({
                     text: "PROJECT DESCRIPTION",
                     bold: true,
-                    size: 84,
+                    size: 20,
                     color: "2E8B57",
                     font: "Montserrat"
                 })
@@ -565,7 +565,7 @@ async function generateProposal(data, aerialImage) {
                                 children: [new TextRun({ 
                                     text: "Property Address", 
                                     bold: true,
-                                    size: 32,
+                                    size: 22,
                                     color: "FFFFFF",
                                     font: "Open Sans"
                                 })]
@@ -576,7 +576,7 @@ async function generateProposal(data, aerialImage) {
                             children: [new Paragraph({ 
                                 children: [new TextRun({ 
                                     text: `${data.customerAddress}, ${data.customerCity}`,
-                                    size: 32,
+                                    size: 22,
                                     font: "Open Sans"
                                 })]
                             })]
@@ -591,7 +591,7 @@ async function generateProposal(data, aerialImage) {
                                 children: [new TextRun({ 
                                     text: "Roof Area", 
                                     bold: true,
-                                    size: 32,
+                                    size: 22,
                                     color: "FFFFFF",
                                     font: "Open Sans"
                                 })]
@@ -601,7 +601,7 @@ async function generateProposal(data, aerialImage) {
                             children: [new Paragraph({ 
                                 children: [new TextRun({ 
                                     text: `${data.squareFeet} sq ft`,
-                                    size: 32,
+                                    size: 22,
                                     font: "Open Sans"
                                 })]
                             })]
@@ -616,7 +616,7 @@ async function generateProposal(data, aerialImage) {
                                 children: [new TextRun({ 
                                     text: "Roof Type", 
                                     bold: true,
-                                    size: 32,
+                                    size: 22,
                                     color: "FFFFFF",
                                     font: "Open Sans"
                                 })]
@@ -626,7 +626,7 @@ async function generateProposal(data, aerialImage) {
                             children: [new Paragraph({ 
                                 children: [new TextRun({ 
                                     text: data.roofType || '',
-                                    size: 32,
+                                    size: 22,
                                     font: "Open Sans"
                                 })]
                             })]
@@ -641,7 +641,7 @@ async function generateProposal(data, aerialImage) {
                                 children: [new TextRun({ 
                                     text: "Roof Age", 
                                     bold: true,
-                                    size: 32,
+                                    size: 22,
                                     color: "FFFFFF",
                                     font: "Open Sans"
                                 })]
@@ -651,7 +651,7 @@ async function generateProposal(data, aerialImage) {
                             children: [new Paragraph({ 
                                 children: [new TextRun({ 
                                     text: `${data.roofAge} years`,
-                                    size: 32,
+                                    size: 22,
                                     font: "Open Sans"
                                 })]
                             })]
@@ -663,12 +663,12 @@ async function generateProposal(data, aerialImage) {
         
         new Paragraph({
             alignment: AlignmentType.CENTER,
-            spacing: { before: 300, after: 300 },
+            spacing: { before: 150, after: 300 },
             children: [
                 new TextRun({
                     text: "[Aerial image will be inserted here]",
                     italics: true,
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
@@ -681,25 +681,25 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            spacing: { before: 400, after: 200 },
+            spacing: { before: 200, after: 200 },
             children: [
                 new TextRun({
                     text: "Proposed ",
                     bold: true,
-                    size: 84,
+                    size: 20,
                     font: "Montserrat"
                 }),
                 new TextRun({
                     text: "GoNano",
                     bold: true,
-                    size: 84,
+                    size: 20,
                     color: "2E8B57",
                     font: "Montserrat"
                 }),
                 new TextRun({
                     text: " Solution",
                     bold: true,
-                    size: 84,
+                    size: 20,
                     font: "Montserrat"
                 })
             ]
@@ -731,7 +731,7 @@ async function generateProposal(data, aerialImage) {
                                         children: [
                                             new TextRun({
                                                 text: "Based on our inspection and analysis of your roof, we recommend:",
-                                                size: 32,
+                                                size: 22,
                                                 font: "Open Sans"
                                             })
                                         ]
@@ -742,7 +742,7 @@ async function generateProposal(data, aerialImage) {
                                             new TextRun({
                                                 text: data.gonanoProduct || '',
                                                 bold: true,
-                                                size: 72,
+                                                size: 42,
                                                 color: "2E8B57",
                                                 font: "Montserrat"
                                             })
@@ -754,7 +754,7 @@ async function generateProposal(data, aerialImage) {
                                             new TextRun({
                                                 text: productInfo.subtitle,
                                                 italics: true,
-                                                size: 32,
+                                                size: 22,
                                                 font: "Open Sans"
                                             })
                                         ]
@@ -791,7 +791,7 @@ async function generateProposal(data, aerialImage) {
                 children: [
                     new TextRun({
                         text: "Based on our inspection and analysis of your roof, we recommend:",
-                        size: 32,
+                        size: 22,
                         font: "Open Sans"
                     })
                 ]
@@ -802,19 +802,19 @@ async function generateProposal(data, aerialImage) {
                     new TextRun({
                         text: data.gonanoProduct || '',
                         bold: true,
-                        size: 72,
+                        size: 42,
                         color: "2E8B57",
                         font: "Montserrat"
                     })
                 ]
             }),
             new Paragraph({
-                spacing: { after: 400 },
+                spacing: { after: 200 },
                 children: [
                     new TextRun({
                         text: productInfo.subtitle,
                         italics: true,
-                        size: 32,
+                        size: 22,
                         font: "Open Sans"
                     })
                 ]
@@ -825,23 +825,23 @@ async function generateProposal(data, aerialImage) {
     children.push(
         
         new Paragraph({
-            spacing: { before: 300, after: 200 },
+            spacing: { before: 150, after: 200 },
             children: [
                 new TextRun({
                     text: "Product Overview",
                     bold: true,
-                    size: 72,
+                    size: 42,
                     font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            spacing: { after: 300 },
+            spacing: { after: 150 },
             children: [
                 new TextRun({
                     text: productInfo.overview,
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
@@ -861,7 +861,7 @@ async function generateProposal(data, aerialImage) {
                                         new TextRun({
                                             text: "KEY FEATURES",
                                             bold: true,
-                                            size: 32,
+                                            size: 22,
                                             color: "2E8B57",
                                             font: "Open Sans"
                                         })
@@ -878,7 +878,7 @@ async function generateProposal(data, aerialImage) {
                                         new TextRun({
                                             text: "PROVEN RESULTS",
                                             bold: true,
-                                            size: 32,
+                                            size: 22,
                                             color: "2E8B57",
                                             font: "Open Sans"
                                         })
@@ -902,12 +902,12 @@ async function generateProposal(data, aerialImage) {
                                                     text: feature.icon,
                                                     bold: true,
                                                     color: "2E8B57",
-                                                    size: 28,
+                                                    size: 20,
                                                     font: "Open Sans"
                                                 }),
                                                 new TextRun({
                                                     text: `\n${feature.description}`,
-                                                    size: 28,
+                                                    size: 20,
                                                     font: "Open Sans"
                                                 })
                                             ]
@@ -927,7 +927,7 @@ async function generateProposal(data, aerialImage) {
                                             children: [
                                                 new TextRun({
                                                     text: result,
-                                                    size: 28,
+                                                    size: 20,
                                                     font: "Open Sans"
                                                 })
                                             ]
@@ -945,17 +945,17 @@ async function generateProposal(data, aerialImage) {
     
     children.push(
         new Paragraph({
-            spacing: { before: 300, after: 600 },
+            spacing: { before: 150, after: 600 },
             children: [
                 new TextRun({
                     text: "Additional Notes: ",
                     bold: true,
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 }),
                 new TextRun({
                     text: productInfo.notes,
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
@@ -969,13 +969,13 @@ async function generateProposal(data, aerialImage) {
     // THE GONANO DIFFERENCE PAGE
     children.push(
         new Paragraph({
-            spacing: { before: 400, after: 400 },
+            spacing: { before: 200, after: 400 },
             alignment: AlignmentType.CENTER,
             children: [
                 new TextRun({
                     text: "THE GONANO DIFFERENCE",
                     bold: true,
-                    size: 84,
+                    size: 20,
                     color: "2E8B57",
                     font: "Montserrat"
                 })
@@ -991,12 +991,12 @@ async function generateProposal(data, aerialImage) {
         children.push(
             new Paragraph({
                 alignment: AlignmentType.CENTER,
-                spacing: { before: 300, after: 400 },
+                spacing: { before: 150, after: 400 },
                 children: [
                     new ImageRun({
                         data: comparisonChartBuffer,
                         transformation: {
-                            width: 500,
+                            width: 400,
                             height: 500
                         }
                     })
@@ -1015,12 +1015,12 @@ async function generateProposal(data, aerialImage) {
         children.push(
             new Paragraph({
                 alignment: AlignmentType.CENTER,
-                spacing: { before: 400, after: 400 },
+                spacing: { before: 200, after: 400 },
                 children: [
                     new ImageRun({
                         data: resellerBannerBuffer,
                         transformation: {
-                            width: 600,
+                            width: 500,
                             height: 150
                         }
                     })
@@ -1037,12 +1037,12 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            spacing: { before: 400, after: 300 },
+            spacing: { before: 200, after: 300 },
             children: [
                 new TextRun({
                     text: "INVESTMENT & SAVINGS ANALYSIS",
                     bold: true,
-                    size: 72,
+                    size: 42,
                     color: "2E8B57",
                     font: "Montserrat"
                 })
@@ -1061,7 +1061,7 @@ async function generateProposal(data, aerialImage) {
                                 children: [new TextRun({ 
                                     text: "Description", 
                                     bold: true,
-                                    size: 32,
+                                    size: 22,
                                     font: "Open Sans"
                                 })]
                             })]
@@ -1074,7 +1074,7 @@ async function generateProposal(data, aerialImage) {
                                 children: [new TextRun({ 
                                     text: "Amount", 
                                     bold: true,
-                                    size: 32,
+                                    size: 22,
                                     font: "Open Sans"
                                 })]
                             })]
@@ -1087,7 +1087,7 @@ async function generateProposal(data, aerialImage) {
                             children: [new Paragraph({ 
                                 children: [new TextRun({ 
                                     text: `GoNano Saver Application (${data.squareFeet} sq ft)`,
-                                    size: 32,
+                                    size: 22,
                                     font: "Open Sans"
                                 })]
                             })]
@@ -1097,7 +1097,7 @@ async function generateProposal(data, aerialImage) {
                                 alignment: AlignmentType.RIGHT,
                                 children: [new TextRun({ 
                                     text: formatCurrency(costs.applicationCost),
-                                    size: 32,
+                                    size: 22,
                                     font: "Open Sans"
                                 })]
                             })]
@@ -1110,7 +1110,7 @@ async function generateProposal(data, aerialImage) {
                             children: [new Paragraph({ 
                                 children: [new TextRun({ 
                                     text: "Professional Installation",
-                                    size: 32,
+                                    size: 22,
                                     font: "Open Sans"
                                 })]
                             })]
@@ -1120,7 +1120,7 @@ async function generateProposal(data, aerialImage) {
                                 alignment: AlignmentType.RIGHT,
                                 children: [new TextRun({ 
                                     text: formatCurrency(costs.installationCost),
-                                    size: 32,
+                                    size: 22,
                                     font: "Open Sans"
                                 })]
                             })]
@@ -1135,7 +1135,7 @@ async function generateProposal(data, aerialImage) {
                                 children: [new TextRun({ 
                                     text: "Total Investment", 
                                     bold: true,
-                                    size: 32,
+                                    size: 22,
                                     color: "FFFFFF",
                                     font: "Open Sans"
                                 })]
@@ -1149,7 +1149,7 @@ async function generateProposal(data, aerialImage) {
                                     new TextRun({
                                         text: formatCurrency(costs.totalCost),
                                         bold: true,
-                                        size: 32,
+                                        size: 22,
                                         color: "FFFFFF",
                                         font: "Open Sans"
                                     })
@@ -1162,12 +1162,12 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            spacing: { before: 400, after: 200 },
+            spacing: { before: 200, after: 200 },
             children: [
                 new TextRun({
                     text: "Cost Comparison",
                     bold: true,
-                    size: 72,
+                    size: 42,
                     font: "Montserrat"
                 })
             ]
@@ -1186,7 +1186,7 @@ async function generateProposal(data, aerialImage) {
                                     children: [new TextRun({ 
                                         text: "Full Roof Replacement", 
                                         bold: true,
-                                        size: 32,
+                                        size: 22,
                                         font: "Open Sans"
                                     })]
                                 }),
@@ -1194,7 +1194,7 @@ async function generateProposal(data, aerialImage) {
                                     children: [new TextRun({ 
                                         text: `(Typical cost: ${formatCurrency(data.replacementCostPerSqFt)}/sq ft)`, 
                                         italics: true,
-                                        size: 28,
+                                        size: 20,
                                         font: "Open Sans"
                                     })]
                                 })
@@ -1209,7 +1209,7 @@ async function generateProposal(data, aerialImage) {
                                     new TextRun({
                                         text: formatCurrency(costs.replacementCost),
                                         bold: true,
-                                        size: 32,
+                                        size: 22,
                                         color: "B71C1C",
                                         font: "Open Sans"
                                     })
@@ -1226,7 +1226,7 @@ async function generateProposal(data, aerialImage) {
                                 children: [new TextRun({ 
                                     text: "GoNano Protection", 
                                     bold: true,
-                                    size: 32,
+                                    size: 22,
                                     font: "Open Sans"
                                 })]
                             })]
@@ -1239,7 +1239,7 @@ async function generateProposal(data, aerialImage) {
                                     new TextRun({
                                         text: formatCurrency(costs.totalCost),
                                         bold: true,
-                                        size: 32,
+                                        size: 22,
                                         color: "2E8B57",
                                         font: "Open Sans"
                                     })
@@ -1257,7 +1257,7 @@ async function generateProposal(data, aerialImage) {
                                     new TextRun({
                                         text: "Your Savings:",
                                         bold: true,
-                                        size: 36,
+                                        size: 24,
                                         color: "FFFFFF",
                                         font: "Montserrat"
                                     })
@@ -1272,7 +1272,7 @@ async function generateProposal(data, aerialImage) {
                                     new TextRun({
                                         text: formatCurrency(costs.savingsAmount),
                                         bold: true,
-                                        size: 36,
+                                        size: 24,
                                         color: "FFFFFF",
                                         font: "Montserrat"
                                     })
@@ -1285,7 +1285,7 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            spacing: { before: 600 },
+            spacing: { before: 300 },
             children: []
         }),
         
@@ -1294,12 +1294,12 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            spacing: { before: 400, after: 300 },
+            spacing: { before: 200, after: 300 },
             children: [
                 new TextRun({
                     text: "AUTHORIZATION TO PROCEED",
                     bold: true,
-                    size: 72,
+                    size: 42,
                     color: "2E8B57",
                     font: "Montserrat"
                 })
@@ -1307,11 +1307,11 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            spacing: { after: 400 },
+            spacing: { after: 200 },
             children: [
                 new TextRun({
                     text: "By signing below, you authorize Roof Recharge by Green Energy Construction & Consulting to proceed with the GoNano application as outlined in this proposal.",
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
@@ -1322,18 +1322,18 @@ async function generateProposal(data, aerialImage) {
             children: [
                 new TextRun({
                     text: "_______________________________",
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
         }),
         
         new Paragraph({
-            spacing: { after: 300 },
+            spacing: { after: 150 },
             children: [
                 new TextRun({
                     text: "Customer Signature",
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
@@ -1344,18 +1344,18 @@ async function generateProposal(data, aerialImage) {
             children: [
                 new TextRun({
                     text: "_______________________________",
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
         }),
         
         new Paragraph({
-            spacing: { after: 300 },
+            spacing: { after: 150 },
             children: [
                 new TextRun({
                     text: "Customer Name (Print)",
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
@@ -1366,18 +1366,18 @@ async function generateProposal(data, aerialImage) {
             children: [
                 new TextRun({
                     text: "_______________________________",
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
         }),
         
         new Paragraph({
-            spacing: { after: 400 },
+            spacing: { after: 200 },
             children: [
                 new TextRun({
                     text: "Date",
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
@@ -1388,7 +1388,29 @@ async function generateProposal(data, aerialImage) {
             children: [
                 new TextRun({
                     text: "_______________________________",
-                    size: 32,
+                    size: 22,
+                    font: "Open Sans"
+                })
+            ]
+        }),
+        
+        new Paragraph({
+            spacing: { after: 150 },
+            children: [
+                new TextRun({
+                    text: data.repName || 'Jennifer Martinez',
+                    size: 22,
+                    font: "Open Sans"
+                })
+            ]
+        }),
+        
+        new Paragraph({
+            spacing: { after: 50 },
+            children: [
+                new TextRun({
+                    text: "_______________________________",
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
@@ -1398,30 +1420,8 @@ async function generateProposal(data, aerialImage) {
             spacing: { after: 300 },
             children: [
                 new TextRun({
-                    text: data.repName || 'Jennifer Martinez',
-                    size: 32,
-                    font: "Open Sans"
-                })
-            ]
-        }),
-        
-        new Paragraph({
-            spacing: { after: 50 },
-            children: [
-                new TextRun({
-                    text: "_______________________________",
-                    size: 32,
-                    font: "Open Sans"
-                })
-            ]
-        }),
-        
-        new Paragraph({
-            spacing: { after: 600 },
-            children: [
-                new TextRun({
                     text: "Date",
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
@@ -1432,12 +1432,12 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            spacing: { before: 400, after: 300 },
+            spacing: { before: 200, after: 300 },
             children: [
                 new TextRun({
                     text: "TERMS AND CONDITIONS",
                     bold: true,
-                    size: 72,
+                    size: 42,
                     color: "2E8B57",
                     font: "Montserrat"
                 })
@@ -1450,18 +1450,18 @@ async function generateProposal(data, aerialImage) {
                 new TextRun({
                     text: "1. SCOPE OF WORK",
                     bold: true,
-                    size: 72,
+                    size: 42,
                     font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            spacing: { after: 300 },
+            spacing: { after: 150 },
             children: [
                 new TextRun({
                     text: "Roof Recharge will apply GoNano nanotechnology protection to the specified roof area. This includes roof inspection, cleaning as necessary, and professional application of the GoNano product.",
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
@@ -1473,18 +1473,18 @@ async function generateProposal(data, aerialImage) {
                 new TextRun({
                     text: "2. WARRANTY",
                     bold: true,
-                    size: 72,
+                    size: 42,
                     font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            spacing: { after: 300 },
+            spacing: { after: 150 },
             children: [
                 new TextRun({
                     text: "GoNano products are warranted for 10-15 years depending on roof condition. This warranty covers the performance of the GoNano coating and does not void existing shingle manufacturer warranties.",
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
@@ -1496,18 +1496,18 @@ async function generateProposal(data, aerialImage) {
                 new TextRun({
                     text: "3. PAYMENT TERMS",
                     bold: true,
-                    size: 72,
+                    size: 42,
                     font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            spacing: { after: 300 },
+            spacing: { after: 150 },
             children: [
                 new TextRun({
                     text: "Payment is due upon completion of application. We accept cash, check, and major credit cards.",
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
@@ -1519,18 +1519,18 @@ async function generateProposal(data, aerialImage) {
                 new TextRun({
                     text: "4. WEATHER CONDITIONS",
                     bold: true,
-                    size: 72,
+                    size: 42,
                     font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            spacing: { after: 300 },
+            spacing: { after: 150 },
             children: [
                 new TextRun({
                     text: "Application requires dry conditions. If weather prevents application, we will reschedule at the earliest convenient time.",
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
@@ -1542,18 +1542,18 @@ async function generateProposal(data, aerialImage) {
                 new TextRun({
                     text: "5. LIABILITY",
                     bold: true,
-                    size: 72,
+                    size: 42,
                     font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            spacing: { after: 300 },
+            spacing: { after: 150 },
             children: [
                 new TextRun({
                     text: "Roof Recharge and GoNano are not responsible for pre-existing roof conditions or damage. Our inspection will identify any issues that may affect warranty coverage.",
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
@@ -1565,18 +1565,18 @@ async function generateProposal(data, aerialImage) {
                 new TextRun({
                     text: "6. ENVIRONMENTAL SAFETY",
                     bold: true,
-                    size: 72,
+                    size: 42,
                     font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            spacing: { after: 300 },
+            spacing: { after: 150 },
             children: [
                 new TextRun({
                     text: "GoNano products are environmentally friendly with no harmful chemicals. The products are safe for vegetation, animals, and humans.",
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
@@ -1588,18 +1588,18 @@ async function generateProposal(data, aerialImage) {
                 new TextRun({
                     text: "7. ADDITIONAL FEES",
                     bold: true,
-                    size: 72,
+                    size: 42,
                     font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            spacing: { after: 300 },
+            spacing: { after: 150 },
             children: [
                 new TextRun({
                     text: "Additional fees may apply for structural changes, shingle replacements, or specialized installation equipment such as boom trucks. Any such additional costs will be discussed and approved before work proceeds.",
-                    size: 32,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
