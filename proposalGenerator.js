@@ -38,6 +38,7 @@ function getProductInfo(productName) {
         'GoNano Shingle Saver': {
             subtitle: 'Perfect for your newer roof (0-7 years old), this advanced nanotechnology formula will protect your investment for decades to come.',
             overview: 'GoNano Shingle Saver is a nanotechnology-driven clear and breathable penetrating sealer for asphalt shingles. Using advanced nano-particles that connect to the aggregate and bitumen, it creates a hydrophobic environment that dramatically extends roof life.',
+            imagePath: null,
             features: [
                 { icon: '✓ FORTIFY', description: 'Significantly enhances impact resistance' },
                 { icon: '✓ ENHANCE', description: 'Improves wind and weather resistance' },
@@ -58,6 +59,7 @@ function getProductInfo(productName) {
         'GoNano Revive': {
             subtitle: 'Ideal for mid-life roofs (8-15 years old), this advanced formula rejuvenates aging shingles and restores protective properties.',
             overview: 'GoNano Revive is a nanotechnology-based rejuvenation system for aging asphalt shingles. The advanced formula penetrates deep into shingle material, restoring flexibility and creating a protective barrier against further deterioration.',
+            imagePath: 'attached_assets/gonano-revive-product.png',
             features: [
                 { icon: '✓ RESTORE', description: 'Rejuvenates aging shingles' },
                 { icon: '✓ PROTECT', description: 'Creates long-lasting barrier' },
@@ -78,6 +80,7 @@ function getProductInfo(productName) {
         'GoNano BioBoost': {
             subtitle: 'Engineered for older roofs (15+ years), combining restoration technology with powerful bio-resistance.',
             overview: 'GoNano BioBoost is a specialized nanotechnology treatment for older asphalt shingles. It combines advanced restoration with superior bio-resistance, revitalizing aged shingles while preventing algae, moss, and biological growth.',
+            imagePath: null,
             features: [
                 { icon: '✓ REVITALIZE', description: 'Maximum restoration for aged roofs' },
                 { icon: '✓ BIO-RESIST', description: 'Powerful algae and moss resistance' },
@@ -669,55 +672,157 @@ async function generateProposal(data, aerialImage) {
                     font: "Open Sans"
                 })
             ]
+        })
+    );
+    
+    children.push(
+        new Paragraph({
+            children: [new PageBreak()]
         }),
         
         new Paragraph({
             spacing: { before: 400, after: 200 },
             children: [
                 new TextRun({
-                    text: "Proposed GoNano Solution",
+                    text: "Proposed ",
                     bold: true,
-                    size: 72,
+                    size: 84,
                     font: "Montserrat"
-                })
-            ]
-        }),
-        
-        new Paragraph({
-            spacing: { after: 200 },
-            children: [
+                }),
                 new TextRun({
-                    text: "Based on our inspection and analysis of your roof, we recommend:",
-                    size: 32,
-                    font: "Open Sans"
-                })
-            ]
-        }),
-        
-        new Paragraph({
-            spacing: { after: 150 },
-            children: [
-                new TextRun({
-                    text: data.gonanoProduct || '',
+                    text: "GoNano",
                     bold: true,
-                    size: 72,
+                    size: 84,
                     color: "2E8B57",
                     font: "Montserrat"
-                })
-            ]
-        }),
-        
-        new Paragraph({
-            spacing: { after: 400 },
-            children: [
+                }),
                 new TextRun({
-                    text: productInfo.subtitle,
-                    italics: true,
-                    size: 32,
-                    font: "Open Sans"
+                    text: " Solution",
+                    bold: true,
+                    size: 84,
+                    font: "Montserrat"
                 })
             ]
-        }),
+        })
+    );
+    
+    let productImageBuffer = null;
+    if (productInfo.imagePath) {
+        try {
+            productImageBuffer = fs.readFileSync(path.join(__dirname, productInfo.imagePath));
+        } catch (err) {
+            console.error('Product image not found:', err);
+        }
+    }
+    
+    if (productImageBuffer) {
+        children.push(
+            new Table({
+                width: { size: 100, type: WidthType.PERCENTAGE },
+                rows: [
+                    new TableRow({
+                        children: [
+                            new TableCell({
+                                width: { size: 60, type: WidthType.PERCENTAGE },
+                                verticalAlign: VerticalAlign.CENTER,
+                                children: [
+                                    new Paragraph({
+                                        spacing: { after: 200 },
+                                        children: [
+                                            new TextRun({
+                                                text: "Based on our inspection and analysis of your roof, we recommend:",
+                                                size: 32,
+                                                font: "Open Sans"
+                                            })
+                                        ]
+                                    }),
+                                    new Paragraph({
+                                        spacing: { after: 150 },
+                                        children: [
+                                            new TextRun({
+                                                text: data.gonanoProduct || '',
+                                                bold: true,
+                                                size: 72,
+                                                color: "2E8B57",
+                                                font: "Montserrat"
+                                            })
+                                        ]
+                                    }),
+                                    new Paragraph({
+                                        spacing: { after: 200 },
+                                        children: [
+                                            new TextRun({
+                                                text: productInfo.subtitle,
+                                                italics: true,
+                                                size: 32,
+                                                font: "Open Sans"
+                                            })
+                                        ]
+                                    })
+                                ]
+                            }),
+                            new TableCell({
+                                width: { size: 40, type: WidthType.PERCENTAGE },
+                                verticalAlign: VerticalAlign.CENTER,
+                                children: [
+                                    new Paragraph({
+                                        alignment: AlignmentType.CENTER,
+                                        children: [
+                                            new ImageRun({
+                                                data: productImageBuffer,
+                                                transformation: {
+                                                    width: 250,
+                                                    height: 250
+                                                }
+                                            })
+                                        ]
+                                    })
+                                ]
+                            })
+                        ]
+                    })
+                ]
+            })
+        );
+    } else {
+        children.push(
+            new Paragraph({
+                spacing: { after: 200 },
+                children: [
+                    new TextRun({
+                        text: "Based on our inspection and analysis of your roof, we recommend:",
+                        size: 32,
+                        font: "Open Sans"
+                    })
+                ]
+            }),
+            new Paragraph({
+                spacing: { after: 150 },
+                children: [
+                    new TextRun({
+                        text: data.gonanoProduct || '',
+                        bold: true,
+                        size: 72,
+                        color: "2E8B57",
+                        font: "Montserrat"
+                    })
+                ]
+            }),
+            new Paragraph({
+                spacing: { after: 400 },
+                children: [
+                    new TextRun({
+                        text: productInfo.subtitle,
+                        italics: true,
+                        size: 32,
+                        font: "Open Sans"
+                    })
+                ]
+            })
+        );
+    }
+    
+    children.push(
         
         new Paragraph({
             spacing: { before: 300, after: 200 },

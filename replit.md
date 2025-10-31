@@ -6,6 +6,7 @@ Professional Word document proposal generator for Roof Recharge by Green Energy 
 ## Purpose
 - Generate branded Word document proposals for GoNano roof treatment services
 - Include company logo and aerial property images in proposals
+- Display product-specific images for each GoNano product
 - Calculate investment costs and savings compared to roof replacement
 - Streamline the proposal creation process for sales representatives
 
@@ -14,6 +15,7 @@ Fully functional web application with:
 - Interactive web form for data entry
 - Company logo on cover page
 - Aerial image upload capability with styled presentation
+- Dynamic product-specific content and images based on selection
 - Custom font styling (Montserrat Bold 42 for titles, Montserrat 36 for headings, Open Sans 16 for body)
 - Real-time cost calculations and savings preview
 - Professional Word document generation matching company template
@@ -33,6 +35,9 @@ Fully functional web application with:
 - Moved Project Description to its own page (page 3)
 - Updated property details table with green headers and white text
 - Converted KEY FEATURES and PROVEN RESULTS to side-by-side table layout
+- Moved Proposed GoNano Solution to its own page (page 4)
+- Added product-specific images that change based on product selection
+- Created side-by-side layout for product description and image
 - Restructured cover page to match exact template design
 - Fixed document formatting to prevent text duplication
 - Configured multer for handling file uploads
@@ -54,7 +59,8 @@ Fully functional web application with:
 ├── public/
 │   └── index.html           # Frontend form with image upload
 ├── attached_assets/
-│   └── roof-recharge-logo-new_1761941852214.png  # Company logo
+│   ├── roof-recharge-logo-new_1761941852214.png  # Company logo
+│   └── gonano-revive-product.png                 # Revive product image
 ├── package.json             # Dependencies
 └── replit.md                # Project documentation
 ```
@@ -71,6 +77,7 @@ Fully functional web application with:
    - Custom font styling throughout
    - Professional green color scheme (#2E8B57)
    - Styled aerial image presentation
+   - Product-specific images
 
 3. **Aerial Image Upload**
    - Optional image upload for property photos
@@ -79,13 +86,20 @@ Fully functional web application with:
    - Footer: "Extending Roof Life with Advanced Nanotechnology"
    - Accepts all common image formats
 
-4. **Pricing & Calculations**
+4. **Dynamic Product Content**
+   - Product selection drives content and images
+   - GoNano Shingle Saver: Advanced protection (0-7 years)
+   - GoNano Revive: Rejuvenation system (8-15 years) with product image
+   - GoNano BioBoost: Restoration with bio-resistance (15+ years)
+   - Each product displays unique features, results, and notes
+
+5. **Pricing & Calculations**
    - Configurable price per square foot
    - Installation costs
    - Replacement cost comparison
    - Automatic savings calculations
 
-5. **Professional Word Document**
+6. **Professional Word Document**
    Matches company template exactly with:
    
    **Page 1 - Cover Page:**
@@ -106,33 +120,38 @@ Fully functional web application with:
    **Page 3 - Project Description:**
    - Property details table with green headers
    - "[Aerial image will be inserted here]" placeholder
-   - Proposed GoNano solution
+
+   **Page 4 - Proposed GoNano Solution:**
+   - Dynamic heading based on selected product
+   - Product-specific image (when available)
+   - Side-by-side layout: description on left, product image on right
    - Product overview and features
    - Side-by-side KEY FEATURES and PROVEN RESULTS table
    - Additional notes
 
-   **Page 4 - Investment & Savings:**
+   **Page 5 - Investment & Savings:**
    - Application costs
    - Installation costs
    - Total investment
    - Cost comparison with replacement
    - Savings calculation
 
-   **Page 5 - Authorization:**
+   **Page 6 - Authorization:**
    - Signature lines for customer
    - Representative signature
    - Date fields
 
-   **Page 6 - Terms and Conditions:**
+   **Page 7 - Terms and Conditions:**
    - 7 comprehensive sections
 
-6. **Product Information**
+7. **Product Information**
    - GoNano Shingle Saver (0-7 years) - Advanced protection
-   - GoNano Revive (8-15 years) - Rejuvenation system
+   - GoNano Revive (8-15 years) - Rejuvenation system (with product image)
    - GoNano BioBoost (15+ years) - Restoration with bio-resistance
    
    Each product includes:
    - Detailed overview
+   - Product-specific image (when available)
    - KEY FEATURES section
    - PROVEN RESULTS section
    - Product-specific notes
@@ -177,6 +196,12 @@ Fully functional web application with:
 - Styled with green bordered table cells
 - Header and footer text in green
 
+### Product Images
+- Product-specific images loaded based on selection
+- GoNano Revive: `gonano-revive-product.png` (250x250 pixels)
+- Images displayed in side-by-side table layout with product description
+- Fallback to text-only layout if no image available
+
 ### Document Generation
 - Uses docx library for Word document creation
 - Custom font specifications (Montserrat, Open Sans)
@@ -186,6 +211,7 @@ Fully functional web application with:
 - Side-by-side KEY FEATURES and PROVEN RESULTS layout
 - Page breaks for section organization
 - Consistent spacing and typography
+- Dynamic content based on product selection
 
 ## User Preferences
 - Professional green branding (#2E8B57)
@@ -194,6 +220,8 @@ Fully functional web application with:
 - Styled aerial image presentation
 - Green table headers with white text
 - Side-by-side feature comparison tables
+- Product-specific images and content
 - Company logo on cover page
 - One-click Word document generation with image
 - Automatic calculations and live preview
+- Each product solution on its own page
