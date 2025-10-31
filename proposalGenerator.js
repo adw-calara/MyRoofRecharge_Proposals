@@ -1,4 +1,4 @@
-const { Document, Packer, Paragraph, TextRun, AlignmentType, HeadingLevel, Table, TableRow, TableCell, WidthType, BorderStyle, VerticalAlign, ImageRun, TabStopType, TabStopPosition } = require('docx');
+const { Document, Packer, Paragraph, TextRun, AlignmentType, HeadingLevel, Table, TableRow, TableCell, WidthType, VerticalAlign, ImageRun } = require('docx');
 
 function formatCurrency(amount) {
     const value = parseFloat(amount);
@@ -104,12 +104,11 @@ async function generateProposal(data, aerialImage) {
     
     const children = [
         new Paragraph({
-            text: "",
-            spacing: { after: 200 }
+            spacing: { after: 200 },
+            children: []
         }),
         
         new Paragraph({
-            text: "PROJECT PROPOSAL",
             alignment: AlignmentType.CENTER,
             spacing: { after: 100 },
             children: [
@@ -122,7 +121,6 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "GoNano Roof Protection System",
             alignment: AlignmentType.CENTER,
             spacing: { after: 400 },
             children: [
@@ -134,12 +132,11 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "",
-            spacing: { after: 200 }
+            spacing: { after: 200 },
+            children: []
         }),
         
         new Paragraph({
-            text: "Prepared For",
             alignment: AlignmentType.CENTER,
             spacing: { after: 100 },
             children: [
@@ -152,7 +149,6 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: data.customerName || '',
             alignment: AlignmentType.CENTER,
             spacing: { after: 50 },
             children: [
@@ -164,7 +160,6 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: data.customerAddress || '',
             alignment: AlignmentType.CENTER,
             spacing: { after: 50 },
             children: [
@@ -176,7 +171,6 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: data.customerCity || '',
             alignment: AlignmentType.CENTER,
             spacing: { after: 400 },
             children: [
@@ -188,12 +182,11 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "",
-            spacing: { after: 200 }
+            spacing: { after: 200 },
+            children: []
         }),
         
         new Paragraph({
-            text: `Date: ${formatDate(data.proposalDate)}`,
             alignment: AlignmentType.CENTER,
             spacing: { after: 400 },
             children: [
@@ -206,12 +199,11 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "",
-            spacing: { after: 200 }
+            spacing: { after: 200 },
+            children: []
         }),
         
         new Paragraph({
-            text: "Professional GoNano Application",
             alignment: AlignmentType.CENTER,
             spacing: { after: 100 },
             children: [
@@ -224,7 +216,6 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "Extending Roof Life with Advanced Nanotechnology",
             alignment: AlignmentType.CENTER,
             spacing: { after: 600 },
             children: [
@@ -237,7 +228,6 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "COMPANY PROFILE",
             heading: HeadingLevel.HEADING_1,
             spacing: { before: 400, after: 200 },
             children: [
@@ -251,7 +241,6 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "Transforming roof protection with cutting-edge nanotechnology solutions across the Mid-Atlantic United States",
             spacing: { after: 300 },
             children: [
                 new TextRun({
@@ -268,7 +257,6 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "Our Experience",
             spacing: { after: 150 },
             children: [
                 new TextRun({
@@ -285,7 +273,6 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "Why We're Different",
             spacing: { after: 150 },
             children: [
                 new TextRun({
@@ -302,7 +289,6 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "Our Service Area",
             spacing: { after: 150 },
             children: [
                 new TextRun({
@@ -319,7 +305,6 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "Our Commitment",
             spacing: { after: 150 },
             children: [
                 new TextRun({
@@ -351,7 +336,6 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "PROJECT DESCRIPTION",
             heading: HeadingLevel.HEADING_1,
             spacing: { before: 400, after: 200 },
             children: [
@@ -371,7 +355,9 @@ async function generateProposal(data, aerialImage) {
                     children: [
                         new TableCell({
                             width: { size: 35, type: WidthType.PERCENTAGE },
-                            children: [new Paragraph({ text: "Property Address", bold: true })]
+                            children: [new Paragraph({ 
+                                children: [new TextRun({ text: "Property Address", bold: true })]
+                            })]
                         }),
                         new TableCell({
                             width: { size: 65, type: WidthType.PERCENTAGE },
@@ -382,7 +368,9 @@ async function generateProposal(data, aerialImage) {
                 new TableRow({
                     children: [
                         new TableCell({
-                            children: [new Paragraph({ text: "Roof Area", bold: true })]
+                            children: [new Paragraph({ 
+                                children: [new TextRun({ text: "Roof Area", bold: true })]
+                            })]
                         }),
                         new TableCell({
                             children: [new Paragraph({ text: `${data.squareFeet} sq ft` })]
@@ -392,7 +380,9 @@ async function generateProposal(data, aerialImage) {
                 new TableRow({
                     children: [
                         new TableCell({
-                            children: [new Paragraph({ text: "Roof Type", bold: true })]
+                            children: [new Paragraph({ 
+                                children: [new TextRun({ text: "Roof Type", bold: true })]
+                            })]
                         }),
                         new TableCell({
                             children: [new Paragraph({ text: data.roofType || '' })]
@@ -402,7 +392,9 @@ async function generateProposal(data, aerialImage) {
                 new TableRow({
                     children: [
                         new TableCell({
-                            children: [new Paragraph({ text: "Roof Age", bold: true })]
+                            children: [new Paragraph({ 
+                                children: [new TextRun({ text: "Roof Age", bold: true })]
+                            })]
                         }),
                         new TableCell({
                             children: [new Paragraph({ text: `${data.roofAge} years` })]
@@ -413,8 +405,8 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "",
-            spacing: { after: 300 }
+            spacing: { after: 300 },
+            children: []
         })
     ];
     
@@ -447,7 +439,6 @@ async function generateProposal(data, aerialImage) {
     
     children.push(
         new Paragraph({
-            text: "Proposed GoNano Solution",
             spacing: { after: 150 },
             children: [
                 new TextRun({
@@ -464,7 +455,6 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: data.gonanoProduct || '',
             spacing: { after: 150 },
             children: [
                 new TextRun({
@@ -483,12 +473,11 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "",
-            spacing: { after: 200 }
+            spacing: { after: 200 },
+            children: []
         }),
         
         new Paragraph({
-            text: "Product Overview",
             heading: HeadingLevel.HEADING_2,
             spacing: { before: 200, after: 200 },
             children: [
@@ -506,7 +495,6 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "KEY FEATURES",
             spacing: { after: 200 },
             children: [
                 new TextRun({
@@ -522,7 +510,6 @@ async function generateProposal(data, aerialImage) {
     productInfo.features.forEach(feature => {
         children.push(
             new Paragraph({
-                text: "",
                 spacing: { after: 100 },
                 children: [
                     new TextRun({
@@ -540,12 +527,11 @@ async function generateProposal(data, aerialImage) {
     
     children.push(
         new Paragraph({
-            text: "",
-            spacing: { after: 200 }
+            spacing: { after: 200 },
+            children: []
         }),
         
         new Paragraph({
-            text: "PROVEN RESULTS",
             spacing: { after: 200 },
             children: [
                 new TextRun({
@@ -569,12 +555,11 @@ async function generateProposal(data, aerialImage) {
     
     children.push(
         new Paragraph({
-            text: "",
-            spacing: { after: 200 }
+            spacing: { after: 200 },
+            children: []
         }),
         
         new Paragraph({
-            text: `Additional Notes: ${productInfo.notes}`,
             spacing: { after: 600 },
             children: [
                 new TextRun({
@@ -588,12 +573,11 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "",
-            spacing: { after: 200 }
+            spacing: { after: 200 },
+            children: []
         }),
         
         new Paragraph({
-            text: "INVESTMENT & SAVINGS ANALYSIS",
             heading: HeadingLevel.HEADING_1,
             spacing: { before: 400, after: 200 },
             children: [
@@ -613,12 +597,17 @@ async function generateProposal(data, aerialImage) {
                     children: [
                         new TableCell({
                             width: { size: 70, type: WidthType.PERCENTAGE },
-                            children: [new Paragraph({ text: "Description", bold: true })],
+                            children: [new Paragraph({ 
+                                children: [new TextRun({ text: "Description", bold: true })]
+                            })],
                             shading: { fill: "E8F5E9" }
                         }),
                         new TableCell({
                             width: { size: 30, type: WidthType.PERCENTAGE },
-                            children: [new Paragraph({ text: "Amount", bold: true, alignment: AlignmentType.RIGHT })],
+                            children: [new Paragraph({ 
+                                alignment: AlignmentType.RIGHT,
+                                children: [new TextRun({ text: "Amount", bold: true })]
+                            })],
                             shading: { fill: "E8F5E9" }
                         })
                     ]
@@ -646,13 +635,13 @@ async function generateProposal(data, aerialImage) {
                 new TableRow({
                     children: [
                         new TableCell({
-                            children: [new Paragraph({ text: "Total Investment", bold: true })],
+                            children: [new Paragraph({ 
+                                children: [new TextRun({ text: "Total Investment", bold: true })]
+                            })],
                             shading: { fill: "2E8B57" }
                         }),
                         new TableCell({
                             children: [new Paragraph({ 
-                                text: formatCurrency(costs.totalCost), 
-                                bold: true,
                                 alignment: AlignmentType.RIGHT,
                                 children: [
                                     new TextRun({
@@ -670,12 +659,11 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "",
-            spacing: { after: 400 }
+            spacing: { after: 400 },
+            children: []
         }),
         
         new Paragraph({
-            text: "Cost Comparison",
             spacing: { after: 200 },
             children: [
                 new TextRun({
@@ -694,16 +682,18 @@ async function generateProposal(data, aerialImage) {
                         new TableCell({
                             width: { size: 70, type: WidthType.PERCENTAGE },
                             children: [
-                                new Paragraph({ text: "Full Roof Replacement", bold: true }),
-                                new Paragraph({ text: `(Typical cost: ${formatCurrency(data.replacementCostPerSqFt)}/sq ft)`, italics: true })
+                                new Paragraph({ 
+                                    children: [new TextRun({ text: "Full Roof Replacement", bold: true })]
+                                }),
+                                new Paragraph({ 
+                                    children: [new TextRun({ text: `(Typical cost: ${formatCurrency(data.replacementCostPerSqFt)}/sq ft)`, italics: true })]
+                                })
                             ],
                             shading: { fill: "FFE0E0" }
                         }),
                         new TableCell({
                             width: { size: 30, type: WidthType.PERCENTAGE },
                             children: [new Paragraph({ 
-                                text: formatCurrency(costs.replacementCost), 
-                                bold: true,
                                 alignment: AlignmentType.RIGHT,
                                 children: [
                                     new TextRun({
@@ -720,13 +710,13 @@ async function generateProposal(data, aerialImage) {
                 new TableRow({
                     children: [
                         new TableCell({
-                            children: [new Paragraph({ text: "GoNano Protection", bold: true })],
+                            children: [new Paragraph({ 
+                                children: [new TextRun({ text: "GoNano Protection", bold: true })]
+                            })],
                             shading: { fill: "E0FFE0" }
                         }),
                         new TableCell({
                             children: [new Paragraph({ 
-                                text: formatCurrency(costs.totalCost), 
-                                bold: true,
                                 alignment: AlignmentType.RIGHT,
                                 children: [
                                     new TextRun({
@@ -744,8 +734,6 @@ async function generateProposal(data, aerialImage) {
                     children: [
                         new TableCell({
                             children: [new Paragraph({ 
-                                text: "Your Savings:",
-                                bold: true,
                                 children: [
                                     new TextRun({
                                         text: "Your Savings:",
@@ -777,12 +765,11 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "",
-            spacing: { after: 600 }
+            spacing: { after: 600 },
+            children: []
         }),
         
         new Paragraph({
-            text: "AUTHORIZATION TO PROCEED",
             heading: HeadingLevel.HEADING_1,
             spacing: { before: 400, after: 200 },
             children: [
@@ -851,12 +838,11 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "",
-            spacing: { after: 200 }
+            spacing: { after: 200 },
+            children: []
         }),
         
         new Paragraph({
-            text: "TERMS AND CONDITIONS",
             heading: HeadingLevel.HEADING_1,
             spacing: { before: 400, after: 200 },
             children: [
@@ -870,7 +856,6 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "1. SCOPE OF WORK",
             spacing: { after: 100 },
             children: [
                 new TextRun({
@@ -887,7 +872,6 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "2. WARRANTY",
             spacing: { after: 100 },
             children: [
                 new TextRun({
@@ -904,7 +888,6 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "3. PAYMENT TERMS",
             spacing: { after: 100 },
             children: [
                 new TextRun({
@@ -921,7 +904,6 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "4. WEATHER CONDITIONS",
             spacing: { after: 100 },
             children: [
                 new TextRun({
@@ -938,7 +920,6 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "5. LIABILITY",
             spacing: { after: 100 },
             children: [
                 new TextRun({
@@ -955,7 +936,6 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "6. ENVIRONMENTAL SAFETY",
             spacing: { after: 100 },
             children: [
                 new TextRun({
@@ -972,7 +952,6 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            text: "7. ADDITIONAL FEES",
             spacing: { after: 100 },
             children: [
                 new TextRun({
