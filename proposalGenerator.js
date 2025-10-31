@@ -38,7 +38,7 @@ function getProductInfo(productName) {
         'GoNano Shingle Saver': {
             subtitle: 'Perfect for your newer roof (0-7 years old), this advanced nanotechnology formula will protect your investment for decades to come.',
             overview: 'GoNano Shingle Saver is a nanotechnology-driven clear and breathable penetrating sealer for asphalt shingles. Using advanced nano-particles that connect to the aggregate and bitumen, it creates a hydrophobic environment that dramatically extends roof life.',
-            imagePath: null,
+            imagePath: 'attached_assets/Shingle Saver mockup_1761943502086.png',
             features: [
                 { icon: '✓ FORTIFY', description: 'Significantly enhances impact resistance' },
                 { icon: '✓ ENHANCE', description: 'Improves wind and weather resistance' },
@@ -59,7 +59,7 @@ function getProductInfo(productName) {
         'GoNano Revive': {
             subtitle: 'Ideal for mid-life roofs (8-15 years old), this advanced formula rejuvenates aging shingles and restores protective properties.',
             overview: 'GoNano Revive is a nanotechnology-based rejuvenation system for aging asphalt shingles. The advanced formula penetrates deep into shingle material, restoring flexibility and creating a protective barrier against further deterioration.',
-            imagePath: 'attached_assets/gonano-revive-product.png',
+            imagePath: 'attached_assets/Revive label mockup_1761943502085.png',
             features: [
                 { icon: '✓ RESTORE', description: 'Rejuvenates aging shingles' },
                 { icon: '✓ PROTECT', description: 'Creates long-lasting barrier' },
@@ -80,7 +80,7 @@ function getProductInfo(productName) {
         'GoNano BioBoost': {
             subtitle: 'The smart choice for your mature roof (15+ years old), providing cost-effective protection that delays replacement.',
             overview: 'GoNano BioBoost is a cost-effective solution for protecting and maintaining asphalt shingle roofs. By combining nanotechnology with renewable bio-oils, it offers a balance of performance and environmental consciousness for mature roofs.',
-            imagePath: null,
+            imagePath: 'attached_assets/Bio-boost mockup_1761943502078.png',
             features: [
                 { icon: '✓ BOOSTS LONGEVITY', description: 'Extends life of mature roofs' },
                 { icon: '✓ RESISTS DAMAGE', description: 'Protects against weather & UV' },

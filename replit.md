@@ -36,7 +36,10 @@ Fully functional web application with:
 - Updated property details table with green headers and white text
 - Converted KEY FEATURES and PROVEN RESULTS to side-by-side table layout
 - Moved Proposed GoNano Solution to its own page (page 4)
-- Added product-specific images that change based on product selection
+- Added product-specific images for all three products:
+  - Shingle Saver: Purple barrel product image
+  - Revive: Orange barrel product image
+  - BioBoost: Green barrel product image
 - Created side-by-side layout for product description and image
 - Updated BioBoost product information with new features and benefits
 - Restructured cover page to match exact template design
@@ -60,8 +63,10 @@ Fully functional web application with:
 ├── public/
 │   └── index.html           # Frontend form with image upload
 ├── attached_assets/
-│   ├── roof-recharge-logo-new_1761941852214.png  # Company logo
-│   └── gonano-revive-product.png                 # Revive product image
+│   ├── roof-recharge-logo-new_1761941852214.png      # Company logo
+│   ├── Shingle Saver mockup_1761943502086.png        # Shingle Saver product
+│   ├── Revive label mockup_1761943502085.png         # Revive product
+│   └── Bio-boost mockup_1761943502078.png            # BioBoost product
 ├── package.json             # Dependencies
 └── replit.md                # Project documentation
 ```
@@ -89,9 +94,9 @@ Fully functional web application with:
 
 4. **Dynamic Product Content**
    - Product selection drives content and images
-   - GoNano Shingle Saver: Advanced protection (0-7 years)
-   - GoNano Revive: Rejuvenation system (8-15 years) with product image
-   - GoNano BioBoost: Cost-effective solution for mature roofs (15+ years)
+   - GoNano Shingle Saver: Advanced protection (0-7 years) with purple barrel
+   - GoNano Revive: Rejuvenation system (8-15 years) with orange barrel
+   - GoNano BioBoost: Cost-effective solution for mature roofs (15+ years) with green barrel
    - Each product displays unique features, results, and notes
 
 5. **Pricing & Calculations**
@@ -124,7 +129,7 @@ Fully functional web application with:
 
    **Page 4 - Proposed GoNano Solution:**
    - Dynamic heading based on selected product
-   - Product-specific image (when available)
+   - Product-specific image (all products now have images)
    - Side-by-side layout: description on left, product image on right
    - Product overview and features
    - Side-by-side KEY FEATURES and PROVEN RESULTS table
@@ -148,23 +153,26 @@ Fully functional web application with:
 7. **Product Information**
    
    **GoNano Shingle Saver (0-7 years)**
+   - Purple barrel product image
    - Advanced protection for newer roofs
    - Key Features: FORTIFY, ENHANCE, PRESERVE, LONGEVITY
    - Results: 68% aging reduction, breathable protection, warranty
    
    **GoNano Revive (8-15 years)**
-   - Rejuvenation system with product image
+   - Orange barrel product image
+   - Rejuvenation system
    - Key Features: RESTORE, PROTECT, PRESERVE, LONGEVITY
    - Results: Restores flexibility, fills micro-cracks, 8-12 year extension
    
    **GoNano BioBoost (15+ years)**
+   - Green barrel product image
    - Cost-effective solution for mature roofs
    - Key Features: BOOSTS LONGEVITY, RESISTS DAMAGE, RESTORES VITALITY, SAVES MONEY
-   - Results: Bio-oil formula, water repellent, 3-5 year extension
+   - Product Benefits: Bio-oil formula, water repellent, 3-5 year extension
    
    Each product includes:
    - Detailed overview
-   - Product-specific image (when available)
+   - Product-specific barrel image (250x250 pixels)
    - KEY FEATURES section
    - PROVEN RESULTS/PRODUCT BENEFITS section
    - Product-specific notes
@@ -210,10 +218,12 @@ Fully functional web application with:
 - Header and footer text in green
 
 ### Product Images
-- Product-specific images loaded based on selection
-- GoNano Revive: `gonano-revive-product.png` (250x250 pixels)
+- All three products now have professional barrel images
+- **Shingle Saver**: Purple barrel (250x250 pixels)
+- **Revive**: Orange barrel (250x250 pixels)
+- **BioBoost**: Green barrel (250x250 pixels)
 - Images displayed in side-by-side table layout with product description
-- Fallback to text-only layout if no image available
+- Professional presentation with vertical centering
 
 ### Document Generation
 - Uses docx library for Word document creation
