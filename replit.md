@@ -1,30 +1,36 @@
 # Roof Recharge Proposal Generator
 
 ## Overview
-Professional Word document proposal generator for Roof Recharge by Green Energy Construction & Consulting. This web application creates comprehensive GoNano roof protection proposals that match the company's professional template exactly.
+Professional Word document proposal generator for Roof Recharge by Green Energy Construction & Consulting. This web application creates comprehensive GoNano roof protection proposals that match the company's professional template exactly with custom fonts and branding.
 
 ## Purpose
 - Generate branded Word document proposals for GoNano roof treatment services
-- Include aerial property images in proposals
+- Include company logo and aerial property images in proposals
 - Calculate investment costs and savings compared to roof replacement
 - Streamline the proposal creation process for sales representatives
 
 ## Current State
 Fully functional web application with:
 - Interactive web form for data entry
-- Aerial image upload capability
+- Company logo on cover page
+- Aerial image upload capability with styled presentation
+- Custom font styling (Montserrat Bold 42 for titles, Montserrat 36 for headings, Open Sans 16 for body)
 - Real-time cost calculations and savings preview
 - Professional Word document generation matching company template
 - Automatic file download
 
 ## Recent Changes
 **October 31, 2025**
-- Rebuilt proposal generator to match exact company template format
-- Added aerial image upload and embedding in Word documents
-- Implemented comprehensive company profile section
-- Added detailed product descriptions with KEY FEATURES and PROVEN RESULTS
-- Created professional authorization to proceed section with signature lines
-- Added complete terms and conditions section
+- Added company logo (Roof Recharge) to cover page top
+- Implemented custom fonts:
+  - Titles: Montserrat Bold size 42
+  - Headings: Montserrat size 36
+  - Body text: Open Sans size 16
+- Created styled aerial image presentation with green bordered box
+- Added "Professional GoNano Application" header above image
+- Added "Extending Roof Life with Advanced Nanotechnology" footer below image
+- Moved Company Profile section to page 2 with page breaks
+- Restructured cover page to match exact template design
 - Fixed document formatting to prevent text duplication
 - Configured multer for handling file uploads
 
@@ -32,7 +38,7 @@ Fully functional web application with:
 
 ### Technology Stack
 - **Backend**: Node.js with Express
-- **Document Generation**: docx library
+- **Document Generation**: docx library with custom fonts
 - **File Upload**: multer middleware
 - **Frontend**: Vanilla HTML, CSS, JavaScript
 - **Server**: Express serving static files and API endpoints
@@ -41,9 +47,11 @@ Fully functional web application with:
 ```
 /
 ├── server.js                 # Express server with multer for image uploads
-├── proposalGenerator.js      # Word document generation matching template
+├── proposalGenerator.js      # Word document generation with custom fonts
 ├── public/
 │   └── index.html           # Frontend form with image upload
+├── attached_assets/
+│   └── roof-recharge-logo-new_1761941852214.png  # Company logo
 ├── package.json             # Dependencies
 └── replit.md                # Project documentation
 ```
@@ -55,28 +63,66 @@ Fully functional web application with:
    - Roof type, age, square footage
    - GoNano product selection (auto-selected based on age)
 
-2. **Aerial Image Upload**
+2. **Branding & Design**
+   - Company logo on cover page
+   - Custom font styling throughout
+   - Professional green color scheme (#2E8B57)
+   - Styled aerial image presentation
+
+3. **Aerial Image Upload**
    - Optional image upload for property photos
-   - Images embedded in Word document
+   - Images embedded in styled green bordered box
+   - Header: "Professional GoNano Application"
+   - Footer: "Extending Roof Life with Advanced Nanotechnology"
    - Accepts all common image formats
 
-3. **Pricing & Calculations**
+4. **Pricing & Calculations**
    - Configurable price per square foot
    - Installation costs
    - Replacement cost comparison
    - Automatic savings calculations
 
-4. **Professional Word Document**
+5. **Professional Word Document**
    Matches company template exactly with:
-   - Cover page with customer information
-   - Company profile and history
-   - Project description with aerial image
-   - Detailed product overview and features
-   - Investment & savings analysis
-   - Authorization to proceed section
-   - Complete terms and conditions
+   
+   **Page 1 - Cover Page:**
+   - Company logo
+   - "PROJECT PROPOSAL" title (Montserrat Bold 42)
+   - "GoNano Roof Protection System" subtitle
+   - Customer information in bordered box
+   - Proposal date
+   - Styled aerial image presentation
 
-5. **Product Information**
+   **Page 2 - Company Profile:**
+   - Company overview
+   - Our Experience
+   - Why We're Different
+   - Our Service Area
+   - Our Commitment
+
+   **Page 3 - Project Description:**
+   - Property details table
+   - Proposed GoNano solution
+   - Product overview and features
+   - KEY FEATURES section
+   - PROVEN RESULTS section
+
+   **Page 4 - Investment & Savings:**
+   - Application costs
+   - Installation costs
+   - Total investment
+   - Cost comparison with replacement
+   - Savings calculation
+
+   **Page 5 - Authorization:**
+   - Signature lines for customer
+   - Representative signature
+   - Date fields
+
+   **Page 6 - Terms and Conditions:**
+   - 7 comprehensive sections
+
+6. **Product Information**
    - GoNano Shingle Saver (0-7 years) - Advanced protection
    - GoNano Revive (8-15 years) - Rejuvenation system
    - GoNano BioBoost (15+ years) - Restoration with bio-resistance
@@ -87,52 +133,23 @@ Fully functional web application with:
    - PROVEN RESULTS section
    - Product-specific notes
 
-### Template Sections
+### Typography
 
-1. **Cover Page**
-   - Project proposal heading
-   - Customer details
-   - Date
-   - Professional tagline
+**Custom Fonts:**
+- **Titles**: Montserrat Bold, size 42pt
+  - Used for: "PROJECT PROPOSAL", section headings like "COMPANY PROFILE", "PROJECT DESCRIPTION"
+- **Headings**: Montserrat, size 36pt
+  - Used for: subsection headings, "Your Savings" callouts
+- **Body Text**: Open Sans, size 16pt
+  - Used for: all paragraph text, descriptions, table content
 
-2. **Company Profile**
-   - Company overview
-   - Our Experience
-   - Why We're Different
-   - Our Service Area
-   - Our Commitment
+**Note**: Fonts are specified in the document. Microsoft Word will use these fonts if installed on the system, or substitute similar fonts if not available.
 
-3. **Project Description**
-   - Property details table
-   - Aerial image (when uploaded)
-   - Proposed GoNano solution
-
-4. **Product Overview**
-   - Product description
-   - KEY FEATURES
-   - PROVEN RESULTS
-   - Additional notes
-
-5. **Investment & Savings Analysis**
-   - Application costs
-   - Installation costs
-   - Total investment
-   - Cost comparison with replacement
-   - Savings calculation
-
-6. **Authorization to Proceed**
-   - Signature lines for customer
-   - Representative signature
-   - Date fields
-
-7. **Terms and Conditions**
-   - Scope of Work
-   - Warranty
-   - Payment Terms
-   - Weather Conditions
-   - Liability
-   - Environmental Safety
-   - Additional Fees
+### Color Scheme
+- **Primary Green**: #2E8B57 (Roof Recharge brand color)
+- **Light Green**: #E8F5E9 (table headers, image box background)
+- **Accent Green**: #4CAF50 (savings highlight)
+- **White**: #FFFFFF (text on green backgrounds)
 
 ### API Endpoints
 - `GET /` - Serves the main form interface
@@ -143,22 +160,33 @@ Fully functional web application with:
 
 ## Technical Details
 
+### Logo Handling
+- Logo loaded from `attached_assets/roof-recharge-logo-new_1761941852214.png`
+- Embedded at top of cover page at 400x80 pixels
+- High-quality PNG format
+
 ### Image Handling
 - Images uploaded via multipart form data
 - Stored in memory (not saved to disk)
 - Maximum file size: 10MB
-- Embedded in Word document at 500x350 pixels
-- If no image uploaded, placeholder text is shown
+- Embedded in Word document at 450x300 pixels
+- Styled with green bordered table cells
+- Header and footer text in green
 
 ### Document Generation
 - Uses docx library for Word document creation
+- Custom font specifications (Montserrat, Open Sans)
 - Proper paragraph formatting (no mixed text/children properties)
-- Professional color scheme (Roof Recharge green: #2E8B57)
+- Professional color scheme
 - Tables with shaded headers and formatted cells
+- Page breaks for section organization
 - Consistent spacing and typography
 
 ## User Preferences
 - Professional green branding (#2E8B57)
+- Custom fonts: Montserrat Bold 42 for titles, Montserrat 36 for headings, Open Sans 16 for body
 - Exact template matching for company consistency
+- Styled aerial image presentation
+- Company logo on cover page
 - One-click Word document generation with image
 - Automatic calculations and live preview

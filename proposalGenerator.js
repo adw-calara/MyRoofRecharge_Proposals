@@ -1,4 +1,6 @@
-const { Document, Packer, Paragraph, TextRun, AlignmentType, HeadingLevel, Table, TableRow, TableCell, WidthType, VerticalAlign, ImageRun } = require('docx');
+const { Document, Packer, Paragraph, TextRun, AlignmentType, HeadingLevel, Table, TableRow, TableCell, WidthType, VerticalAlign, ImageRun, BorderStyle, PageBreak } = require('docx');
+const fs = require('fs');
+const path = require('path');
 
 function formatCurrency(amount) {
     const value = parseFloat(amount);
@@ -102,20 +104,45 @@ async function generateProposal(data, aerialImage) {
     const costs = calculateCosts(data);
     const productInfo = getProductInfo(data.gonanoProduct);
     
-    const children = [
-        new Paragraph({
-            spacing: { after: 200 },
-            children: []
-        }),
-        
+    const logoPath = path.join(__dirname, 'attached_assets', 'roof-recharge-logo-new_1761941852214.png');
+    let logoBuffer;
+    try {
+        logoBuffer = fs.readFileSync(logoPath);
+    } catch (err) {
+        console.error('Logo not found:', err);
+        logoBuffer = null;
+    }
+    
+    const children = [];
+    
+    if (logoBuffer) {
+        children.push(
+            new Paragraph({
+                alignment: AlignmentType.CENTER,
+                spacing: { after: 300 },
+                children: [
+                    new ImageRun({
+                        data: logoBuffer,
+                        transformation: {
+                            width: 400,
+                            height: 80
+                        }
+                    })
+                ]
+            })
+        );
+    }
+    
+    children.push(
         new Paragraph({
             alignment: AlignmentType.CENTER,
-            spacing: { after: 100 },
+            spacing: { after: 200 },
             children: [
                 new TextRun({
                     text: "PROJECT PROPOSAL",
                     bold: true,
-                    size: 32
+                    size: 84,
+                    font: "Montserrat"
                 })
             ]
         }),
@@ -125,117 +152,247 @@ async function generateProposal(data, aerialImage) {
             spacing: { after: 400 },
             children: [
                 new TextRun({
-                    text: "GoNano Roof Protection System",
-                    size: 24
-                })
-            ]
-        }),
-        
-        new Paragraph({
-            spacing: { after: 200 },
-            children: []
-        }),
-        
-        new Paragraph({
-            alignment: AlignmentType.CENTER,
-            spacing: { after: 100 },
-            children: [
+                    text: "GoNano",
+                    size: 48,
+                    color: "2E8B57",
+                    font: "Montserrat"
+                }),
                 new TextRun({
-                    text: "Prepared For",
-                    bold: true,
-                    size: 22
+                    text: " Roof Protection System",
+                    size: 48,
+                    font: "Montserrat"
+                })
+            ]
+        })
+    );
+    
+    children.push(
+        new Table({
+            width: { size: 80, type: WidthType.PERCENTAGE },
+            alignment: AlignmentType.CENTER,
+            margins: {
+                top: 100,
+                bottom: 100,
+                left: 100,
+                right: 100
+            },
+            borders: {
+                top: { style: BorderStyle.SINGLE, size: 1, color: "000000" },
+                bottom: { style: BorderStyle.SINGLE, size: 1, color: "000000" },
+                left: { style: BorderStyle.SINGLE, size: 1, color: "000000" },
+                right: { style: BorderStyle.SINGLE, size: 1, color: "000000" }
+            },
+            rows: [
+                new TableRow({
+                    children: [
+                        new TableCell({
+                            children: [
+                                new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    spacing: { before: 100, after: 100 },
+                                    children: [
+                                        new TextRun({
+                                            text: "Prepared For",
+                                            bold: true,
+                                            size: 28,
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                }),
+                                new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    spacing: { after: 50 },
+                                    children: [
+                                        new TextRun({
+                                            text: data.customerName || '',
+                                            size: 32,
+                                            bold: true,
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                }),
+                                new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    spacing: { after: 50 },
+                                    children: [
+                                        new TextRun({
+                                            text: data.customerAddress || '',
+                                            size: 28,
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                }),
+                                new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    spacing: { after: 100 },
+                                    children: [
+                                        new TextRun({
+                                            text: data.customerCity || '',
+                                            size: 28,
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                })
+                            ]
+                        })
+                    ]
                 })
             ]
         }),
         
         new Paragraph({
             alignment: AlignmentType.CENTER,
-            spacing: { after: 50 },
-            children: [
-                new TextRun({
-                    text: data.customerName || '',
-                    size: 20
-                })
-            ]
-        }),
-        
-        new Paragraph({
-            alignment: AlignmentType.CENTER,
-            spacing: { after: 50 },
-            children: [
-                new TextRun({
-                    text: data.customerAddress || '',
-                    size: 20
-                })
-            ]
-        }),
-        
-        new Paragraph({
-            alignment: AlignmentType.CENTER,
-            spacing: { after: 400 },
-            children: [
-                new TextRun({
-                    text: data.customerCity || '',
-                    size: 20
-                })
-            ]
-        }),
-        
-        new Paragraph({
-            spacing: { after: 200 },
-            children: []
-        }),
-        
-        new Paragraph({
-            alignment: AlignmentType.CENTER,
-            spacing: { after: 400 },
+            spacing: { before: 300, after: 400 },
             children: [
                 new TextRun({
                     text: `Date: ${formatDate(data.proposalDate)}`,
-                    bold: true,
-                    size: 20
+                    size: 32,
+                    font: "Open Sans"
                 })
             ]
-        }),
-        
-        new Paragraph({
-            spacing: { after: 200 },
-            children: []
-        }),
-        
-        new Paragraph({
+        })
+    );
+    
+    children.push(
+        new Table({
+            width: { size: 85, type: WidthType.PERCENTAGE },
             alignment: AlignmentType.CENTER,
-            spacing: { after: 100 },
-            children: [
-                new TextRun({
-                    text: "Professional GoNano Application",
-                    bold: true,
-                    size: 28
+            margins: {
+                top: 200,
+                bottom: 200,
+                left: 200,
+                right: 200
+            },
+            borders: {
+                top: { style: BorderStyle.SINGLE, size: 6, color: "2E8B57" },
+                bottom: { style: BorderStyle.SINGLE, size: 6, color: "2E8B57" },
+                left: { style: BorderStyle.SINGLE, size: 6, color: "2E8B57" },
+                right: { style: BorderStyle.SINGLE, size: 6, color: "2E8B57" }
+            },
+            rows: [
+                new TableRow({
+                    children: [
+                        new TableCell({
+                            shading: { fill: "E8F5E9" },
+                            children: [
+                                new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    spacing: { before: 150, after: 150 },
+                                    children: [
+                                        new TextRun({
+                                            text: "Professional ",
+                                            size: 28,
+                                            color: "2E8B57",
+                                            font: "Open Sans"
+                                        }),
+                                        new TextRun({
+                                            text: "GoNano",
+                                            size: 28,
+                                            color: "2E8B57",
+                                            bold: true,
+                                            font: "Open Sans"
+                                        }),
+                                        new TextRun({
+                                            text: " Application",
+                                            size: 28,
+                                            color: "2E8B57",
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                })
+                            ]
+                        })
+                    ]
                 })
             ]
-        }),
-        
-        new Paragraph({
+        })
+    );
+    
+    if (aerialImage && aerialImage.buffer) {
+        children.push(
+            new Paragraph({
+                alignment: AlignmentType.CENTER,
+                spacing: { after: 0 },
+                children: [
+                    new ImageRun({
+                        data: aerialImage.buffer,
+                        transformation: {
+                            width: 450,
+                            height: 300
+                        }
+                    })
+                ]
+            })
+        );
+    }
+    
+    children.push(
+        new Table({
+            width: { size: 85, type: WidthType.PERCENTAGE },
             alignment: AlignmentType.CENTER,
-            spacing: { after: 600 },
-            children: [
-                new TextRun({
-                    text: "Extending Roof Life with Advanced Nanotechnology",
-                    italics: true,
-                    size: 22
+            margins: {
+                top: 200,
+                bottom: 200,
+                left: 200,
+                right: 200
+            },
+            borders: {
+                top: { style: BorderStyle.SINGLE, size: 6, color: "2E8B57" },
+                bottom: { style: BorderStyle.SINGLE, size: 6, color: "2E8B57" },
+                left: { style: BorderStyle.SINGLE, size: 6, color: "2E8B57" },
+                right: { style: BorderStyle.SINGLE, size: 6, color: "2E8B57" }
+            },
+            rows: [
+                new TableRow({
+                    children: [
+                        new TableCell({
+                            shading: { fill: "E8F5E9" },
+                            children: [
+                                new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    spacing: { before: 150, after: 150 },
+                                    children: [
+                                        new TextRun({
+                                            text: "Extending Roof Life with Advanced Nanotechnology",
+                                            size: 24,
+                                            color: "2E8B57",
+                                            italics: true,
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                })
+                            ]
+                        })
+                    ]
                 })
             ]
         }),
         
         new Paragraph({
-            heading: HeadingLevel.HEADING_1,
-            spacing: { before: 400, after: 200 },
+            children: [new PageBreak()]
+        }),
+        
+        new Paragraph({
+            spacing: { before: 400, after: 300 },
             children: [
                 new TextRun({
                     text: "COMPANY PROFILE",
                     bold: true,
-                    size: 28,
-                    color: "2E8B57"
+                    size: 72,
+                    color: "2E8B57",
+                    font: "Montserrat"
+                })
+            ]
+        }),
+        
+        new Paragraph({
+            spacing: { after: 400 },
+            children: [
+                new TextRun({
+                    text: "Transforming roof protection with cutting-edge nanotechnology solutions across the Mid-Atlantic United States",
+                    italics: true,
+                    size: 32,
+                    font: "Open Sans"
                 })
             ]
         }),
@@ -244,106 +401,151 @@ async function generateProposal(data, aerialImage) {
             spacing: { after: 300 },
             children: [
                 new TextRun({
-                    text: "Transforming roof protection with cutting-edge nanotechnology solutions across the Mid-Atlantic United States",
-                    italics: true,
-                    size: 22
+                    text: "We believe that every property deserves protection that lasts. Our journey began with a commitment to bringing innovative nanotechnology solutions to property owners who demand excellence and longevity from their roofing investments.",
+                    size: 32,
+                    font: "Open Sans"
                 })
             ]
         }),
         
         new Paragraph({
-            text: "We believe that every property deserves protection that lasts. Our journey began with a commitment to bringing innovative nanotechnology solutions to property owners who demand excellence and longevity from their roofing investments.",
-            spacing: { after: 300 }
-        }),
-        
-        new Paragraph({
-            spacing: { after: 150 },
+            spacing: { before: 200, after: 150 },
             children: [
                 new TextRun({
                     text: "Our Experience",
                     bold: true,
-                    size: 24
+                    size: 72,
+                    font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            text: "Green Energy Construction & Consulting has over 15 years of experience developing and installing thousands of renewable energy projects for home and business owners. It is through this experience we recognized a clear need and our Roof Recharge division was born.",
-            spacing: { after: 300 }
+            spacing: { after: 300 },
+            children: [
+                new TextRun({
+                    text: "Green Energy Construction & Consulting has over 15 years of experience developing and installing thousands of renewable energy projects for home and business owners. It is through this experience we recognized a clear need and our Roof Recharge division was born.",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            spacing: { after: 150 },
+            spacing: { before: 200, after: 150 },
             children: [
                 new TextRun({
                     text: "Why We're Different",
                     bold: true,
-                    size: 24
+                    size: 72,
+                    font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            text: "We recognized that traditional roofing treatments offered short-term protection at best. We partnered with GoNano to deliver cutting-edge nanotechnology solutions that strengthen durability and extend roof lifespan by decades, providing our customers with true long-term value.",
-            spacing: { after: 300 }
+            spacing: { after: 300 },
+            children: [
+                new TextRun({
+                    text: "We recognized that traditional roofing treatments offered short-term protection at best. We partnered with GoNano to deliver cutting-edge nanotechnology solutions that strengthen durability and extend roof lifespan by decades, providing our customers with true long-term value.",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            spacing: { after: 150 },
+            spacing: { before: 200, after: 150 },
             children: [
                 new TextRun({
                     text: "Our Service Area",
                     bold: true,
-                    size: 24
+                    size: 72,
+                    font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            text: "Today, we serve property owners throughout the Mid-Atlantic United States, combining our construction expertise with revolutionary GoNano technology to protect investments and reduce maintenance costs for years to come.",
-            spacing: { after: 300 }
+            spacing: { after: 300 },
+            children: [
+                new TextRun({
+                    text: "Today, we serve property owners throughout the Mid-Atlantic United States, combining our construction expertise with revolutionary GoNano technology to protect investments and reduce maintenance costs for years to come.",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            spacing: { after: 150 },
+            spacing: { before: 200, after: 150 },
             children: [
                 new TextRun({
                     text: "Our Commitment",
                     bold: true,
-                    size: 24
+                    size: 72,
+                    font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            text: "✓ Authorized GoNano Installer - Fully certified and trained in advanced application techniques",
-            spacing: { after: 100 }
+            spacing: { after: 100 },
+            children: [
+                new TextRun({
+                    text: "✓ Authorized GoNano Installer - Fully certified and trained in advanced application techniques",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            text: "✓ Proven Track Record - Thousands of successful installations over 15+ years",
-            spacing: { after: 100 }
+            spacing: { after: 100 },
+            children: [
+                new TextRun({
+                    text: "✓ Proven Track Record - Thousands of successful installations over 15+ years",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            text: "✓ Long-Term Protection - Solutions that extend roof life by decades, not just years",
-            spacing: { after: 100 }
+            spacing: { after: 100 },
+            children: [
+                new TextRun({
+                    text: "✓ Long-Term Protection - Solutions that extend roof life by decades, not just years",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            text: "✓ True Value - Cost-effective alternatives to premature roof replacement",
-            spacing: { after: 600 }
+            spacing: { after: 600 },
+            children: [
+                new TextRun({
+                    text: "✓ True Value - Cost-effective alternatives to premature roof replacement",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            heading: HeadingLevel.HEADING_1,
-            spacing: { before: 400, after: 200 },
+            children: [new PageBreak()]
+        }),
+        
+        new Paragraph({
+            spacing: { before: 400, after: 300 },
             children: [
                 new TextRun({
                     text: "PROJECT DESCRIPTION",
                     bold: true,
-                    size: 28,
-                    color: "2E8B57"
+                    size: 72,
+                    color: "2E8B57",
+                    font: "Montserrat"
                 })
             ]
         }),
@@ -356,12 +558,23 @@ async function generateProposal(data, aerialImage) {
                         new TableCell({
                             width: { size: 35, type: WidthType.PERCENTAGE },
                             children: [new Paragraph({ 
-                                children: [new TextRun({ text: "Property Address", bold: true })]
+                                children: [new TextRun({ 
+                                    text: "Property Address", 
+                                    bold: true,
+                                    size: 32,
+                                    font: "Open Sans"
+                                })]
                             })]
                         }),
                         new TableCell({
                             width: { size: 65, type: WidthType.PERCENTAGE },
-                            children: [new Paragraph({ text: `${data.customerAddress}, ${data.customerCity}` })]
+                            children: [new Paragraph({ 
+                                children: [new TextRun({ 
+                                    text: `${data.customerAddress}, ${data.customerCity}`,
+                                    size: 32,
+                                    font: "Open Sans"
+                                })]
+                            })]
                         })
                     ]
                 }),
@@ -369,11 +582,22 @@ async function generateProposal(data, aerialImage) {
                     children: [
                         new TableCell({
                             children: [new Paragraph({ 
-                                children: [new TextRun({ text: "Roof Area", bold: true })]
+                                children: [new TextRun({ 
+                                    text: "Roof Area", 
+                                    bold: true,
+                                    size: 32,
+                                    font: "Open Sans"
+                                })]
                             })]
                         }),
                         new TableCell({
-                            children: [new Paragraph({ text: `${data.squareFeet} sq ft` })]
+                            children: [new Paragraph({ 
+                                children: [new TextRun({ 
+                                    text: `${data.squareFeet} sq ft`,
+                                    size: 32,
+                                    font: "Open Sans"
+                                })]
+                            })]
                         })
                     ]
                 }),
@@ -381,11 +605,22 @@ async function generateProposal(data, aerialImage) {
                     children: [
                         new TableCell({
                             children: [new Paragraph({ 
-                                children: [new TextRun({ text: "Roof Type", bold: true })]
+                                children: [new TextRun({ 
+                                    text: "Roof Type", 
+                                    bold: true,
+                                    size: 32,
+                                    font: "Open Sans"
+                                })]
                             })]
                         }),
                         new TableCell({
-                            children: [new Paragraph({ text: data.roofType || '' })]
+                            children: [new Paragraph({ 
+                                children: [new TextRun({ 
+                                    text: data.roofType || '',
+                                    size: 32,
+                                    font: "Open Sans"
+                                })]
+                            })]
                         })
                     ]
                 }),
@@ -393,11 +628,22 @@ async function generateProposal(data, aerialImage) {
                     children: [
                         new TableCell({
                             children: [new Paragraph({ 
-                                children: [new TextRun({ text: "Roof Age", bold: true })]
+                                children: [new TextRun({ 
+                                    text: "Roof Age", 
+                                    bold: true,
+                                    size: 32,
+                                    font: "Open Sans"
+                                })]
                             })]
                         }),
                         new TableCell({
-                            children: [new Paragraph({ text: `${data.roofAge} years` })]
+                            children: [new Paragraph({ 
+                                children: [new TextRun({ 
+                                    text: `${data.roofAge} years`,
+                                    size: 32,
+                                    font: "Open Sans"
+                                })]
+                            })]
                         })
                     ]
                 })
@@ -405,53 +651,26 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            spacing: { after: 300 },
-            children: []
-        })
-    ];
-    
-    if (aerialImage && aerialImage.buffer) {
-        children.push(
-            new Paragraph({
-                alignment: AlignmentType.CENTER,
-                spacing: { after: 300 },
-                children: [
-                    new ImageRun({
-                        data: aerialImage.buffer,
-                        transformation: {
-                            width: 500,
-                            height: 350
-                        }
-                    })
-                ]
-            })
-        );
-    } else {
-        children.push(
-            new Paragraph({
-                text: "[Aerial image will be inserted here]",
-                alignment: AlignmentType.CENTER,
-                spacing: { after: 300 },
-                italics: true
-            })
-        );
-    }
-    
-    children.push(
-        new Paragraph({
-            spacing: { after: 150 },
+            spacing: { before: 400, after: 200 },
             children: [
                 new TextRun({
                     text: "Proposed GoNano Solution",
                     bold: true,
-                    size: 24
+                    size: 72,
+                    font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            text: "Based on our inspection and analysis of your roof, we recommend:",
-            spacing: { after: 200 }
+            spacing: { after: 200 },
+            children: [
+                new TextRun({
+                    text: "Based on our inspection and analysis of your roof, we recommend:",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
@@ -460,48 +679,57 @@ async function generateProposal(data, aerialImage) {
                 new TextRun({
                     text: data.gonanoProduct || '',
                     bold: true,
-                    size: 26,
-                    color: "2E8B57"
+                    size: 72,
+                    color: "2E8B57",
+                    font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            text: productInfo.subtitle,
             spacing: { after: 400 },
-            italics: true
+            children: [
+                new TextRun({
+                    text: productInfo.subtitle,
+                    italics: true,
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            spacing: { after: 200 },
-            children: []
-        }),
-        
-        new Paragraph({
-            heading: HeadingLevel.HEADING_2,
-            spacing: { before: 200, after: 200 },
+            spacing: { before: 300, after: 200 },
             children: [
                 new TextRun({
                     text: "Product Overview",
                     bold: true,
-                    size: 24
+                    size: 72,
+                    font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            text: productInfo.overview,
-            spacing: { after: 300 }
+            spacing: { after: 300 },
+            children: [
+                new TextRun({
+                    text: productInfo.overview,
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            spacing: { after: 200 },
+            spacing: { before: 200, after: 200 },
             children: [
                 new TextRun({
                     text: "KEY FEATURES",
                     bold: true,
-                    size: 22,
-                    color: "2E8B57"
+                    size: 72,
+                    color: "2E8B57",
+                    font: "Montserrat"
                 })
             ]
         })
@@ -510,15 +738,19 @@ async function generateProposal(data, aerialImage) {
     productInfo.features.forEach(feature => {
         children.push(
             new Paragraph({
-                spacing: { after: 100 },
+                spacing: { after: 150 },
                 children: [
                     new TextRun({
                         text: feature.icon,
                         bold: true,
-                        color: "2E8B57"
+                        color: "2E8B57",
+                        size: 32,
+                        font: "Open Sans"
                     }),
                     new TextRun({
                         text: `\n${feature.description}`,
+                        size: 32,
+                        font: "Open Sans"
                     })
                 ]
             })
@@ -527,18 +759,14 @@ async function generateProposal(data, aerialImage) {
     
     children.push(
         new Paragraph({
-            spacing: { after: 200 },
-            children: []
-        }),
-        
-        new Paragraph({
-            spacing: { after: 200 },
+            spacing: { before: 300, after: 200 },
             children: [
                 new TextRun({
                     text: "PROVEN RESULTS",
                     bold: true,
-                    size: 22,
-                    color: "2E8B57"
+                    size: 72,
+                    color: "2E8B57",
+                    font: "Montserrat"
                 })
             ]
         })
@@ -547,45 +775,49 @@ async function generateProposal(data, aerialImage) {
     productInfo.results.forEach(result => {
         children.push(
             new Paragraph({
-                text: result,
-                spacing: { after: 100 }
+                spacing: { after: 100 },
+                children: [
+                    new TextRun({
+                        text: result,
+                        size: 32,
+                        font: "Open Sans"
+                    })
+                ]
             })
         );
     });
     
     children.push(
         new Paragraph({
-            spacing: { after: 200 },
-            children: []
-        }),
-        
-        new Paragraph({
-            spacing: { after: 600 },
+            spacing: { before: 300, after: 600 },
             children: [
                 new TextRun({
                     text: "Additional Notes: ",
-                    bold: true
+                    bold: true,
+                    size: 32,
+                    font: "Open Sans"
                 }),
                 new TextRun({
-                    text: productInfo.notes
+                    text: productInfo.notes,
+                    size: 32,
+                    font: "Open Sans"
                 })
             ]
         }),
         
         new Paragraph({
-            spacing: { after: 200 },
-            children: []
+            children: [new PageBreak()]
         }),
         
         new Paragraph({
-            heading: HeadingLevel.HEADING_1,
-            spacing: { before: 400, after: 200 },
+            spacing: { before: 400, after: 300 },
             children: [
                 new TextRun({
                     text: "INVESTMENT & SAVINGS ANALYSIS",
                     bold: true,
-                    size: 28,
-                    color: "2E8B57"
+                    size: 72,
+                    color: "2E8B57",
+                    font: "Montserrat"
                 })
             ]
         }),
@@ -597,38 +829,28 @@ async function generateProposal(data, aerialImage) {
                     children: [
                         new TableCell({
                             width: { size: 70, type: WidthType.PERCENTAGE },
+                            shading: { fill: "E8F5E9" },
                             children: [new Paragraph({ 
-                                children: [new TextRun({ text: "Description", bold: true })]
-                            })],
-                            shading: { fill: "E8F5E9" }
+                                children: [new TextRun({ 
+                                    text: "Description", 
+                                    bold: true,
+                                    size: 32,
+                                    font: "Open Sans"
+                                })]
+                            })]
                         }),
                         new TableCell({
                             width: { size: 30, type: WidthType.PERCENTAGE },
+                            shading: { fill: "E8F5E9" },
                             children: [new Paragraph({ 
                                 alignment: AlignmentType.RIGHT,
-                                children: [new TextRun({ text: "Amount", bold: true })]
-                            })],
-                            shading: { fill: "E8F5E9" }
-                        })
-                    ]
-                }),
-                new TableRow({
-                    children: [
-                        new TableCell({
-                            children: [new Paragraph({ text: `GoNano Saver Application (${data.squareFeet} sq ft)` })]
-                        }),
-                        new TableCell({
-                            children: [new Paragraph({ text: formatCurrency(costs.applicationCost), alignment: AlignmentType.RIGHT })]
-                        })
-                    ]
-                }),
-                new TableRow({
-                    children: [
-                        new TableCell({
-                            children: [new Paragraph({ text: "Professional Installation" })]
-                        }),
-                        new TableCell({
-                            children: [new Paragraph({ text: formatCurrency(costs.installationCost), alignment: AlignmentType.RIGHT })]
+                                children: [new TextRun({ 
+                                    text: "Amount", 
+                                    bold: true,
+                                    size: 32,
+                                    font: "Open Sans"
+                                })]
+                            })]
                         })
                     ]
                 }),
@@ -636,22 +858,76 @@ async function generateProposal(data, aerialImage) {
                     children: [
                         new TableCell({
                             children: [new Paragraph({ 
-                                children: [new TextRun({ text: "Total Investment", bold: true })]
-                            })],
-                            shading: { fill: "2E8B57" }
+                                children: [new TextRun({ 
+                                    text: `GoNano Saver Application (${data.squareFeet} sq ft)`,
+                                    size: 32,
+                                    font: "Open Sans"
+                                })]
+                            })]
                         }),
                         new TableCell({
+                            children: [new Paragraph({ 
+                                alignment: AlignmentType.RIGHT,
+                                children: [new TextRun({ 
+                                    text: formatCurrency(costs.applicationCost),
+                                    size: 32,
+                                    font: "Open Sans"
+                                })]
+                            })]
+                        })
+                    ]
+                }),
+                new TableRow({
+                    children: [
+                        new TableCell({
+                            children: [new Paragraph({ 
+                                children: [new TextRun({ 
+                                    text: "Professional Installation",
+                                    size: 32,
+                                    font: "Open Sans"
+                                })]
+                            })]
+                        }),
+                        new TableCell({
+                            children: [new Paragraph({ 
+                                alignment: AlignmentType.RIGHT,
+                                children: [new TextRun({ 
+                                    text: formatCurrency(costs.installationCost),
+                                    size: 32,
+                                    font: "Open Sans"
+                                })]
+                            })]
+                        })
+                    ]
+                }),
+                new TableRow({
+                    children: [
+                        new TableCell({
+                            shading: { fill: "2E8B57" },
+                            children: [new Paragraph({ 
+                                children: [new TextRun({ 
+                                    text: "Total Investment", 
+                                    bold: true,
+                                    size: 32,
+                                    color: "FFFFFF",
+                                    font: "Open Sans"
+                                })]
+                            })]
+                        }),
+                        new TableCell({
+                            shading: { fill: "2E8B57" },
                             children: [new Paragraph({ 
                                 alignment: AlignmentType.RIGHT,
                                 children: [
                                     new TextRun({
                                         text: formatCurrency(costs.totalCost),
                                         bold: true,
-                                        color: "FFFFFF"
+                                        size: 32,
+                                        color: "FFFFFF",
+                                        font: "Open Sans"
                                     })
                                 ]
-                            })],
-                            shading: { fill: "2E8B57" }
+                            })]
                         })
                     ]
                 })
@@ -659,17 +935,13 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            spacing: { after: 400 },
-            children: []
-        }),
-        
-        new Paragraph({
-            spacing: { after: 200 },
+            spacing: { before: 400, after: 200 },
             children: [
                 new TextRun({
                     text: "Cost Comparison",
                     bold: true,
-                    size: 22
+                    size: 72,
+                    font: "Montserrat"
                 })
             ]
         }),
@@ -681,83 +953,104 @@ async function generateProposal(data, aerialImage) {
                     children: [
                         new TableCell({
                             width: { size: 70, type: WidthType.PERCENTAGE },
+                            shading: { fill: "FFE0E0" },
                             children: [
                                 new Paragraph({ 
-                                    children: [new TextRun({ text: "Full Roof Replacement", bold: true })]
+                                    children: [new TextRun({ 
+                                        text: "Full Roof Replacement", 
+                                        bold: true,
+                                        size: 32,
+                                        font: "Open Sans"
+                                    })]
                                 }),
                                 new Paragraph({ 
-                                    children: [new TextRun({ text: `(Typical cost: ${formatCurrency(data.replacementCostPerSqFt)}/sq ft)`, italics: true })]
+                                    children: [new TextRun({ 
+                                        text: `(Typical cost: ${formatCurrency(data.replacementCostPerSqFt)}/sq ft)`, 
+                                        italics: true,
+                                        size: 28,
+                                        font: "Open Sans"
+                                    })]
                                 })
-                            ],
-                            shading: { fill: "FFE0E0" }
+                            ]
                         }),
                         new TableCell({
                             width: { size: 30, type: WidthType.PERCENTAGE },
+                            shading: { fill: "FFE0E0" },
                             children: [new Paragraph({ 
                                 alignment: AlignmentType.RIGHT,
                                 children: [
                                     new TextRun({
                                         text: formatCurrency(costs.replacementCost),
                                         bold: true,
-                                        color: "B71C1C"
+                                        size: 32,
+                                        color: "B71C1C",
+                                        font: "Open Sans"
                                     })
                                 ]
-                            })],
-                            shading: { fill: "FFE0E0" }
+                            })]
                         })
                     ]
                 }),
                 new TableRow({
                     children: [
                         new TableCell({
+                            shading: { fill: "E0FFE0" },
                             children: [new Paragraph({ 
-                                children: [new TextRun({ text: "GoNano Protection", bold: true })]
-                            })],
-                            shading: { fill: "E0FFE0" }
+                                children: [new TextRun({ 
+                                    text: "GoNano Protection", 
+                                    bold: true,
+                                    size: 32,
+                                    font: "Open Sans"
+                                })]
+                            })]
                         }),
                         new TableCell({
+                            shading: { fill: "E0FFE0" },
                             children: [new Paragraph({ 
                                 alignment: AlignmentType.RIGHT,
                                 children: [
                                     new TextRun({
                                         text: formatCurrency(costs.totalCost),
                                         bold: true,
-                                        color: "2E8B57"
+                                        size: 32,
+                                        color: "2E8B57",
+                                        font: "Open Sans"
                                     })
                                 ]
-                            })],
-                            shading: { fill: "E0FFE0" }
+                            })]
                         })
                     ]
                 }),
                 new TableRow({
                     children: [
                         new TableCell({
+                            shading: { fill: "4CAF50" },
                             children: [new Paragraph({ 
                                 children: [
                                     new TextRun({
                                         text: "Your Savings:",
                                         bold: true,
-                                        size: 26,
-                                        color: "FFFFFF"
+                                        size: 36,
+                                        color: "FFFFFF",
+                                        font: "Montserrat"
                                     })
                                 ]
-                            })],
-                            shading: { fill: "4CAF50" }
+                            })]
                         }),
                         new TableCell({
+                            shading: { fill: "4CAF50" },
                             children: [new Paragraph({ 
                                 alignment: AlignmentType.RIGHT,
                                 children: [
                                     new TextRun({
                                         text: formatCurrency(costs.savingsAmount),
                                         bold: true,
-                                        size: 26,
-                                        color: "FFFFFF"
+                                        size: 36,
+                                        color: "FFFFFF",
+                                        font: "Montserrat"
                                     })
                                 ]
-                            })],
-                            shading: { fill: "4CAF50" }
+                            })]
                         })
                     ]
                 })
@@ -765,206 +1058,324 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            spacing: { after: 600 },
+            spacing: { before: 600 },
             children: []
         }),
         
         new Paragraph({
-            heading: HeadingLevel.HEADING_1,
-            spacing: { before: 400, after: 200 },
+            children: [new PageBreak()]
+        }),
+        
+        new Paragraph({
+            spacing: { before: 400, after: 300 },
             children: [
                 new TextRun({
                     text: "AUTHORIZATION TO PROCEED",
                     bold: true,
-                    size: 28,
-                    color: "2E8B57"
+                    size: 72,
+                    color: "2E8B57",
+                    font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            text: "By signing below, you authorize Roof Recharge by Green Energy Construction & Consulting to proceed with the GoNano application as outlined in this proposal.",
-            spacing: { after: 400 }
+            spacing: { after: 400 },
+            children: [
+                new TextRun({
+                    text: "By signing below, you authorize Roof Recharge by Green Energy Construction & Consulting to proceed with the GoNano application as outlined in this proposal.",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            text: "_______________________________",
-            spacing: { after: 50 }
+            spacing: { after: 50 },
+            children: [
+                new TextRun({
+                    text: "_______________________________",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            text: "Customer Signature",
-            spacing: { after: 300 }
+            spacing: { after: 300 },
+            children: [
+                new TextRun({
+                    text: "Customer Signature",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            text: "_______________________________",
-            spacing: { after: 50 }
+            spacing: { after: 50 },
+            children: [
+                new TextRun({
+                    text: "_______________________________",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            text: "Customer Name (Print)",
-            spacing: { after: 300 }
+            spacing: { after: 300 },
+            children: [
+                new TextRun({
+                    text: "Customer Name (Print)",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            text: "_______________________________",
-            spacing: { after: 50 }
+            spacing: { after: 50 },
+            children: [
+                new TextRun({
+                    text: "_______________________________",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            text: "Date",
-            spacing: { after: 400 }
+            spacing: { after: 400 },
+            children: [
+                new TextRun({
+                    text: "Date",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            text: "_______________________________",
-            spacing: { after: 50 }
+            spacing: { after: 50 },
+            children: [
+                new TextRun({
+                    text: "_______________________________",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            text: data.repName || 'Jennifer Martinez',
-            spacing: { after: 300 }
+            spacing: { after: 300 },
+            children: [
+                new TextRun({
+                    text: data.repName || 'Jennifer Martinez',
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            text: "_______________________________",
-            spacing: { after: 50 }
+            spacing: { after: 50 },
+            children: [
+                new TextRun({
+                    text: "_______________________________",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            text: "Date",
-            spacing: { after: 600 }
+            spacing: { after: 600 },
+            children: [
+                new TextRun({
+                    text: "Date",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            spacing: { after: 200 },
-            children: []
+            children: [new PageBreak()]
         }),
         
         new Paragraph({
-            heading: HeadingLevel.HEADING_1,
-            spacing: { before: 400, after: 200 },
+            spacing: { before: 400, after: 300 },
             children: [
                 new TextRun({
                     text: "TERMS AND CONDITIONS",
                     bold: true,
-                    size: 28,
-                    color: "2E8B57"
+                    size: 72,
+                    color: "2E8B57",
+                    font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            spacing: { after: 100 },
+            spacing: { before: 200, after: 150 },
             children: [
                 new TextRun({
                     text: "1. SCOPE OF WORK",
                     bold: true,
-                    size: 20
+                    size: 72,
+                    font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            text: "Roof Recharge will apply GoNano nanotechnology protection to the specified roof area. This includes roof inspection, cleaning as necessary, and professional application of the GoNano product.",
-            spacing: { after: 300 }
+            spacing: { after: 300 },
+            children: [
+                new TextRun({
+                    text: "Roof Recharge will apply GoNano nanotechnology protection to the specified roof area. This includes roof inspection, cleaning as necessary, and professional application of the GoNano product.",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            spacing: { after: 100 },
+            spacing: { before: 200, after: 150 },
             children: [
                 new TextRun({
                     text: "2. WARRANTY",
                     bold: true,
-                    size: 20
+                    size: 72,
+                    font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            text: "GoNano products are warranted for 10-15 years depending on roof condition. This warranty covers the performance of the GoNano coating and does not void existing shingle manufacturer warranties.",
-            spacing: { after: 300 }
+            spacing: { after: 300 },
+            children: [
+                new TextRun({
+                    text: "GoNano products are warranted for 10-15 years depending on roof condition. This warranty covers the performance of the GoNano coating and does not void existing shingle manufacturer warranties.",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            spacing: { after: 100 },
+            spacing: { before: 200, after: 150 },
             children: [
                 new TextRun({
                     text: "3. PAYMENT TERMS",
                     bold: true,
-                    size: 20
+                    size: 72,
+                    font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            text: "Payment is due upon completion of application. We accept cash, check, and major credit cards.",
-            spacing: { after: 300 }
+            spacing: { after: 300 },
+            children: [
+                new TextRun({
+                    text: "Payment is due upon completion of application. We accept cash, check, and major credit cards.",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            spacing: { after: 100 },
+            spacing: { before: 200, after: 150 },
             children: [
                 new TextRun({
                     text: "4. WEATHER CONDITIONS",
                     bold: true,
-                    size: 20
+                    size: 72,
+                    font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            text: "Application requires dry conditions. If weather prevents application, we will reschedule at the earliest convenient time.",
-            spacing: { after: 300 }
+            spacing: { after: 300 },
+            children: [
+                new TextRun({
+                    text: "Application requires dry conditions. If weather prevents application, we will reschedule at the earliest convenient time.",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            spacing: { after: 100 },
+            spacing: { before: 200, after: 150 },
             children: [
                 new TextRun({
                     text: "5. LIABILITY",
                     bold: true,
-                    size: 20
+                    size: 72,
+                    font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            text: "Roof Recharge and GoNano are not responsible for pre-existing roof conditions or damage. Our inspection will identify any issues that may affect warranty coverage.",
-            spacing: { after: 300 }
+            spacing: { after: 300 },
+            children: [
+                new TextRun({
+                    text: "Roof Recharge and GoNano are not responsible for pre-existing roof conditions or damage. Our inspection will identify any issues that may affect warranty coverage.",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            spacing: { after: 100 },
+            spacing: { before: 200, after: 150 },
             children: [
                 new TextRun({
                     text: "6. ENVIRONMENTAL SAFETY",
                     bold: true,
-                    size: 20
+                    size: 72,
+                    font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            text: "GoNano products are environmentally friendly with no harmful chemicals. The products are safe for vegetation, animals, and humans.",
-            spacing: { after: 300 }
+            spacing: { after: 300 },
+            children: [
+                new TextRun({
+                    text: "GoNano products are environmentally friendly with no harmful chemicals. The products are safe for vegetation, animals, and humans.",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         }),
         
         new Paragraph({
-            spacing: { after: 100 },
+            spacing: { before: 200, after: 150 },
             children: [
                 new TextRun({
                     text: "7. ADDITIONAL FEES",
                     bold: true,
-                    size: 20
+                    size: 72,
+                    font: "Montserrat"
                 })
             ]
         }),
         
         new Paragraph({
-            text: "Additional fees may apply for structural changes, shingle replacements, or specialized installation equipment such as boom trucks. Any such additional costs will be discussed and approved before work proceeds.",
-            spacing: { after: 300 }
+            spacing: { after: 300 },
+            children: [
+                new TextRun({
+                    text: "Additional fees may apply for structural changes, shingle replacements, or specialized installation equipment such as boom trucks. Any such additional costs will be discussed and approved before work proceeds.",
+                    size: 32,
+                    font: "Open Sans"
+                })
+            ]
         })
     );
     
