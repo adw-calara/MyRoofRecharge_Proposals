@@ -248,9 +248,9 @@ Fully functional web application with:
 - Images uploaded via multipart form data
 - Stored in memory (not saved to disk)
 - Maximum file size: 10MB
-- Embedded in Word document at 450x300 pixels
-- Styled with green bordered table cells
-- Header and footer text in green
+- Embedded in Word document at 600x400 pixels (matches table width)
+- Professional centered presentation
+- Proper spacing for clean layout
 
 ### Product Images
 - All three products now have professional barrel images

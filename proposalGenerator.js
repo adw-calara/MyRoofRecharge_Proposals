@@ -634,8 +634,8 @@ async function generateProposal(data, aerialImage) {
                 new ImageRun({
                     data: aerialImage.buffer,
                     transformation: {
-                        width: 450,
-                        height: 300
+                        width: 600,
+                        height: 400
                     }
                 })
             ] : [
