@@ -126,6 +126,16 @@ async function generateProposal(data, aerialImage) {
         smallLogoBuffer = null;
     }
     
+    // Load GoNano logo for cover page
+    const gonanoLogoPath = path.join(__dirname, 'attached_assets', 'gonano-logo-dark_1761946062514.png');
+    let gonanoLogoBuffer;
+    try {
+        gonanoLogoBuffer = fs.readFileSync(gonanoLogoPath);
+    } catch (err) {
+        console.error('GoNano logo not found:', err);
+        gonanoLogoBuffer = null;
+    }
+    
     const children = [];
     
     if (logoBuffer) {
@@ -149,38 +159,45 @@ async function generateProposal(data, aerialImage) {
     children.push(
         new Paragraph({
             alignment: AlignmentType.CENTER,
-            spacing: { after: 100 },
+            spacing: { after: 200 },
             children: [
                 new TextRun({
                     text: "PROJECT PROPOSAL",
-                    bold: true,
-                    size: 32,
+                    size: 36,
                     color: "2E8B57",
                     font: "Montserrat"
                 })
             ]
-        }),
-        
+        })
+    );
+    
+    // Add GoNano logo
+    if (gonanoLogoBuffer) {
+        children.push(
+            new Paragraph({
+                alignment: AlignmentType.CENTER,
+                spacing: { after: 100 },
+                children: [
+                    new ImageRun({
+                        data: gonanoLogoBuffer,
+                        transformation: {
+                            width: 300,
+                            height: 80
+                        }
+                    })
+                ]
+            })
+        );
+    }
+    
+    children.push(
         new Paragraph({
             alignment: AlignmentType.CENTER,
-            spacing: { after: 50 },
-            children: [
-                new TextRun({
-                    text: "gonano",
-                    size: 36,
-                    bold: true,
-                    font: "Montserrat"
-                })
-            ]
-        }),
-        
-        new Paragraph({
-            alignment: AlignmentType.CENTER,
-            spacing: { after: 200 },
+            spacing: { after: 250 },
             children: [
                 new TextRun({
                     text: "Roof Protection System",
-                    size: 20,
+                    size: 22,
                     font: "Open Sans"
                 })
             ]
@@ -269,61 +286,6 @@ async function generateProposal(data, aerialImage) {
                     text: `Date: ${formatDate(data.proposalDate)}`,
                     size: 22,
                     font: "Open Sans"
-                })
-            ]
-        })
-    );
-    
-    children.push(
-        new Table({
-            width: { size: 85, type: WidthType.PERCENTAGE },
-            alignment: AlignmentType.CENTER,
-            margins: {
-                top: 200,
-                bottom: 200,
-                left: 200,
-                right: 200
-            },
-            borders: {
-                top: { style: BorderStyle.SINGLE, size: 6, color: "2E8B57" },
-                bottom: { style: BorderStyle.SINGLE, size: 6, color: "2E8B57" },
-                left: { style: BorderStyle.SINGLE, size: 6, color: "2E8B57" },
-                right: { style: BorderStyle.SINGLE, size: 6, color: "2E8B57" }
-            },
-            rows: [
-                new TableRow({
-                    children: [
-                        new TableCell({
-                            shading: { fill: "E8F5E9" },
-                            children: [
-                                new Paragraph({
-                                    alignment: AlignmentType.CENTER,
-                                    spacing: { before: 150, after: 150 },
-                                    children: [
-                                        new TextRun({
-                                            text: "Professional ",
-                                            size: 20,
-                                            color: "2E8B57",
-                                            font: "Open Sans"
-                                        }),
-                                        new TextRun({
-                                            text: "GoNano",
-                                            size: 20,
-                                            color: "2E8B57",
-                                            bold: true,
-                                            font: "Open Sans"
-                                        }),
-                                        new TextRun({
-                                            text: " Application",
-                                            size: 20,
-                                            color: "2E8B57",
-                                            font: "Open Sans"
-                                        })
-                                    ]
-                                })
-                            ]
-                        })
-                    ]
                 })
             ]
         })

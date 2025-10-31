@@ -71,6 +71,7 @@ Fully functional web application with:
 │   └── index.html           # Frontend form with image upload
 ├── attached_assets/
 │   ├── roof-recharge-logo-new_1761941852214.png                      # Company logo
+│   ├── gonano-logo-dark_1761946062514.png                            # GoNano logo for cover page
 │   ├── Shingle Saver mockup_1761943502086.png                        # Shingle Saver product
 │   ├── Revive label mockup_1761943502085.png                         # Revive product
 │   ├── Bio-boost mockup_1761943502078.png                            # BioBoost product
@@ -119,10 +120,10 @@ Fully functional web application with:
    Matches company template exactly with:
    
    **Page 1 - Cover Page:**
-   - Company logo (Roof Recharge)
-   - "PROJECT PROPOSAL" title in green (Montserrat Bold 32)
-   - "gonano" branding (Montserrat Bold 36)
-   - "Roof Protection System" subtitle (Open Sans 20)
+   - Company logo (Roof Recharge) at top
+   - "PROJECT PROPOSAL" title in green (Montserrat 36)
+   - GoNano logo with purple molecular icon (300x80 pixels)
+   - "Roof Protection System" subtitle (Open Sans 22)
    - Customer information in bordered box ("Prepared For" section)
    - Proposal date
    - Aerial image of property
