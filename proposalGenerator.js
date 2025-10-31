@@ -1782,80 +1782,19 @@ async function generateProposal(data, aerialImage) {
         })
     );
     
-    // Create footer with page number and logo centered
-    let footerChildren;
-    
-    if (smallLogoBuffer) {
-        footerChildren = [
-            new Table({
-                width: { size: 100, type: WidthType.PERCENTAGE },
-                alignment: AlignmentType.CENTER,
-                borders: {
-                    top: { style: BorderStyle.NONE },
-                    bottom: { style: BorderStyle.NONE },
-                    left: { style: BorderStyle.NONE },
-                    right: { style: BorderStyle.NONE },
-                    insideHorizontal: { style: BorderStyle.NONE },
-                    insideVertical: { style: BorderStyle.NONE }
-                },
-                rows: [
-                    new TableRow({
-                        children: [
-                            new TableCell({
-                                width: { size: 100, type: WidthType.PERCENTAGE },
-                                borders: {
-                                    top: { style: BorderStyle.NONE },
-                                    bottom: { style: BorderStyle.NONE },
-                                    left: { style: BorderStyle.NONE },
-                                    right: { style: BorderStyle.NONE }
-                                },
-                                children: [
-                                    new Paragraph({
-                                        alignment: AlignmentType.CENTER,
-                                        children: [
-                                            new ImageRun({
-                                                data: smallLogoBuffer,
-                                                transformation: {
-                                                    width: 40,
-                                                    height: 40
-                                                }
-                                            })
-                                        ]
-                                    }),
-                                    new Paragraph({
-                                        alignment: AlignmentType.CENTER,
-                                        spacing: { before: -380 },
-                                        children: [
-                                            new TextRun({
-                                                children: [PageNumber.CURRENT],
-                                                size: 18,
-                                                bold: true,
-                                                color: "FFFFFF",
-                                                font: "Open Sans"
-                                            })
-                                        ]
-                                    })
-                                ]
-                            })
-                        ]
-                    })
-                ]
-            })
-        ];
-    } else {
-        footerChildren = [
-            new Paragraph({
-                alignment: AlignmentType.CENTER,
-                children: [
-                    new TextRun({
-                        children: [PageNumber.CURRENT],
-                        size: 20,
-                        font: "Open Sans"
-                    })
-                ]
-            })
-        ];
-    }
+    // Create simple footer with page number centered
+    const footerChildren = [
+        new Paragraph({
+            alignment: AlignmentType.CENTER,
+            children: [
+                new TextRun({
+                    children: [PageNumber.CURRENT],
+                    size: 20,
+                    font: "Open Sans"
+                })
+            ]
+        })
+    ];
     
     const doc = new Document({
         sections: [{
