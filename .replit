@@ -35,4 +35,4 @@ channel = "stable-25_05"
 
 [deployment]
 deploymentTarget = "autoscale"
-run = ["node", "server.js"]
+run = ["bash", "-c", "node server.js"]
