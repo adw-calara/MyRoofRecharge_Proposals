@@ -14,8 +14,8 @@ function formatDate(dateString) {
 }
 
 function calculateCosts(data) {
-    const installCost = parseFloat(data.installationCost) || 0;
     const replacementPerSqFt = parseFloat(data.replacementCostPerSqFt) || 0;
+    const legacyInstallCost = parseFloat(data.installationCost) || 0; // For backward compatibility
     
     let normalizedRoofs = [];
     
@@ -25,6 +25,7 @@ function calculateCosts(data) {
         normalizedRoofs = data.roofs.map((roof, index) => {
             const sqft = parseFloat(roof.squareFeet) || 0;
             const pricePerSqFt = parseFloat(roof.pricePerSqFt) || 0;
+            const installCost = parseFloat(roof.installationCost) || 0;
             const applicationCost = sqft * pricePerSqFt;
             const replacementCost = sqft * replacementPerSqFt;
             
@@ -35,6 +36,7 @@ function calculateCosts(data) {
                 squareFeet: sqft,
                 gonanoProduct: roof.gonanoProduct || '',
                 pricePerSqFt: pricePerSqFt,
+                installationCost: installCost,
                 applicationCost: applicationCost,
                 replacementCost: replacementCost
             };
@@ -53,6 +55,7 @@ function calculateCosts(data) {
             squareFeet: sqft,
             gonanoProduct: data.gonanoProduct || '',
             pricePerSqFt: pricePerSqFt,
+            installationCost: legacyInstallCost,
             applicationCost: applicationCost,
             replacementCost: replacementCost
         }];
@@ -62,10 +65,12 @@ function calculateCosts(data) {
     const totals = normalizedRoofs.reduce((acc, roof) => ({
         totalSquareFeet: acc.totalSquareFeet + roof.squareFeet,
         totalApplicationCost: acc.totalApplicationCost + roof.applicationCost,
+        totalInstallationCost: acc.totalInstallationCost + roof.installationCost,
         totalReplacementCost: acc.totalReplacementCost + roof.replacementCost
     }), {
         totalSquareFeet: 0,
         totalApplicationCost: 0,
+        totalInstallationCost: 0,
         totalReplacementCost: 0
     });
     
@@ -75,9 +80,8 @@ function calculateCosts(data) {
     const service3Price = parseFloat(data.service3Price) || 0;
     const customServicesTotal = service1Price + service2Price + service3Price;
     
-    totals.installationCost = installCost;
     totals.customServicesTotal = customServicesTotal;
-    totals.totalCost = totals.totalApplicationCost + installCost + customServicesTotal;
+    totals.totalCost = totals.totalApplicationCost + totals.totalInstallationCost + customServicesTotal;
     totals.savingsAmount = totals.totalReplacementCost - totals.totalCost;
     
     return {
@@ -1345,9 +1349,11 @@ async function generateProposal(data, aerialImage) {
                 })
             );
             
-            // Per-roof application costs
+            // Per-roof application costs and installation costs
             costs.roofs.forEach(roof => {
                 const roofLabel = roof.label ? `${roof.label} ` : '';
+                
+                // Application cost
                 invRows.push(
                     new TableRow({
                         children: [
@@ -1373,34 +1379,34 @@ async function generateProposal(data, aerialImage) {
                         ]
                     })
                 );
+                
+                // Installation cost
+                invRows.push(
+                    new TableRow({
+                        children: [
+                            new TableCell({
+                                children: [new Paragraph({ 
+                                    children: [new TextRun({ 
+                                        text: `${roofLabel}Installation`,
+                                        size: 22,
+                                        font: "Open Sans"
+                                    })]
+                                })]
+                            }),
+                            new TableCell({
+                                children: [new Paragraph({ 
+                                    alignment: AlignmentType.RIGHT,
+                                    children: [new TextRun({ 
+                                        text: formatCurrency(roof.installationCost),
+                                        size: 22,
+                                        font: "Open Sans"
+                                    })]
+                                })]
+                            })
+                        ]
+                    })
+                );
             });
-            
-            // Installation cost
-            invRows.push(
-                new TableRow({
-                    children: [
-                        new TableCell({
-                            children: [new Paragraph({ 
-                                children: [new TextRun({ 
-                                    text: "Professional Installation",
-                                    size: 22,
-                                    font: "Open Sans"
-                                })]
-                            })]
-                        }),
-                        new TableCell({
-                            children: [new Paragraph({ 
-                                alignment: AlignmentType.RIGHT,
-                                children: [new TextRun({ 
-                                    text: formatCurrency(costs.totals.installationCost),
-                                    size: 22,
-                                    font: "Open Sans"
-                                })]
-                            })]
-                        })
-                    ]
-                })
-            );
             
             // Optional services
             if (costs.totals.customServicesTotal > 0) {

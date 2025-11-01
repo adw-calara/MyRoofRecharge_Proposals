@@ -31,7 +31,8 @@ app.post('/api/generate-proposal', upload.single('aerialImage'), async (req, res
                     ...roof,
                     roofAge: parseInt(roof.roofAge) || 0,
                     squareFeet: parseFloat(roof.squareFeet) || 0,
-                    pricePerSqFt: parseFloat(roof.pricePerSqFt) || 0
+                    pricePerSqFt: parseFloat(roof.pricePerSqFt) || 0,
+                    installationCost: parseFloat(roof.installationCost) || 0
                 }));
             } catch (e) {
                 console.error('Error parsing roofs:', e);
