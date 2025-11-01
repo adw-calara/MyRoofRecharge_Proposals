@@ -3,6 +3,11 @@
 ## Overview
 This web application generates professional Word document proposals for Green Energy Construction & Consulting's GoNano roof protection services. Its primary purpose is to streamline the sales process by creating branded, comprehensive proposals that precisely match the company's established template, including custom fonts, branding, and dynamic content. The system supports multi-roof proposals, aerial image integration, product-specific information, and automated cost calculations, ultimately aiming to enhance professionalism and efficiency in client presentations.
 
+## Recent Updates (November 1, 2025)
+- **Fixed roof replacement cost calculation**: Cost comparison now correctly displays total replacement cost for all roofs
+- **Moved Authorization to Proceed**: Authorization section now appears on the Investment & Savings page instead of a separate page
+- **Updated footer design**: All pages now display "myroofrecharge.com" in center and page number on the right side
+
 ## User Preferences
 - Professional green branding (#2E8B57)
 - Custom fonts optimized for single-page sections: Montserrat Bold 48 for titles, Montserrat 42 for headings, Open Sans 20 for body

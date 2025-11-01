@@ -1582,7 +1582,7 @@ async function generateProposal(data, aerialImage) {
                                 alignment: AlignmentType.RIGHT,
                                 children: [
                                     new TextRun({
-                                        text: formatCurrency(costs.totals.replacementCost),
+                                        text: formatCurrency(costs.totals.totalReplacementCost),
                                         bold: true,
                                         size: 22,
                                         color: "B71C1C",
@@ -1660,16 +1660,7 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            spacing: { before: 300 },
-            children: []
-        }),
-        
-        new Paragraph({
-            children: [new PageBreak()]
-        }),
-        
-        new Paragraph({
-            spacing: { before: 200, after: 300 },
+            spacing: { before: 300, after: 200 },
             children: [
                 new TextRun({
                     text: "AUTHORIZATION TO PROCEED",
@@ -1745,6 +1736,10 @@ async function generateProposal(data, aerialImage) {
                     font: "Open Sans"
                 })
             ]
+        }),
+        
+        new Paragraph({
+            children: [new PageBreak()]
         }),
         
         new Paragraph({
@@ -1981,15 +1976,74 @@ async function generateProposal(data, aerialImage) {
         })
     );
     
-    // Create simple footer with page number centered
+    // Create footer with website in center and page number on right
     const footerChildren = [
-        new Paragraph({
-            alignment: AlignmentType.CENTER,
-            children: [
-                new TextRun({
-                    children: [PageNumber.CURRENT],
-                    size: 20,
-                    font: "Open Sans"
+        new Table({
+            width: { size: 100, type: WidthType.PERCENTAGE },
+            borders: {
+                top: { style: BorderStyle.NONE },
+                bottom: { style: BorderStyle.NONE },
+                left: { style: BorderStyle.NONE },
+                right: { style: BorderStyle.NONE },
+                insideHorizontal: { style: BorderStyle.NONE },
+                insideVertical: { style: BorderStyle.NONE }
+            },
+            rows: [
+                new TableRow({
+                    children: [
+                        new TableCell({
+                            width: { size: 33, type: WidthType.PERCENTAGE },
+                            borders: {
+                                top: { style: BorderStyle.NONE },
+                                bottom: { style: BorderStyle.NONE },
+                                left: { style: BorderStyle.NONE },
+                                right: { style: BorderStyle.NONE }
+                            },
+                            children: [new Paragraph({ children: [] })]
+                        }),
+                        new TableCell({
+                            width: { size: 34, type: WidthType.PERCENTAGE },
+                            borders: {
+                                top: { style: BorderStyle.NONE },
+                                bottom: { style: BorderStyle.NONE },
+                                left: { style: BorderStyle.NONE },
+                                right: { style: BorderStyle.NONE }
+                            },
+                            children: [
+                                new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    children: [
+                                        new TextRun({
+                                            text: "myroofrecharge.com",
+                                            size: 20,
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                })
+                            ]
+                        }),
+                        new TableCell({
+                            width: { size: 33, type: WidthType.PERCENTAGE },
+                            borders: {
+                                top: { style: BorderStyle.NONE },
+                                bottom: { style: BorderStyle.NONE },
+                                left: { style: BorderStyle.NONE },
+                                right: { style: BorderStyle.NONE }
+                            },
+                            children: [
+                                new Paragraph({
+                                    alignment: AlignmentType.RIGHT,
+                                    children: [
+                                        new TextRun({
+                                            children: [PageNumber.CURRENT],
+                                            size: 20,
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                })
+                            ]
+                        })
+                    ]
                 })
             ]
         })
