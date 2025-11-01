@@ -7,6 +7,7 @@ This web application generates professional Word document proposals for Green En
 - **Fixed roof replacement cost calculation**: Cost comparison now correctly displays total replacement cost for all roofs
 - **Moved Authorization to Proceed**: Authorization section now appears on the Investment & Savings page instead of a separate page
 - **Updated footer design**: All pages now display "myroofrecharge.com" in center and page number on the right side
+- **Two-column Authorization layout**: Customer signature fields on left (Signature, Name, Date), Representative signature fields on right (Signature, Name, Date) - ensures entire Investment & Savings page with Authorization fits on one page
 
 ## User Preferences
 - Professional green branding (#2E8B57)

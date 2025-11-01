@@ -1683,116 +1683,162 @@ async function generateProposal(data, aerialImage) {
             ]
         }),
         
-        new Paragraph({
-            spacing: { after: 50 },
-            children: [
-                new TextRun({
-                    text: "_______________________________",
-                    size: 22,
-                    font: "Open Sans"
-                })
-            ]
-        }),
-        
-        new Paragraph({
-            spacing: { after: 150 },
-            children: [
-                new TextRun({
-                    text: "Customer Signature",
-                    size: 22,
-                    font: "Open Sans"
-                })
-            ]
-        }),
-        
-        new Paragraph({
-            spacing: { after: 50 },
-            children: [
-                new TextRun({
-                    text: "_______________________________",
-                    size: 22,
-                    font: "Open Sans"
-                })
-            ]
-        }),
-        
-        new Paragraph({
-            spacing: { after: 150 },
-            children: [
-                new TextRun({
-                    text: "Customer Name (Print)",
-                    size: 22,
-                    font: "Open Sans"
-                })
-            ]
-        }),
-        
-        new Paragraph({
-            spacing: { after: 50 },
-            children: [
-                new TextRun({
-                    text: "_______________________________",
-                    size: 22,
-                    font: "Open Sans"
-                })
-            ]
-        }),
-        
-        new Paragraph({
-            children: [new PageBreak()]
-        }),
-        
-        new Paragraph({
-            spacing: { after: 200 },
-            children: [
-                new TextRun({
-                    text: "Date",
-                    size: 22,
-                    font: "Open Sans"
-                })
-            ]
-        }),
-        
-        new Paragraph({
-            spacing: { after: 50 },
-            children: [
-                new TextRun({
-                    text: "_______________________________",
-                    size: 22,
-                    font: "Open Sans"
-                })
-            ]
-        }),
-        
-        new Paragraph({
-            spacing: { after: 150 },
-            children: [
-                new TextRun({
-                    text: data.repName || 'Jennifer Martinez',
-                    size: 22,
-                    font: "Open Sans"
-                })
-            ]
-        }),
-        
-        new Paragraph({
-            spacing: { after: 50 },
-            children: [
-                new TextRun({
-                    text: "_______________________________",
-                    size: 22,
-                    font: "Open Sans"
-                })
-            ]
-        }),
-        
-        new Paragraph({
-            spacing: { after: 300 },
-            children: [
-                new TextRun({
-                    text: "Date",
-                    size: 22,
-                    font: "Open Sans"
+        new Table({
+            width: { size: 100, type: WidthType.PERCENTAGE },
+            borders: {
+                top: { style: BorderStyle.NONE },
+                bottom: { style: BorderStyle.NONE },
+                left: { style: BorderStyle.NONE },
+                right: { style: BorderStyle.NONE },
+                insideHorizontal: { style: BorderStyle.NONE },
+                insideVertical: { style: BorderStyle.NONE }
+            },
+            rows: [
+                new TableRow({
+                    children: [
+                        new TableCell({
+                            width: { size: 50, type: WidthType.PERCENTAGE },
+                            borders: {
+                                top: { style: BorderStyle.NONE },
+                                bottom: { style: BorderStyle.NONE },
+                                left: { style: BorderStyle.NONE },
+                                right: { style: BorderStyle.NONE }
+                            },
+                            children: [
+                                new Paragraph({
+                                    spacing: { after: 50 },
+                                    children: [
+                                        new TextRun({
+                                            text: "_______________________________",
+                                            size: 22,
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                }),
+                                new Paragraph({
+                                    spacing: { after: 150 },
+                                    children: [
+                                        new TextRun({
+                                            text: "Customer Signature",
+                                            size: 22,
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                }),
+                                new Paragraph({
+                                    spacing: { after: 50 },
+                                    children: [
+                                        new TextRun({
+                                            text: "_______________________________",
+                                            size: 22,
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                }),
+                                new Paragraph({
+                                    spacing: { after: 150 },
+                                    children: [
+                                        new TextRun({
+                                            text: "Customer Name (Print)",
+                                            size: 22,
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                }),
+                                new Paragraph({
+                                    spacing: { after: 50 },
+                                    children: [
+                                        new TextRun({
+                                            text: "_______________________________",
+                                            size: 22,
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                }),
+                                new Paragraph({
+                                    spacing: { after: 150 },
+                                    children: [
+                                        new TextRun({
+                                            text: "Date",
+                                            size: 22,
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                })
+                            ]
+                        }),
+                        new TableCell({
+                            width: { size: 50, type: WidthType.PERCENTAGE },
+                            borders: {
+                                top: { style: BorderStyle.NONE },
+                                bottom: { style: BorderStyle.NONE },
+                                left: { style: BorderStyle.NONE },
+                                right: { style: BorderStyle.NONE }
+                            },
+                            children: [
+                                new Paragraph({
+                                    spacing: { after: 50 },
+                                    children: [
+                                        new TextRun({
+                                            text: "_______________________________",
+                                            size: 22,
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                }),
+                                new Paragraph({
+                                    spacing: { after: 150 },
+                                    children: [
+                                        new TextRun({
+                                            text: "Roof Recharge Representative Signature",
+                                            size: 22,
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                }),
+                                new Paragraph({
+                                    spacing: { after: 50 },
+                                    children: [
+                                        new TextRun({
+                                            text: "_______________________________",
+                                            size: 22,
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                }),
+                                new Paragraph({
+                                    spacing: { after: 150 },
+                                    children: [
+                                        new TextRun({
+                                            text: "Representative Name (Print)",
+                                            size: 22,
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                }),
+                                new Paragraph({
+                                    spacing: { after: 50 },
+                                    children: [
+                                        new TextRun({
+                                            text: "_______________________________",
+                                            size: 22,
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                }),
+                                new Paragraph({
+                                    spacing: { after: 150 },
+                                    children: [
+                                        new TextRun({
+                                            text: "Date",
+                                            size: 22,
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                })
+                            ]
+                        })
+                    ]
                 })
             ]
         }),
