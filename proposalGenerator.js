@@ -383,6 +383,7 @@ async function generateProposal(data, aerialImage) {
             new Paragraph({
                 alignment: AlignmentType.CENTER,
                 spacing: { after: 0 },
+                indent: { left: 0, right: 0 },
                 children: [
                     new ImageRun({
                         data: ladderImageBuffer,
@@ -402,6 +403,7 @@ async function generateProposal(data, aerialImage) {
             new Paragraph({
                 alignment: AlignmentType.CENTER,
                 spacing: { after: 0 },
+                indent: { left: 0, right: 0 },
                 children: [
                     new ImageRun({
                         data: gradientBuffer,
