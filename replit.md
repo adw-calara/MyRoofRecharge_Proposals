@@ -56,6 +56,23 @@ This web application generates professional Word document proposals for Green En
 - **Image Handling**: Supports dynamic image uploads (aerial photos) and embeds static product-specific images, all optimized for document presentation.
 - **Modular Calculation**: `calculateCosts()` function handles complex calculations for multiple roofs, returning per-roof and aggregated totals while maintaining backward compatibility for single-roof proposals.
 
+## Deployment
+
+The app is configured for **Autoscale deployment** on Replit, which automatically scales based on traffic. To publish:
+1. Click the "Publish" button in Replit
+2. The app will be deployed with command: `node server.js`
+3. Once published, you can embed it on external websites using an iframe
+
+### Embed Code
+After publishing, use this HTML snippet on your website:
+```html
+<iframe src="YOUR_PUBLISHED_URL?embed=true" width="800" height="600" frameborder="0"></iframe>
+```
+
+Optional parameters:
+- `&theme=light` or `&theme=dark` - Control the theme
+- Adjust `width` and `height` to fit your site layout
+
 ## External Dependencies
 
 -   **docx library**: For programmatic generation of `.docx` Word documents.
