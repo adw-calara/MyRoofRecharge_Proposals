@@ -649,127 +649,86 @@ async function generateProposal(data, aerialImage) {
         })
     );
     
-    // Process Flowchart
+    // Process Section
     children.push(
         new Paragraph({
-            alignment: AlignmentType.CENTER,
-            spacing: { before: 300, after: 200 },
+            spacing: { before: 300, after: 150 },
             children: [
                 new TextRun({
-                    text: "JOB PROCESS",
+                    text: "Our Process",
                     bold: true,
-                    size: 28,
-                    color: "2E8B57",
+                    size: 32,
+                    color: "D4AF37",
                     font: "Montserrat"
                 })
             ]
         }),
         
+        new Paragraph({
+            spacing: { after: 100 },
+            children: [
+                new TextRun({
+                    text: "Efficient, Simple, Permanent.",
+                    bold: true,
+                    size: 28,
+                    font: "Montserrat"
+                })
+            ]
+        }),
+        
+        new Paragraph({
+            spacing: { after: 300 },
+            children: [
+                new TextRun({
+                    text: "Our specialists apply our GoNano treatments in three simple steps:",
+                    size: 20,
+                    font: "Open Sans"
+                })
+            ]
+        }),
+        
         new Table({
-            width: { size: 90, type: WidthType.PERCENTAGE },
-            alignment: AlignmentType.CENTER,
+            width: { size: 100, type: WidthType.PERCENTAGE },
             rows: [
                 new TableRow({
                     children: [
                         new TableCell({
-                            width: { size: 30, type: WidthType.PERCENTAGE },
-                            shading: { fill: "2E8B57" },
+                            width: { size: 33, type: WidthType.PERCENTAGE },
                             margins: {
                                 top: 150,
                                 bottom: 150,
-                                left: 100,
-                                right: 100
+                                left: 150,
+                                right: 150
                             },
                             children: [
                                 new Paragraph({
-                                    alignment: AlignmentType.CENTER,
-                                    spacing: { before: 100, after: 100 },
+                                    spacing: { after: 150 },
                                     children: [
                                         new TextRun({
-                                            text: "STEP 1",
+                                            text: "Step 1",
                                             bold: true,
-                                            size: 18,
-                                            color: "FFFFFF",
+                                            size: 28,
+                                            color: "D4AF37",
                                             font: "Montserrat"
                                         })
                                     ]
                                 }),
                                 new Paragraph({
-                                    alignment: AlignmentType.CENTER,
+                                    spacing: { after: 150 },
                                     children: [
                                         new TextRun({
-                                            text: "Roof Inspection",
-                                            size: 20,
-                                            color: "FFFFFF",
-                                            font: "Open Sans"
-                                        })
-                                    ]
-                                })
-                            ]
-                        }),
-                        new TableCell({
-                            width: { size: 10, type: WidthType.PERCENTAGE },
-                            borders: {
-                                top: { style: BorderStyle.NONE },
-                                bottom: { style: BorderStyle.NONE },
-                                left: { style: BorderStyle.NONE },
-                                right: { style: BorderStyle.NONE }
-                            },
-                            children: [
-                                new Paragraph({
-                                    alignment: AlignmentType.CENTER,
-                                    children: [
-                                        new TextRun({
-                                            text: "→",
-                                            size: 36,
-                                            color: "2E8B57",
-                                            bold: true
-                                        })
-                                    ]
-                                })
-                            ]
-                        }),
-                        new TableCell({
-                            width: { size: 30, type: WidthType.PERCENTAGE },
-                            shading: { fill: "2E8B57" },
-                            margins: {
-                                top: 150,
-                                bottom: 150,
-                                left: 100,
-                                right: 100
-                            },
-                            children: [
-                                new Paragraph({
-                                    alignment: AlignmentType.CENTER,
-                                    spacing: { before: 100, after: 100 },
-                                    children: [
-                                        new TextRun({
-                                            text: "STEP 2",
+                                            text: "Inspection",
                                             bold: true,
-                                            size: 18,
-                                            color: "FFFFFF",
+                                            size: 24,
                                             font: "Montserrat"
                                         })
                                     ]
                                 }),
                                 new Paragraph({
-                                    alignment: AlignmentType.CENTER,
                                     children: [
                                         new TextRun({
-                                            text: "Product Ordering",
-                                            size: 20,
-                                            color: "FFFFFF",
-                                            font: "Open Sans"
-                                        })
-                                    ]
-                                }),
-                                new Paragraph({
-                                    alignment: AlignmentType.CENTER,
-                                    children: [
-                                        new TextRun({
-                                            text: "& Scheduling",
-                                            size: 20,
-                                            color: "FFFFFF",
+                                            text: "Our experts inspect your roof or other surface free of charge to verify its condition will allow us to honor our 10-15 year warranty.",
+                                            size: 18,
                                             font: "Open Sans"
                                         })
                                     ]
@@ -777,68 +736,85 @@ async function generateProposal(data, aerialImage) {
                             ]
                         }),
                         new TableCell({
-                            width: { size: 10, type: WidthType.PERCENTAGE },
-                            borders: {
-                                top: { style: BorderStyle.NONE },
-                                bottom: { style: BorderStyle.NONE },
-                                left: { style: BorderStyle.NONE },
-                                right: { style: BorderStyle.NONE }
-                            },
-                            children: [
-                                new Paragraph({
-                                    alignment: AlignmentType.CENTER,
-                                    children: [
-                                        new TextRun({
-                                            text: "→",
-                                            size: 36,
-                                            color: "2E8B57",
-                                            bold: true
-                                        })
-                                    ]
-                                })
-                            ]
-                        }),
-                        new TableCell({
-                            width: { size: 30, type: WidthType.PERCENTAGE },
-                            shading: { fill: "2E8B57" },
+                            width: { size: 33, type: WidthType.PERCENTAGE },
                             margins: {
                                 top: 150,
                                 bottom: 150,
-                                left: 100,
-                                right: 100
+                                left: 150,
+                                right: 150
                             },
                             children: [
                                 new Paragraph({
-                                    alignment: AlignmentType.CENTER,
-                                    spacing: { before: 100, after: 100 },
+                                    spacing: { after: 150 },
                                     children: [
                                         new TextRun({
-                                            text: "STEP 3",
+                                            text: "Step 2",
                                             bold: true,
-                                            size: 18,
-                                            color: "FFFFFF",
+                                            size: 28,
+                                            color: "D4AF37",
                                             font: "Montserrat"
                                         })
                                     ]
                                 }),
                                 new Paragraph({
-                                    alignment: AlignmentType.CENTER,
+                                    spacing: { after: 150 },
                                     children: [
                                         new TextRun({
-                                            text: "GoNano Installation",
-                                            size: 20,
-                                            color: "FFFFFF",
-                                            font: "Open Sans"
+                                            text: "Preparation",
+                                            bold: true,
+                                            size: 24,
+                                            font: "Montserrat"
                                         })
                                     ]
                                 }),
                                 new Paragraph({
-                                    alignment: AlignmentType.CENTER,
                                     children: [
                                         new TextRun({
-                                            text: "& Final Inspection",
-                                            size: 20,
-                                            color: "FFFFFF",
+                                            text: "If your surface qualifies, we prep your surface for application of GoNano. This might require minor repairs or pressure washing.",
+                                            size: 18,
+                                            font: "Open Sans"
+                                        })
+                                    ]
+                                })
+                            ]
+                        }),
+                        new TableCell({
+                            width: { size: 33, type: WidthType.PERCENTAGE },
+                            margins: {
+                                top: 150,
+                                bottom: 150,
+                                left: 150,
+                                right: 150
+                            },
+                            children: [
+                                new Paragraph({
+                                    spacing: { after: 150 },
+                                    children: [
+                                        new TextRun({
+                                            text: "Step 3",
+                                            bold: true,
+                                            size: 28,
+                                            color: "D4AF37",
+                                            font: "Montserrat"
+                                        })
+                                    ]
+                                }),
+                                new Paragraph({
+                                    spacing: { after: 150 },
+                                    children: [
+                                        new TextRun({
+                                            text: "Application",
+                                            bold: true,
+                                            size: 24,
+                                            font: "Montserrat"
+                                        })
+                                    ]
+                                }),
+                                new Paragraph({
+                                    children: [
+                                        new TextRun({
+                                            text: "We apply GoNano to your surface in a single day. Your surface is then protected for up to 15 years.",
+                                            size: 18,
                                             font: "Open Sans"
                                         })
                                     ]

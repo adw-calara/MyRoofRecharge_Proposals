@@ -35,7 +35,8 @@ Fully functional web application with:
 - Fixed aerial image upload to display on page 3 (Project Description)
 - Added spacing buffer between aerial image and Project Description section
 - Removed green bordered box from cover page aerial image for cleaner design
-- Added Job Process flowchart on Page 3 with three-step visual workflow
+- Added "Our Process" section on Page 3 with detailed three-step workflow
+- Updated process to match template with gold headings and detailed descriptions
 - Moved Company Profile section to page 2 with page breaks
 - Moved Project Description to its own page (page 3)
 - Updated property details table with green headers and white text
@@ -142,10 +143,12 @@ Fully functional web application with:
    **Page 3 - Project Description:**
    - Property details table with green headers
    - Aerial image of property (uploaded by user) with spacing buffer
-   - Job Process flowchart with three steps:
-     - Step 1: Roof Inspection
-     - Step 2: Product Ordering & Scheduling
-     - Step 3: GoNano Installation & Final Inspection
+   - "Our Process" section with gold accent color (#D4AF37)
+   - Tagline: "Efficient, Simple, Permanent."
+   - Three-column process layout:
+     - Step 1 - Inspection: Free roof inspection to verify warranty conditions
+     - Step 2 - Preparation: Surface prep including repairs or pressure washing
+     - Step 3 - Application: Single-day GoNano application with 15-year protection
 
    **Page 4 - Proposed GoNano Solution:**
    - Dynamic heading based on selected product
