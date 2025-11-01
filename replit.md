@@ -1,303 +1,7 @@
 # Roof Recharge Proposal Generator
 
 ## Overview
-Professional Word document proposal generator for Roof Recharge by Green Energy Construction & Consulting. This web application creates comprehensive GoNano roof protection proposals that match the company's professional template exactly with custom fonts and branding.
-
-## Purpose
-- Generate branded Word document proposals for GoNano roof treatment services
-- Include company logo and aerial property images in proposals
-- Display product-specific images for each GoNano product
-- Calculate investment costs and savings compared to roof replacement
-- Streamline the proposal creation process for sales representatives
-
-## Current State
-Fully functional web application with:
-- Interactive web form for data entry
-- Company logo on cover page
-- Aerial image upload capability with styled presentation
-- Dynamic product-specific content and images based on selection
-- Custom font styling (Montserrat Bold 42 for titles, Montserrat 36 for headings, Open Sans 16 for body)
-- Real-time cost calculations and savings preview
-- Professional Word document generation matching company template
-- Automatic file download
-
-## Recent Changes
-**November 1, 2025**
-- Implemented multi-roof support with dynamic "Add Roof" functionality
-- Users can now add unlimited roofs to a single proposal (Roof 1, Roof 2, Roof 3, etc.)
-- Each roof has individual type, age, square footage, price per sq ft, installation cost, and product selection
-- Removed global pricing section - all pricing now assigned to individual roofs
-- Product auto-selection works independently for each roof based on its age
-- Frontend dynamically generates roof sections with remove buttons
-- Backend parses roofs array with full backward compatibility for single-roof legacy format
-- Refactored calculateCosts() to handle multiple roofs:
-  - Returns per-roof calculations (application cost, installation cost, replacement cost)
-  - Aggregates totalInstallationCost by summing all roof installation costs
-  - Provides aggregate totals across all roofs
-  - Maintains roof labels for display (Roof 1, Roof 2, etc.)
-- Updated Project Description table to display all roofs with labeled rows
-- Proposed GoNano Solution section now groups roofs by product:
-  - Shows separate section for each unique product
-  - Lists which roofs use each product
-  - Displays correct product image and information for each group
-- Investment & Savings section shows detailed per-roof breakdown:
-  - Paired rows for each roof showing application cost and installation cost
-  - Optional custom services
-  - Aggregate totals and savings calculation
-- All sections maintain backward compatibility with single-roof proposals
-
-**October 31, 2025**
-- Added company logo (Roof Recharge) to cover page top
-- Added GoNano logo with purple molecular icon to cover page (300x80 pixels)
-- Implemented custom fonts with optimized sizes for single-page sections:
-  - Main titles: Montserrat Bold size 48
-  - Section headings: Montserrat size 42 (all page titles now consistent)
-  - Subsection headings: Montserrat size 28
-  - Body text headings: Open Sans Bold size 22
-  - Body text: Open Sans size 20
-- Standardized all page title fonts to Montserrat Bold size 42 for consistency
-- Fixed aerial image upload to display on page 3 (Project Description)
-- Added spacing buffer between aerial image and Project Description section
-- Removed green bordered box from cover page aerial image for cleaner design
-- Added "Our Process" section on Page 3 with detailed three-step workflow
-- Updated process to match template with gold headings and detailed descriptions
-- Moved Company Profile section to page 2 with page breaks
-- Moved Project Description to its own page (page 3)
-- Updated property details table with green headers and white text
-- Converted KEY FEATURES and PROVEN RESULTS to side-by-side table layout
-- Moved Proposed GoNano Solution to its own page (page 4)
-- Added product-specific images for all three products:
-  - Shingle Saver: Purple barrel product image
-  - Revive: Orange barrel product image
-  - BioBoost: Green barrel product image
-- Created side-by-side layout for product description and image
-- Updated BioBoost product information with new features and benefits
-- Restructured cover page to match exact template design
-- Fixed document formatting to prevent text duplication
-- Configured multer for handling file uploads
-- Added "The GoNano Difference" page (page 5) with:
-  - Comparison chart showing GoNano vs. Competition
-  - Authorized Reseller & Installer banner
-- Added page numbers to footer (bottom center, all pages except cover)
-- Simple centered page number design for clean formatting
-
-## Project Architecture
-
-### Technology Stack
-- **Backend**: Node.js with Express
-- **Document Generation**: docx library with custom fonts
-- **File Upload**: multer middleware
-- **Frontend**: Vanilla HTML, CSS, JavaScript
-- **Server**: Express serving static files and API endpoints
-
-### File Structure
-```
-/
-├── server.js                 # Express server with multer for image uploads
-├── proposalGenerator.js      # Word document generation with custom fonts
-├── public/
-│   └── index.html           # Frontend form with image upload
-├── attached_assets/
-│   ├── roof-recharge-logo-new_1761941852214.png                      # Company logo
-│   ├── gonano-logo-dark_1761946062514.png                            # GoNano logo for cover page
-│   ├── Shingle Saver mockup_1761943502086.png                        # Shingle Saver product
-│   ├── Revive label mockup_1761943502085.png                         # Revive product
-│   ├── Bio-boost mockup_1761943502078.png                            # BioBoost product
-│   ├── GoNano VS Competition chart_Square Format copy_1761943938309.png  # Comparison chart
-│   ├── gonano-authorized-reseller-banner_1761943967489.png           # Authorized reseller banner
-│   └── 1758641788792_ce68f289307689cd8c46bf9217137ee4_1761945730363.png  # Small GoNano logo for footer
-├── package.json             # Dependencies
-└── replit.md                # Project documentation
-```
-
-### Key Features
-
-1. **Customer Information Collection**
-   - Name, address, date
-   - Roof type, age, square footage
-   - GoNano product selection (auto-selected based on age)
-
-2. **Branding & Design**
-   - Company logo on cover page
-   - Custom font styling throughout
-   - Professional green color scheme (#2E8B57)
-   - Styled aerial image presentation
-   - Product-specific images
-
-3. **Aerial Image Upload**
-   - Optional image upload for property photos
-   - Images embedded in styled green bordered box
-   - Header: "Professional GoNano Application"
-   - Footer: "Extending Roof Life with Advanced Nanotechnology"
-   - Accepts all common image formats
-
-4. **Dynamic Product Content**
-   - Product selection drives content and images
-   - GoNano Shingle Saver: Advanced protection (0-7 years) with purple barrel
-   - GoNano Revive: Rejuvenation system (8-15 years) with orange barrel
-   - GoNano BioBoost: Cost-effective solution for mature roofs (15+ years) with green barrel
-   - Each product displays unique features, results, and notes
-
-5. **Pricing & Calculations**
-   - Configurable price per square foot
-   - Installation costs
-   - Replacement cost comparison
-   - Automatic savings calculations
-
-6. **Professional Word Document**
-   Matches company template exactly with:
-   
-   **Page 1 - Cover Page:**
-   - Company logo (Roof Recharge) at top
-   - "PROJECT PROPOSAL" title in green (Montserrat 36)
-   - GoNano logo with purple molecular icon (300x80 pixels)
-   - "Roof Protection System" subtitle (Open Sans 22)
-   - Customer information in bordered box ("Prepared For" section)
-   - Proposal date
-   - Aerial image of property
-   - Footer: "Extending Roof Life with Advanced Nanotechnology" and "myroofrecharge.com"
-
-   **Page 2 - Company Profile:**
-   - Company overview
-   - Our Experience
-   - Why We're Different
-   - Our Service Area
-   - Our Commitment
-
-   **Page 3 - Project Description:**
-   - Property details table with green headers
-   - Aerial image of property (uploaded by user) with spacing buffer
-   - "Our Process" section with gold accent color (#D4AF37)
-   - Tagline: "Efficient, Simple, Permanent."
-   - Three-column process layout:
-     - Step 1 - Inspection: Free roof inspection to verify warranty conditions
-     - Step 2 - Preparation: Surface prep including repairs or pressure washing
-     - Step 3 - Application: Single-day GoNano application with 15-year protection
-
-   **Page 4 - Proposed GoNano Solution:**
-   - Dynamic heading based on selected product
-   - Product-specific image (all products now have images)
-   - Side-by-side layout: description on left, product image on right
-   - Product overview and features
-   - Side-by-side KEY FEATURES and PROVEN RESULTS table
-   - Additional notes
-
-   **Page 5 - The GoNano Difference:**
-   - Title: "THE GONANO DIFFERENCE" (Montserrat Bold 84)
-   - GoNano vs. Competition comparison chart
-   - Authorized Reseller & Installer banner
-
-   **Page 6 - Investment & Savings:**
-   - Application costs
-   - Installation costs
-   - Total investment
-   - Cost comparison with replacement
-   - Savings calculation
-
-   **Page 7 - Authorization:**
-   - Signature lines for customer
-   - Representative signature
-   - Date fields
-
-   **Page 8 - Terms and Conditions:**
-   - 7 comprehensive sections
-   
-   **Footer (All pages except cover):**
-   - Page number centered at bottom of page
-   - Clean, simple design (Open Sans 20)
-
-7. **Product Information**
-   
-   **GoNano Shingle Saver (0-7 years)**
-   - Purple barrel product image
-   - Advanced protection for newer roofs
-   - Key Features: FORTIFY, ENHANCE, PRESERVE, LONGEVITY
-   - Results: 68% aging reduction, breathable protection, warranty
-   
-   **GoNano Revive (8-15 years)**
-   - Orange barrel product image
-   - Rejuvenation system
-   - Key Features: RESTORE, PROTECT, PRESERVE, LONGEVITY
-   - Results: Restores flexibility, fills micro-cracks, 8-12 year extension
-   
-   **GoNano BioBoost (15+ years)**
-   - Green barrel product image
-   - Cost-effective solution for mature roofs
-   - Key Features: BOOSTS LONGEVITY, RESISTS DAMAGE, RESTORES VITALITY, SAVES MONEY
-   - Product Benefits: Bio-oil formula, water repellent, 3-5 year extension
-   
-   Each product includes:
-   - Detailed overview
-   - Product-specific barrel image (250x250 pixels)
-   - KEY FEATURES section
-   - PROVEN RESULTS/PRODUCT BENEFITS section
-   - Product-specific notes
-
-### Typography
-
-**Custom Fonts (optimized for single-page sections):**
-- **Main Titles**: Montserrat Bold, size 48pt
-  - Used for: "PROJECT PROPOSAL", main section headings
-- **Section Headings**: Montserrat, size 42pt
-  - Used for: "COMPANY PROFILE", "PROJECT DESCRIPTION", "INVESTMENT & SAVINGS ANALYSIS"
-- **Subsection Headings**: Montserrat, size 28pt
-  - Used for: subsection headings
-- **Body Text Headings**: Open Sans Bold, size 22pt
-  - Used for: table headers, emphasis text
-- **Body Text**: Open Sans, size 20pt
-  - Used for: all paragraph text, descriptions, table content
-
-**Note**: Font sizes have been optimized to ensure each section fits on a single page while maintaining readability. Fonts are specified in the document. Microsoft Word will use these fonts if installed on the system, or substitute similar fonts if not available.
-
-### Color Scheme
-- **Primary Green**: #2E8B57 (Roof Recharge brand color)
-- **Light Green**: #E8F5E9 (table headers, image box background)
-- **Accent Green**: #4CAF50 (savings highlight)
-- **White**: #FFFFFF (text on green backgrounds)
-
-### API Endpoints
-- `GET /` - Serves the main form interface
-- `POST /api/generate-proposal` - Generates and downloads Word document (accepts multipart/form-data with optional image)
-
-### Workflow
-- **server**: Runs on port 5000 with webview output
-
-## Technical Details
-
-### Logo Handling
-- Logo loaded from `attached_assets/roof-recharge-logo-new_1761941852214.png`
-- Embedded at top of cover page at 400x80 pixels
-- High-quality PNG format
-
-### Image Handling
-- Images uploaded via multipart form data
-- Stored in memory (not saved to disk)
-- Maximum file size: 10MB
-- Embedded in Word document at 600x400 pixels (matches table width)
-- Professional centered presentation
-- Proper spacing for clean layout
-
-### Product Images
-- All three products now have professional barrel images
-- **Shingle Saver**: Purple barrel (200x200 pixels)
-- **Revive**: Orange barrel (200x200 pixels)
-- **BioBoost**: Green barrel (200x200 pixels)
-- Images displayed in side-by-side table layout with product description
-- Professional presentation with vertical centering
-- Optimized sizes for single-page layouts
-
-### Document Generation
-- Uses docx library for Word document creation
-- Custom font specifications (Montserrat, Open Sans)
-- Proper paragraph formatting (no mixed text/children properties)
-- Professional color scheme
-- Tables with shaded headers and formatted cells
-- Side-by-side KEY FEATURES and PROVEN RESULTS layout
-- Page breaks for section organization
-- Consistent spacing and typography
-- Dynamic content based on product selection
-- Page numbers in footer (bottom right, all pages except cover)
-- Small GoNano logo in footer (bottom right)
+This web application generates professional Word document proposals for Green Energy Construction & Consulting's GoNano roof protection services. Its primary purpose is to streamline the sales process by creating branded, comprehensive proposals that precisely match the company's established template, including custom fonts, branding, and dynamic content. The system supports multi-roof proposals, aerial image integration, product-specific information, and automated cost calculations, ultimately aiming to enhance professionalism and efficiency in client presentations.
 
 ## User Preferences
 - Professional green branding (#2E8B57)
@@ -311,3 +15,40 @@ Fully functional web application with:
 - One-click Word document generation with image
 - Automatic calculations and live preview
 - Each section fits on one page for professional presentation
+
+## System Architecture
+
+### Technology Stack
+- **Backend**: Node.js with Express
+- **Document Generation**: docx library
+- **File Upload**: multer middleware
+- **Frontend**: Vanilla HTML, CSS, JavaScript
+
+### Key Features
+
+1.  **Multi-Roof Support**: Allows adding unlimited roofs to a single proposal, each with independent type, age, square footage, pricing, and product selection.
+2.  **Branding & Design**: Incorporates company and GoNano logos, custom fonts (Montserrat, Open Sans), and a professional green color scheme.
+3.  **Dynamic Content Generation**: Product selection (Shingle Saver, Revive, BioBoost) drives specific content, images, and feature descriptions. Product auto-selection is based on roof age.
+4.  **Aerial Image Integration**: Users can upload aerial property images, which are styled and embedded within the proposal.
+5.  **Automated Calculations**: Provides real-time investment costs, installation costs, replacement cost comparisons, and savings calculations, with detailed per-roof breakdowns.
+6.  **Professional Word Document Output**: Generates a multi-page Word document (`.docx`) that precisely replicates the company's template, including:
+    *   **Cover Page**: Company and GoNano logos, project title, customer details, aerial image.
+    *   **Company Profile**: Overview, experience, differentiation.
+    *   **Project Description**: Property details, user-uploaded aerial image, "Our Process" section.
+    *   **Proposed GoNano Solution**: Product-specific images, features, and benefits in a side-by-side layout, grouped by product for multi-roof proposals.
+    *   **The GoNano Difference**: Comparison chart, authorized reseller banner.
+    *   **Investment & Savings**: Detailed cost breakdown and savings analysis per roof and aggregated totals.
+    *   **Authorization & Terms**: Signature lines and comprehensive terms and conditions.
+    *   Consistent page numbering in the footer (excluding cover).
+
+### System Design
+- **Document Structure**: The generated Word document is carefully structured with specific page layouts for each section, optimized to fit content on single pages where appropriate.
+- **Typography**: Utilizes specific font families (Montserrat, Open Sans) and sizes for different elements (titles, headings, body text) to maintain brand consistency and readability.
+- **Color Scheme**: Adheres to a primary green brand color (#2E8B57) with accent colors for highlighting.
+- **Image Handling**: Supports dynamic image uploads (aerial photos) and embeds static product-specific images, all optimized for document presentation.
+- **Modular Calculation**: `calculateCosts()` function handles complex calculations for multiple roofs, returning per-roof and aggregated totals while maintaining backward compatibility for single-roof proposals.
+
+## External Dependencies
+
+-   **docx library**: For programmatic generation of `.docx` Word documents.
+-   **multer**: Node.js middleware for handling `multipart/form-data`, primarily used for file uploads (e.g., aerial images).

@@ -719,13 +719,13 @@ async function generateProposal(data, aerialImage) {
         
         new Paragraph({
             alignment: AlignmentType.CENTER,
-            spacing: { before: 300, after: 400 },
+            spacing: { before: 200, after: 200 },
             children: aerialImage && aerialImage.buffer ? [
                 new ImageRun({
                     data: aerialImage.buffer,
                     transformation: {
-                        width: 600,
-                        height: 400
+                        width: 400,
+                        height: 267
                     }
                 })
             ] : [
@@ -742,7 +742,7 @@ async function generateProposal(data, aerialImage) {
     // Process Section
     children.push(
         new Paragraph({
-            spacing: { before: 300, after: 150 },
+            spacing: { before: 200, after: 150 },
             children: [
                 new TextRun({
                     text: "Our Process",
@@ -755,7 +755,7 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            spacing: { after: 100 },
+            spacing: { after: 75 },
             children: [
                 new TextRun({
                     text: "Efficient, Simple, Permanent.",
@@ -767,7 +767,7 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            spacing: { after: 300 },
+            spacing: { after: 200 },
             children: [
                 new TextRun({
                     text: "Our specialists apply our GoNano treatments in three simple steps:",
@@ -785,31 +785,31 @@ async function generateProposal(data, aerialImage) {
                         new TableCell({
                             width: { size: 33, type: WidthType.PERCENTAGE },
                             margins: {
-                                top: 150,
-                                bottom: 150,
-                                left: 150,
-                                right: 150
+                                top: 100,
+                                bottom: 100,
+                                left: 100,
+                                right: 100
                             },
                             children: [
                                 new Paragraph({
-                                    spacing: { after: 150 },
+                                    spacing: { after: 100 },
                                     children: [
                                         new TextRun({
                                             text: "Step 1",
                                             bold: true,
-                                            size: 28,
+                                            size: 26,
                                             color: "D4AF37",
                                             font: "Montserrat"
                                         })
                                     ]
                                 }),
                                 new Paragraph({
-                                    spacing: { after: 150 },
+                                    spacing: { after: 100 },
                                     children: [
                                         new TextRun({
                                             text: "Inspection",
                                             bold: true,
-                                            size: 24,
+                                            size: 22,
                                             font: "Montserrat"
                                         })
                                     ]
@@ -828,31 +828,31 @@ async function generateProposal(data, aerialImage) {
                         new TableCell({
                             width: { size: 33, type: WidthType.PERCENTAGE },
                             margins: {
-                                top: 150,
-                                bottom: 150,
-                                left: 150,
-                                right: 150
+                                top: 100,
+                                bottom: 100,
+                                left: 100,
+                                right: 100
                             },
                             children: [
                                 new Paragraph({
-                                    spacing: { after: 150 },
+                                    spacing: { after: 100 },
                                     children: [
                                         new TextRun({
                                             text: "Step 2",
                                             bold: true,
-                                            size: 28,
+                                            size: 26,
                                             color: "D4AF37",
                                             font: "Montserrat"
                                         })
                                     ]
                                 }),
                                 new Paragraph({
-                                    spacing: { after: 150 },
+                                    spacing: { after: 100 },
                                     children: [
                                         new TextRun({
                                             text: "Preparation",
                                             bold: true,
-                                            size: 24,
+                                            size: 22,
                                             font: "Montserrat"
                                         })
                                     ]
@@ -871,31 +871,31 @@ async function generateProposal(data, aerialImage) {
                         new TableCell({
                             width: { size: 33, type: WidthType.PERCENTAGE },
                             margins: {
-                                top: 150,
-                                bottom: 150,
-                                left: 150,
-                                right: 150
+                                top: 100,
+                                bottom: 100,
+                                left: 100,
+                                right: 100
                             },
                             children: [
                                 new Paragraph({
-                                    spacing: { after: 150 },
+                                    spacing: { after: 100 },
                                     children: [
                                         new TextRun({
                                             text: "Step 3",
                                             bold: true,
-                                            size: 28,
+                                            size: 26,
                                             color: "D4AF37",
                                             font: "Montserrat"
                                         })
                                     ]
                                 }),
                                 new Paragraph({
-                                    spacing: { after: 150 },
+                                    spacing: { after: 100 },
                                     children: [
                                         new TextRun({
                                             text: "Application",
                                             bold: true,
-                                            size: 24,
+                                            size: 22,
                                             font: "Montserrat"
                                         })
                                     ]
