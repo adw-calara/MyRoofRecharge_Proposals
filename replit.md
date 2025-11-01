@@ -8,6 +8,7 @@ This web application generates professional Word document proposals for Green En
 - **Moved Authorization to Proceed**: Authorization section now appears on the Investment & Savings page instead of a separate page
 - **Updated footer design**: All pages now display "myroofrecharge.com" in center and page number on the right side
 - **Two-column Authorization layout**: Customer signature fields on left (Signature, Name, Date), Representative signature fields on right (Signature, Name, Date) - ensures entire Investment & Savings page with Authorization fits on one page
+- **Roof-specific product labeling**: Each GoNano Solution section now starts with a heading showing which roof(s) will receive that product (e.g., "Roof 1", "Roof 2", "Roof 1, Roof 3")
 
 ## User Preferences
 - Professional green branding (#2E8B57)

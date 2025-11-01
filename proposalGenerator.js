@@ -963,11 +963,28 @@ async function generateProposal(data, aerialImage) {
             }
         }
         
+        // Create roof label heading
+        const roofLabels = roofsForProduct.map(r => r.label).filter(Boolean).join(', ');
+        const roofHeading = roofLabels ? roofLabels : 'Your Roof';
+        
+        // Add roof label heading
+        children.push(
+            new Paragraph({
+                spacing: { before: index > 0 ? 400 : 0, after: 200 },
+                children: [
+                    new TextRun({
+                        text: roofHeading,
+                        bold: true,
+                        size: 36,
+                        color: "2E8B57",
+                        font: "Montserrat"
+                    })
+                ]
+            })
+        );
+        
         // Intro paragraph with roof list
-        const roofLabels = roofsForProduct.map(r => r.label || 'your roof').join(', ');
-        const introText = roofsForProduct.length > 1 || roofsForProduct[0].label
-            ? `Based on our inspection and analysis, we recommend the following for ${roofLabels}:`
-            : "Based on our inspection and analysis of your roof, we recommend:";
+        const introText = "Based on our inspection and analysis, we recommend:";
         
         if (productImageBuffer) {
             children.push(
