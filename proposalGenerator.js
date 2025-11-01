@@ -357,16 +357,56 @@ async function generateProposal(data, aerialImage) {
         })
     );
     
-    if (aerialImage && aerialImage.buffer) {
+    // Load ladder and spray image for cover page
+    const ladderImagePath = path.join(__dirname, 'attached_assets', 'Ladder and Spray_RAW_1762009503907.png');
+    let ladderImageBuffer;
+    try {
+        ladderImageBuffer = fs.readFileSync(ladderImagePath);
+    } catch (err) {
+        console.error('Ladder image not found:', err);
+        ladderImageBuffer = null;
+    }
+    
+    // Load gradient background for cover page
+    const gradientPath = path.join(__dirname, 'attached_assets', 'Screenshot 2025-11-01 at 11.06.11 AM_1762009590135.png');
+    let gradientBuffer;
+    try {
+        gradientBuffer = fs.readFileSync(gradientPath);
+    } catch (err) {
+        console.error('Gradient background not found:', err);
+        gradientBuffer = null;
+    }
+    
+    // Add ladder and spray image (larger size)
+    if (ladderImageBuffer) {
         children.push(
             new Paragraph({
                 alignment: AlignmentType.CENTER,
                 spacing: { after: 0 },
                 children: [
                     new ImageRun({
-                        data: aerialImage.buffer,
+                        data: ladderImageBuffer,
                         transformation: {
-                            width: 400,
+                            width: 650,
+                            height: 434
+                        }
+                    })
+                ]
+            })
+        );
+    }
+    
+    // Add gradient background below
+    if (gradientBuffer) {
+        children.push(
+            new Paragraph({
+                alignment: AlignmentType.CENTER,
+                spacing: { after: 0 },
+                children: [
+                    new ImageRun({
+                        data: gradientBuffer,
+                        transformation: {
+                            width: 650,
                             height: 300
                         }
                     })
@@ -378,7 +418,7 @@ async function generateProposal(data, aerialImage) {
     children.push(
         new Paragraph({
             alignment: AlignmentType.CENTER,
-            spacing: { before: 150, after: 50 },
+            spacing: { before: -250, after: 50 },
             children: [
                 new TextRun({
                     text: "Extending Roof Life with Advanced Nanotechnology",
