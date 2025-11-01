@@ -204,22 +204,6 @@
                 <small style="display: block; margin-top: 5px; color: #666;">Upload an aerial photo of the property to be included in the proposal</small>
             </div>
             
-            <h2>Pricing</h2>
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                        <label for="pricePerSqFt">Price per Sq Ft ($) *</label>
-                        <input type="number" id="pricePerSqFt" name="pricePerSqFt" step="0.01" value="2.50" required min="0">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <label for="installationCost">Installation Cost ($) *</label>
-                        <input type="number" id="installationCost" name="installationCost" step="0.01" value="400" required min="0">
-                    </div>
-                </div>
-            </div>
-            
             <h3 style="color: #2E8B57; margin-top: 20px;">Additional Services (Optional)</h3>
             
             <div class="custom-service">
@@ -378,9 +362,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="pricePerSqFt_${roofCount}">Price per Sq Ft ($) *</label>
-                    <input type="number" id="pricePerSqFt_${roofCount}" name="pricePerSqFt_${roofCount}" class="pricePerSqFt" step="0.01" value="2.50" required min="0">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="pricePerSqFt_${roofCount}">Price per Sq Ft ($) *</label>
+                            <input type="number" id="pricePerSqFt_${roofCount}" name="pricePerSqFt_${roofCount}" class="pricePerSqFt" step="0.01" value="2.50" required min="0">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="installationCost_${roofCount}">Installation Cost ($) *</label>
+                            <input type="number" id="installationCost_${roofCount}" name="installationCost_${roofCount}" class="installationCost" step="0.01" value="400" required min="0">
+                        </div>
+                    </div>
                 </div>
             `;
             
@@ -404,6 +398,7 @@
             
             document.getElementById(`squareFeet_${roofCount}`).addEventListener('input', recalculateTotals);
             document.getElementById(`pricePerSqFt_${roofCount}`).addEventListener('input', recalculateTotals);
+            document.getElementById(`installationCost_${roofCount}`).addEventListener('input', recalculateTotals);
         }
         
         function deleteRoof(roofNum) {
@@ -422,17 +417,16 @@
         document.getElementById('service1Price').addEventListener('input', recalculateTotals);
         document.getElementById('service2Price').addEventListener('input', recalculateTotals);
         document.getElementById('service3Price').addEventListener('input', recalculateTotals);
-        document.getElementById('installationCost').addEventListener('input', recalculateTotals);
         document.getElementById('replacementCostPerSqFt').addEventListener('input', recalculateTotals);
         
         function recalculateTotals() {
-            const installCost = parseFloat(document.getElementById('installationCost').value) || 0;
             const replacementPerSqFt = parseFloat(document.getElementById('replacementCostPerSqFt').value) || 0;
             const service1Price = parseFloat(document.getElementById('service1Price').value) || 0;
             const service2Price = parseFloat(document.getElementById('service2Price').value) || 0;
             const service3Price = parseFloat(document.getElementById('service3Price').value) || 0;
             
             let totalApplicationCost = 0;
+            let totalInstallationCost = 0;
             let totalReplacementCost = 0;
             const roofs = [];
             
@@ -443,29 +437,32 @@
                 
                 const sqft = parseFloat(document.getElementById(`squareFeet_${i}`).value) || 0;
                 const pricePerSqFt = parseFloat(document.getElementById(`pricePerSqFt_${i}`).value) || 0;
+                const installCost = parseFloat(document.getElementById(`installationCost_${i}`).value) || 0;
                 
                 const roofAppCost = sqft * pricePerSqFt;
                 const roofRepCost = sqft * replacementPerSqFt;
                 
                 totalApplicationCost += roofAppCost;
+                totalInstallationCost += installCost;
                 totalReplacementCost += roofRepCost;
                 
                 roofs.push({
                     num: i,
                     sqft: sqft,
                     pricePerSqFt: pricePerSqFt,
+                    installationCost: installCost,
                     applicationCost: roofAppCost
                 });
             }
             
             const customServicesTotal = service1Price + service2Price + service3Price;
-            const totalCost = totalApplicationCost + installCost + customServicesTotal;
+            const totalCost = totalApplicationCost + totalInstallationCost + customServicesTotal;
             const savingsAmount = totalReplacementCost - totalCost;
             
             updateCostPreview({
                 roofs: roofs,
                 totalApplicationCost: totalApplicationCost.toFixed(2),
-                installationCost: installCost.toFixed(2),
+                totalInstallationCost: totalInstallationCost.toFixed(2),
                 service1Price: service1Price,
                 service2Price: service2Price,
                 service3Price: service3Price,
@@ -490,6 +487,7 @@
             if (data.roofs && data.roofs.length > 0) {
                 data.roofs.forEach(roof => {
                     roofsHTML += `<div class="cost-row"><span>Roof ${roof.num} GoNano Application (${roof.sqft} sq ft × $${roof.pricePerSqFt.toFixed(2)}):</span><strong>$${roof.applicationCost.toFixed(2)}</strong></div>`;
+                    roofsHTML += `<div class="cost-row"><span>Roof ${roof.num} Installation:</span><strong>$${roof.installationCost.toFixed(2)}</strong></div>`;
                 });
             }
             
@@ -517,8 +515,8 @@
                     <strong>$${data.totalApplicationCost}</strong>
                 </div>
                 <div class="cost-row">
-                    <span>Professional Installation:</span>
-                    <strong>$${data.installationCost}</strong>
+                    <span>Total Professional Installation:</span>
+                    <strong>$${data.totalInstallationCost}</strong>
                 </div>
                 ${servicesHTML}
                 <div class="cost-row total-cost">
@@ -561,7 +559,6 @@
             formData.append('customerCity', document.getElementById('customerCity').value);
             
             // Add pricing info
-            formData.append('installationCost', document.getElementById('installationCost').value);
             formData.append('replacementCostPerSqFt', document.getElementById('replacementCostPerSqFt').value);
             formData.append('repName', document.getElementById('repName').value);
             formData.append('notes', document.getElementById('notes').value);
@@ -597,7 +594,8 @@
                     roofAge: document.getElementById(`roofAge_${i}`).value,
                     squareFeet: document.getElementById(`squareFeet_${i}`).value,
                     gonanoProduct: document.getElementById(`gonanoProduct_${i}`).value,
-                    pricePerSqFt: document.getElementById(`pricePerSqFt_${i}`).value
+                    pricePerSqFt: document.getElementById(`pricePerSqFt_${i}`).value,
+                    installationCost: document.getElementById(`installationCost_${i}`).value
                 });
             }
             
