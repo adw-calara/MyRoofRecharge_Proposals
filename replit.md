@@ -22,6 +22,29 @@ Fully functional web application with:
 - Automatic file download
 
 ## Recent Changes
+**November 1, 2025**
+- Implemented multi-roof support with dynamic "Add Roof" functionality
+- Users can now add unlimited roofs to a single proposal (Roof 1, Roof 2, Roof 3, etc.)
+- Each roof has individual type, age, square footage, and product selection
+- Product auto-selection works independently for each roof based on its age
+- Frontend dynamically generates roof sections with remove buttons
+- Backend parses roofs array with full backward compatibility for single-roof legacy format
+- Refactored calculateCosts() to handle multiple roofs:
+  - Returns per-roof calculations (application cost, replacement cost)
+  - Provides aggregate totals across all roofs
+  - Maintains roof labels for display (Roof 1, Roof 2, etc.)
+- Updated Project Description table to display all roofs with labeled rows
+- Proposed GoNano Solution section now groups roofs by product:
+  - Shows separate section for each unique product
+  - Lists which roofs use each product
+  - Displays correct product image and information for each group
+- Investment & Savings section shows per-roof breakdown:
+  - Individual application costs for each roof
+  - Single installation cost
+  - Optional custom services
+  - Aggregate totals and savings calculation
+- All sections maintain backward compatibility with single-roof proposals
+
 **October 31, 2025**
 - Added company logo (Roof Recharge) to cover page top
 - Added GoNano logo with purple molecular icon to cover page (300x80 pixels)
