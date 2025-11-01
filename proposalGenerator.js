@@ -446,10 +446,6 @@ async function generateProposal(data, aerialImage) {
         }),
         
         new Paragraph({
-            children: [new PageBreak()]
-        }),
-        
-        new Paragraph({
             spacing: { before: 200, after: 300 },
             children: [
                 new TextRun({
