@@ -22,7 +22,25 @@ app.post('/api/generate-proposal', upload.single('aerialImage'), async (req, res
         const proposalData = req.body;
         const aerialImage = req.file;
         
+        // Parse roofs array if present
+        if (proposalData.roofs && typeof proposalData.roofs === 'string') {
+            try {
+                proposalData.roofs = JSON.parse(proposalData.roofs);
+                // Convert string numbers to actual numbers
+                proposalData.roofs = proposalData.roofs.map(roof => ({
+                    ...roof,
+                    roofAge: parseInt(roof.roofAge) || 0,
+                    squareFeet: parseFloat(roof.squareFeet) || 0,
+                    pricePerSqFt: parseFloat(roof.pricePerSqFt) || 0
+                }));
+            } catch (e) {
+                console.error('Error parsing roofs:', e);
+                proposalData.roofs = [];
+            }
+        }
+        
         console.log('Generating proposal for:', proposalData.customerName);
+        console.log('Number of roofs:', proposalData.roofs ? proposalData.roofs.length : 1);
         if (aerialImage) {
             console.log('Aerial image uploaded:', aerialImage.originalname);
         }

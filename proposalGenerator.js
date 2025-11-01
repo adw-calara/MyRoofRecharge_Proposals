@@ -14,22 +14,75 @@ function formatDate(dateString) {
 }
 
 function calculateCosts(data) {
-    const sqft = parseFloat(data.squareFeet) || 0;
-    const pricePerSqFt = parseFloat(data.pricePerSqFt) || 0;
     const installCost = parseFloat(data.installationCost) || 0;
     const replacementPerSqFt = parseFloat(data.replacementCostPerSqFt) || 0;
     
-    const applicationCost = sqft * pricePerSqFt;
-    const totalCost = applicationCost + installCost;
-    const replacementCost = sqft * replacementPerSqFt;
-    const savingsAmount = replacementCost - totalCost;
+    let normalizedRoofs = [];
+    
+    // Check if we have roofs array (new format) or legacy single roof format
+    if (data.roofs && Array.isArray(data.roofs) && data.roofs.length > 0) {
+        // New format: multiple roofs
+        normalizedRoofs = data.roofs.map((roof, index) => {
+            const sqft = parseFloat(roof.squareFeet) || 0;
+            const pricePerSqFt = parseFloat(roof.pricePerSqFt) || 0;
+            const applicationCost = sqft * pricePerSqFt;
+            const replacementCost = sqft * replacementPerSqFt;
+            
+            return {
+                label: `Roof ${index + 1}`,
+                roofType: roof.roofType || '',
+                roofAge: parseInt(roof.roofAge) || 0,
+                squareFeet: sqft,
+                gonanoProduct: roof.gonanoProduct || '',
+                pricePerSqFt: pricePerSqFt,
+                applicationCost: applicationCost,
+                replacementCost: replacementCost
+            };
+        });
+    } else {
+        // Legacy format: single roof (backward compatibility)
+        const sqft = parseFloat(data.squareFeet) || 0;
+        const pricePerSqFt = parseFloat(data.pricePerSqFt) || 0;
+        const applicationCost = sqft * pricePerSqFt;
+        const replacementCost = sqft * replacementPerSqFt;
+        
+        normalizedRoofs = [{
+            label: '',  // No label for single roof
+            roofType: data.roofType || '',
+            roofAge: parseInt(data.roofAge) || 0,
+            squareFeet: sqft,
+            gonanoProduct: data.gonanoProduct || '',
+            pricePerSqFt: pricePerSqFt,
+            applicationCost: applicationCost,
+            replacementCost: replacementCost
+        }];
+    }
+    
+    // Calculate totals
+    const totals = normalizedRoofs.reduce((acc, roof) => ({
+        totalSquareFeet: acc.totalSquareFeet + roof.squareFeet,
+        totalApplicationCost: acc.totalApplicationCost + roof.applicationCost,
+        totalReplacementCost: acc.totalReplacementCost + roof.replacementCost
+    }), {
+        totalSquareFeet: 0,
+        totalApplicationCost: 0,
+        totalReplacementCost: 0
+    });
+    
+    // Add optional services
+    const service1Price = parseFloat(data.service1Price) || 0;
+    const service2Price = parseFloat(data.service2Price) || 0;
+    const service3Price = parseFloat(data.service3Price) || 0;
+    const customServicesTotal = service1Price + service2Price + service3Price;
+    
+    totals.installationCost = installCost;
+    totals.customServicesTotal = customServicesTotal;
+    totals.totalCost = totals.totalApplicationCost + installCost + customServicesTotal;
+    totals.savingsAmount = totals.totalReplacementCost - totals.totalCost;
     
     return {
-        applicationCost,
-        installationCost: installCost,
-        totalCost,
-        replacementCost,
-        savingsAmount
+        roofs: normalizedRoofs,
+        totals: totals
     };
 }
 
@@ -105,7 +158,16 @@ function getProductInfo(productName) {
 
 async function generateProposal(data, aerialImage) {
     const costs = calculateCosts(data);
-    const productInfo = getProductInfo(data.gonanoProduct);
+    
+    // Group roofs by product
+    const roofsByProduct = {};
+    costs.roofs.forEach(roof => {
+        const product = roof.gonanoProduct || 'GoNano Shingle Saver';
+        if (!roofsByProduct[product]) {
+            roofsByProduct[product] = [];
+        }
+        roofsByProduct[product].push(roof);
+    });
     
     const logoPath = path.join(__dirname, 'attached_assets', 'roof-recharge-logo-new_1761941852214.png');
     let logoBuffer;
@@ -519,9 +581,11 @@ async function generateProposal(data, aerialImage) {
             ]
         }),
         
-        new Table({
-            width: { size: 100, type: WidthType.PERCENTAGE },
-            rows: [
+        (() => {
+            const tableRows = [];
+            
+            // Property Address row (always first)
+            tableRows.push(
                 new TableRow({
                     children: [
                         new TableCell({
@@ -548,84 +612,106 @@ async function generateProposal(data, aerialImage) {
                             })]
                         })
                     ]
-                }),
-                new TableRow({
-                    children: [
-                        new TableCell({
-                            shading: { fill: "2E8B57" },
-                            children: [new Paragraph({ 
-                                children: [new TextRun({ 
-                                    text: "Roof Area", 
-                                    bold: true,
-                                    size: 22,
-                                    color: "FFFFFF",
-                                    font: "Open Sans"
-                                })]
-                            })]
-                        }),
-                        new TableCell({
-                            children: [new Paragraph({ 
-                                children: [new TextRun({ 
-                                    text: `${data.squareFeet} sq ft`,
-                                    size: 22,
-                                    font: "Open Sans"
-                                })]
-                            })]
-                        })
-                    ]
-                }),
-                new TableRow({
-                    children: [
-                        new TableCell({
-                            shading: { fill: "2E8B57" },
-                            children: [new Paragraph({ 
-                                children: [new TextRun({ 
-                                    text: "Roof Type", 
-                                    bold: true,
-                                    size: 22,
-                                    color: "FFFFFF",
-                                    font: "Open Sans"
-                                })]
-                            })]
-                        }),
-                        new TableCell({
-                            children: [new Paragraph({ 
-                                children: [new TextRun({ 
-                                    text: data.roofType || '',
-                                    size: 22,
-                                    font: "Open Sans"
-                                })]
-                            })]
-                        })
-                    ]
-                }),
-                new TableRow({
-                    children: [
-                        new TableCell({
-                            shading: { fill: "2E8B57" },
-                            children: [new Paragraph({ 
-                                children: [new TextRun({ 
-                                    text: "Roof Age", 
-                                    bold: true,
-                                    size: 22,
-                                    color: "FFFFFF",
-                                    font: "Open Sans"
-                                })]
-                            })]
-                        }),
-                        new TableCell({
-                            children: [new Paragraph({ 
-                                children: [new TextRun({ 
-                                    text: `${data.roofAge} years`,
-                                    size: 22,
-                                    font: "Open Sans"
-                                })]
-                            })]
-                        })
-                    ]
                 })
-            ]
-        }),
+            );
+            
+            // Add rows for each roof
+            costs.roofs.forEach(roof => {
+                const prefix = roof.label ? `${roof.label} - ` : '';
+                
+                // Roof Area
+                tableRows.push(
+                    new TableRow({
+                        children: [
+                            new TableCell({
+                                shading: { fill: "2E8B57" },
+                                children: [new Paragraph({ 
+                                    children: [new TextRun({ 
+                                        text: `${prefix}Roof Area`, 
+                                        bold: true,
+                                        size: 22,
+                                        color: "FFFFFF",
+                                        font: "Open Sans"
+                                    })]
+                                })]
+                            }),
+                            new TableCell({
+                                children: [new Paragraph({ 
+                                    children: [new TextRun({ 
+                                        text: `${roof.squareFeet} sq ft`,
+                                        size: 22,
+                                        font: "Open Sans"
+                                    })]
+                                })]
+                            })
+                        ]
+                    })
+                );
+                
+                // Roof Type
+                tableRows.push(
+                    new TableRow({
+                        children: [
+                            new TableCell({
+                                shading: { fill: "2E8B57" },
+                                children: [new Paragraph({ 
+                                    children: [new TextRun({ 
+                                        text: `${prefix}Roof Type`, 
+                                        bold: true,
+                                        size: 22,
+                                        color: "FFFFFF",
+                                        font: "Open Sans"
+                                    })]
+                                })]
+                            }),
+                            new TableCell({
+                                children: [new Paragraph({ 
+                                    children: [new TextRun({ 
+                                        text: roof.roofType || '',
+                                        size: 22,
+                                        font: "Open Sans"
+                                    })]
+                                })]
+                            })
+                        ]
+                    })
+                );
+                
+                // Roof Age
+                tableRows.push(
+                    new TableRow({
+                        children: [
+                            new TableCell({
+                                shading: { fill: "2E8B57" },
+                                children: [new Paragraph({ 
+                                    children: [new TextRun({ 
+                                        text: `${prefix}Roof Age`, 
+                                        bold: true,
+                                        size: 22,
+                                        color: "FFFFFF",
+                                        font: "Open Sans"
+                                    })]
+                                })]
+                            }),
+                            new TableCell({
+                                children: [new Paragraph({ 
+                                    children: [new TextRun({ 
+                                        text: `${roof.roofAge} years`,
+                                        size: 22,
+                                        font: "Open Sans"
+                                    })]
+                                })]
+                            })
+                        ]
+                    })
+                );
+            });
+            
+            return new Table({
+                width: { size: 100, type: WidthType.PERCENTAGE },
+                rows: tableRows
+            });
+        })(),
         
         new Paragraph({
             alignment: AlignmentType.CENTER,
@@ -858,55 +944,174 @@ async function generateProposal(data, aerialImage) {
         })
     );
     
-    let productImageBuffer = null;
-    if (productInfo.imagePath) {
-        try {
-            productImageBuffer = fs.readFileSync(path.join(__dirname, productInfo.imagePath));
-        } catch (err) {
-            console.error('Product image not found:', err);
+    // Generate sections for each unique product
+    Object.keys(roofsByProduct).forEach((productName, index) => {
+        const productInfo = getProductInfo(productName);
+        const roofsForProduct = roofsByProduct[productName];
+        
+        // Load product image
+        let productImageBuffer = null;
+        if (productInfo.imagePath) {
+            try {
+                productImageBuffer = fs.readFileSync(path.join(__dirname, productInfo.imagePath));
+            } catch (err) {
+                console.error('Product image not found:', err);
+            }
         }
-    }
-    
-    if (productImageBuffer) {
+        
+        // Intro paragraph with roof list
+        const roofLabels = roofsForProduct.map(r => r.label || 'your roof').join(', ');
+        const introText = roofsForProduct.length > 1 || roofsForProduct[0].label
+            ? `Based on our inspection and analysis, we recommend the following for ${roofLabels}:`
+            : "Based on our inspection and analysis of your roof, we recommend:";
+        
+        if (productImageBuffer) {
+            children.push(
+                new Table({
+                    width: { size: 100, type: WidthType.PERCENTAGE },
+                    rows: [
+                        new TableRow({
+                            children: [
+                                new TableCell({
+                                    width: { size: 60, type: WidthType.PERCENTAGE },
+                                    verticalAlign: VerticalAlign.CENTER,
+                                    children: [
+                                        new Paragraph({
+                                            spacing: { after: 200 },
+                                            children: [
+                                                new TextRun({
+                                                    text: introText,
+                                                    size: 22,
+                                                    font: "Open Sans"
+                                                })
+                                            ]
+                                        }),
+                                        new Paragraph({
+                                            spacing: { after: 150 },
+                                            children: [
+                                                new TextRun({
+                                                    text: productName,
+                                                    bold: true,
+                                                    size: 42,
+                                                    color: "2E8B57",
+                                                    font: "Montserrat"
+                                                })
+                                            ]
+                                        }),
+                                        new Paragraph({
+                                            spacing: { after: 200 },
+                                            children: [
+                                                new TextRun({
+                                                    text: productInfo.subtitle,
+                                                    italics: true,
+                                                    size: 22,
+                                                    font: "Open Sans"
+                                                })
+                                            ]
+                                        })
+                                    ]
+                                }),
+                                new TableCell({
+                                    width: { size: 40, type: WidthType.PERCENTAGE },
+                                    verticalAlign: VerticalAlign.CENTER,
+                                    children: [
+                                        new Paragraph({
+                                            alignment: AlignmentType.CENTER,
+                                            children: [
+                                                new ImageRun({
+                                                    data: productImageBuffer,
+                                                    transformation: {
+                                                        width: 250,
+                                                        height: 250
+                                                    }
+                                                })
+                                            ]
+                                        })
+                                    ]
+                                })
+                            ]
+                        })
+                    ]
+                })
+            );
+        } else {
+            children.push(
+                new Paragraph({
+                    spacing: { after: 200 },
+                    children: [
+                        new TextRun({
+                            text: introText,
+                            size: 22,
+                            font: "Open Sans"
+                        })
+                    ]
+                }),
+                new Paragraph({
+                    spacing: { after: 150 },
+                    children: [
+                        new TextRun({
+                            text: productName,
+                            bold: true,
+                            size: 42,
+                            color: "2E8B57",
+                            font: "Montserrat"
+                        })
+                    ]
+                }),
+                new Paragraph({
+                    spacing: { after: 200 },
+                    children: [
+                        new TextRun({
+                            text: productInfo.subtitle,
+                            italics: true,
+                            size: 22,
+                            font: "Open Sans"
+                        })
+                    ]
+                })
+            );
+        }
+        
         children.push(
+            new Paragraph({
+                spacing: { before: 150, after: 200 },
+                children: [
+                    new TextRun({
+                        text: "Product Overview",
+                        bold: true,
+                        size: 42,
+                        font: "Montserrat"
+                    })
+                ]
+            }),
+            
+            new Paragraph({
+                spacing: { after: 150 },
+                children: [
+                    new TextRun({
+                        text: productInfo.overview,
+                        size: 22,
+                        font: "Open Sans"
+                    })
+                ]
+            }),
+            
             new Table({
                 width: { size: 100, type: WidthType.PERCENTAGE },
                 rows: [
                     new TableRow({
                         children: [
                             new TableCell({
-                                width: { size: 60, type: WidthType.PERCENTAGE },
-                                verticalAlign: VerticalAlign.CENTER,
+                                width: { size: 50, type: WidthType.PERCENTAGE },
+                                shading: { fill: "E8F5E9" },
                                 children: [
                                     new Paragraph({
-                                        spacing: { after: 200 },
                                         children: [
                                             new TextRun({
-                                                text: "Based on our inspection and analysis of your roof, we recommend:",
-                                                size: 22,
-                                                font: "Open Sans"
-                                            })
-                                        ]
-                                    }),
-                                    new Paragraph({
-                                        spacing: { after: 150 },
-                                        children: [
-                                            new TextRun({
-                                                text: data.gonanoProduct || '',
+                                                text: "KEY FEATURES",
                                                 bold: true,
-                                                size: 42,
-                                                color: "2E8B57",
-                                                font: "Montserrat"
-                                            })
-                                        ]
-                                    }),
-                                    new Paragraph({
-                                        spacing: { after: 200 },
-                                        children: [
-                                            new TextRun({
-                                                text: productInfo.subtitle,
-                                                italics: true,
                                                 size: 22,
+                                                color: "2E8B57",
                                                 font: "Open Sans"
                                             })
                                         ]
@@ -914,205 +1119,108 @@ async function generateProposal(data, aerialImage) {
                                 ]
                             }),
                             new TableCell({
-                                width: { size: 40, type: WidthType.PERCENTAGE },
-                                verticalAlign: VerticalAlign.CENTER,
+                                width: { size: 50, type: WidthType.PERCENTAGE },
+                                shading: { fill: "E8F5E9" },
                                 children: [
                                     new Paragraph({
-                                        alignment: AlignmentType.CENTER,
                                         children: [
-                                            new ImageRun({
-                                                data: productImageBuffer,
-                                                transformation: {
-                                                    width: 250,
-                                                    height: 250
-                                                }
+                                            new TextRun({
+                                                text: "PROVEN RESULTS",
+                                                bold: true,
+                                                size: 22,
+                                                color: "2E8B57",
+                                                font: "Open Sans"
                                             })
                                         ]
                                     })
                                 ]
                             })
                         ]
+                    }),
+                    new TableRow({
+                        children: [
+                            new TableCell({
+                                children: (() => {
+                                    const featureParagraphs = [];
+                                    productInfo.features.forEach(feature => {
+                                        featureParagraphs.push(
+                                            new Paragraph({
+                                                spacing: { after: 150 },
+                                                children: [
+                                                    new TextRun({
+                                                        text: feature.icon,
+                                                        bold: true,
+                                                        color: "2E8B57",
+                                                        size: 20,
+                                                        font: "Open Sans"
+                                                    }),
+                                                    new TextRun({
+                                                        text: `\n${feature.description}`,
+                                                        size: 20,
+                                                        font: "Open Sans"
+                                                    })
+                                                ]
+                                            })
+                                        );
+                                    });
+                                    return featureParagraphs;
+                                })()
+                            }),
+                            new TableCell({
+                                children: (() => {
+                                    const resultParagraphs = [];
+                                    productInfo.results.forEach(result => {
+                                        resultParagraphs.push(
+                                            new Paragraph({
+                                                spacing: { after: 100 },
+                                                children: [
+                                                    new TextRun({
+                                                        text: result,
+                                                        size: 20,
+                                                        font: "Open Sans"
+                                                    })
+                                                ]
+                                            })
+                                        );
+                                    });
+                                    return resultParagraphs;
+                                })()
+                            })
+                        ]
                     })
                 ]
             })
         );
-    } else {
+        
         children.push(
             new Paragraph({
-                spacing: { after: 200 },
+                spacing: { before: 150, after: 600 },
                 children: [
                     new TextRun({
-                        text: "Based on our inspection and analysis of your roof, we recommend:",
+                        text: "Additional Notes: ",
+                        bold: true,
                         size: 22,
                         font: "Open Sans"
-                    })
-                ]
-            }),
-            new Paragraph({
-                spacing: { after: 150 },
-                children: [
+                    }),
                     new TextRun({
-                        text: data.gonanoProduct || '',
-                        bold: true,
-                        size: 42,
-                        color: "2E8B57",
-                        font: "Montserrat"
-                    })
-                ]
-            }),
-            new Paragraph({
-                spacing: { after: 200 },
-                children: [
-                    new TextRun({
-                        text: productInfo.subtitle,
-                        italics: true,
+                        text: productInfo.notes,
                         size: 22,
                         font: "Open Sans"
                     })
                 ]
             })
         );
-    }
+        
+        // Page break after each product section
+        if (index < Object.keys(roofsByProduct).length - 1) {
+            children.push(new Paragraph({
+                children: [new PageBreak()]
+            }));
+        }
+    });
     
+    // Final page break before next section
     children.push(
-        
-        new Paragraph({
-            spacing: { before: 150, after: 200 },
-            children: [
-                new TextRun({
-                    text: "Product Overview",
-                    bold: true,
-                    size: 42,
-                    font: "Montserrat"
-                })
-            ]
-        }),
-        
-        new Paragraph({
-            spacing: { after: 150 },
-            children: [
-                new TextRun({
-                    text: productInfo.overview,
-                    size: 22,
-                    font: "Open Sans"
-                })
-            ]
-        }),
-        
-        new Table({
-            width: { size: 100, type: WidthType.PERCENTAGE },
-            rows: [
-                new TableRow({
-                    children: [
-                        new TableCell({
-                            width: { size: 50, type: WidthType.PERCENTAGE },
-                            shading: { fill: "E8F5E9" },
-                            children: [
-                                new Paragraph({
-                                    children: [
-                                        new TextRun({
-                                            text: "KEY FEATURES",
-                                            bold: true,
-                                            size: 22,
-                                            color: "2E8B57",
-                                            font: "Open Sans"
-                                        })
-                                    ]
-                                })
-                            ]
-                        }),
-                        new TableCell({
-                            width: { size: 50, type: WidthType.PERCENTAGE },
-                            shading: { fill: "E8F5E9" },
-                            children: [
-                                new Paragraph({
-                                    children: [
-                                        new TextRun({
-                                            text: "PROVEN RESULTS",
-                                            bold: true,
-                                            size: 22,
-                                            color: "2E8B57",
-                                            font: "Open Sans"
-                                        })
-                                    ]
-                                })
-                            ]
-                        })
-                    ]
-                }),
-                new TableRow({
-                    children: [
-                        new TableCell({
-                            children: (() => {
-                                const featureParagraphs = [];
-                                productInfo.features.forEach(feature => {
-                                    featureParagraphs.push(
-                                        new Paragraph({
-                                            spacing: { after: 150 },
-                                            children: [
-                                                new TextRun({
-                                                    text: feature.icon,
-                                                    bold: true,
-                                                    color: "2E8B57",
-                                                    size: 20,
-                                                    font: "Open Sans"
-                                                }),
-                                                new TextRun({
-                                                    text: `\n${feature.description}`,
-                                                    size: 20,
-                                                    font: "Open Sans"
-                                                })
-                                            ]
-                                        })
-                                    );
-                                });
-                                return featureParagraphs;
-                            })()
-                        }),
-                        new TableCell({
-                            children: (() => {
-                                const resultParagraphs = [];
-                                productInfo.results.forEach(result => {
-                                    resultParagraphs.push(
-                                        new Paragraph({
-                                            spacing: { after: 100 },
-                                            children: [
-                                                new TextRun({
-                                                    text: result,
-                                                    size: 20,
-                                                    font: "Open Sans"
-                                                })
-                                            ]
-                                        })
-                                    );
-                                });
-                                return resultParagraphs;
-                            })()
-                        })
-                    ]
-                })
-            ]
-        })
-    );
-    
-    children.push(
-        new Paragraph({
-            spacing: { before: 150, after: 600 },
-            children: [
-                new TextRun({
-                    text: "Additional Notes: ",
-                    bold: true,
-                    size: 22,
-                    font: "Open Sans"
-                }),
-                new TextRun({
-                    text: productInfo.notes,
-                    size: 22,
-                    font: "Open Sans"
-                })
-            ]
-        }),
-        
         new Paragraph({
             children: [new PageBreak()]
         })
@@ -1201,9 +1309,11 @@ async function generateProposal(data, aerialImage) {
             ]
         }),
         
-        new Table({
-            width: { size: 100, type: WidthType.PERCENTAGE },
-            rows: [
+        (() => {
+            const invRows = [];
+            
+            // Header row
+            invRows.push(
                 new TableRow({
                     children: [
                         new TableCell({
@@ -1232,30 +1342,41 @@ async function generateProposal(data, aerialImage) {
                             })]
                         })
                     ]
-                }),
-                new TableRow({
-                    children: [
-                        new TableCell({
-                            children: [new Paragraph({ 
-                                children: [new TextRun({ 
-                                    text: `GoNano Saver Application (${data.squareFeet} sq ft)`,
-                                    size: 22,
-                                    font: "Open Sans"
+                })
+            );
+            
+            // Per-roof application costs
+            costs.roofs.forEach(roof => {
+                const roofLabel = roof.label ? `${roof.label} ` : '';
+                invRows.push(
+                    new TableRow({
+                        children: [
+                            new TableCell({
+                                children: [new Paragraph({ 
+                                    children: [new TextRun({ 
+                                        text: `${roofLabel}GoNano Application (${roof.squareFeet} sq ft)`,
+                                        size: 22,
+                                        font: "Open Sans"
+                                    })]
                                 })]
-                            })]
-                        }),
-                        new TableCell({
-                            children: [new Paragraph({ 
-                                alignment: AlignmentType.RIGHT,
-                                children: [new TextRun({ 
-                                    text: formatCurrency(costs.applicationCost),
-                                    size: 22,
-                                    font: "Open Sans"
+                            }),
+                            new TableCell({
+                                children: [new Paragraph({ 
+                                    alignment: AlignmentType.RIGHT,
+                                    children: [new TextRun({ 
+                                        text: formatCurrency(roof.applicationCost),
+                                        size: 22,
+                                        font: "Open Sans"
+                                    })]
                                 })]
-                            })]
-                        })
-                    ]
-                }),
+                            })
+                        ]
+                    })
+                );
+            });
+            
+            // Installation cost
+            invRows.push(
                 new TableRow({
                     children: [
                         new TableCell({
@@ -1271,14 +1392,105 @@ async function generateProposal(data, aerialImage) {
                             children: [new Paragraph({ 
                                 alignment: AlignmentType.RIGHT,
                                 children: [new TextRun({ 
-                                    text: formatCurrency(costs.installationCost),
+                                    text: formatCurrency(costs.totals.installationCost),
                                     size: 22,
                                     font: "Open Sans"
                                 })]
                             })]
                         })
                     ]
-                }),
+                })
+            );
+            
+            // Optional services
+            if (costs.totals.customServicesTotal > 0) {
+                if (data.service1Description && parseFloat(data.service1Price) > 0) {
+                    invRows.push(
+                        new TableRow({
+                            children: [
+                                new TableCell({
+                                    children: [new Paragraph({ 
+                                        children: [new TextRun({ 
+                                            text: data.service1Description,
+                                            size: 22,
+                                            font: "Open Sans"
+                                        })]
+                                    })]
+                                }),
+                                new TableCell({
+                                    children: [new Paragraph({ 
+                                        alignment: AlignmentType.RIGHT,
+                                        children: [new TextRun({ 
+                                            text: formatCurrency(parseFloat(data.service1Price)),
+                                            size: 22,
+                                            font: "Open Sans"
+                                        })]
+                                    })]
+                                })
+                            ]
+                        })
+                    );
+                }
+                
+                if (data.service2Description && parseFloat(data.service2Price) > 0) {
+                    invRows.push(
+                        new TableRow({
+                            children: [
+                                new TableCell({
+                                    children: [new Paragraph({ 
+                                        children: [new TextRun({ 
+                                            text: data.service2Description,
+                                            size: 22,
+                                            font: "Open Sans"
+                                        })]
+                                    })]
+                                }),
+                                new TableCell({
+                                    children: [new Paragraph({ 
+                                        alignment: AlignmentType.RIGHT,
+                                        children: [new TextRun({ 
+                                            text: formatCurrency(parseFloat(data.service2Price)),
+                                            size: 22,
+                                            font: "Open Sans"
+                                        })]
+                                    })]
+                                })
+                            ]
+                        })
+                    );
+                }
+                
+                if (data.service3Description && parseFloat(data.service3Price) > 0) {
+                    invRows.push(
+                        new TableRow({
+                            children: [
+                                new TableCell({
+                                    children: [new Paragraph({ 
+                                        children: [new TextRun({ 
+                                            text: data.service3Description,
+                                            size: 22,
+                                            font: "Open Sans"
+                                        })]
+                                    })]
+                                }),
+                                new TableCell({
+                                    children: [new Paragraph({ 
+                                        alignment: AlignmentType.RIGHT,
+                                        children: [new TextRun({ 
+                                            text: formatCurrency(parseFloat(data.service3Price)),
+                                            size: 22,
+                                            font: "Open Sans"
+                                        })]
+                                    })]
+                                })
+                            ]
+                        })
+                    );
+                }
+            }
+            
+            // Total row
+            invRows.push(
                 new TableRow({
                     children: [
                         new TableCell({
@@ -1299,7 +1511,7 @@ async function generateProposal(data, aerialImage) {
                                 alignment: AlignmentType.RIGHT,
                                 children: [
                                     new TextRun({
-                                        text: formatCurrency(costs.totalCost),
+                                        text: formatCurrency(costs.totals.totalCost),
                                         bold: true,
                                         size: 22,
                                         color: "FFFFFF",
@@ -1310,8 +1522,13 @@ async function generateProposal(data, aerialImage) {
                         })
                     ]
                 })
-            ]
-        }),
+            );
+            
+            return new Table({
+                width: { size: 100, type: WidthType.PERCENTAGE },
+                rows: invRows
+            });
+        })(),
         
         new Paragraph({
             spacing: { before: 200, after: 200 },
@@ -1359,7 +1576,7 @@ async function generateProposal(data, aerialImage) {
                                 alignment: AlignmentType.RIGHT,
                                 children: [
                                     new TextRun({
-                                        text: formatCurrency(costs.replacementCost),
+                                        text: formatCurrency(costs.totals.replacementCost),
                                         bold: true,
                                         size: 22,
                                         color: "B71C1C",
@@ -1389,7 +1606,7 @@ async function generateProposal(data, aerialImage) {
                                 alignment: AlignmentType.RIGHT,
                                 children: [
                                     new TextRun({
-                                        text: formatCurrency(costs.totalCost),
+                                        text: formatCurrency(costs.totals.totalCost),
                                         bold: true,
                                         size: 22,
                                         color: "2E8B57",
@@ -1422,7 +1639,7 @@ async function generateProposal(data, aerialImage) {
                                 alignment: AlignmentType.RIGHT,
                                 children: [
                                     new TextRun({
-                                        text: formatCurrency(costs.savingsAmount),
+                                        text: formatCurrency(costs.totals.savingsAmount),
                                         bold: true,
                                         size: 24,
                                         color: "FFFFFF",

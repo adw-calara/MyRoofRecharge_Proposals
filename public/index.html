@@ -195,46 +195,8 @@
             </div>
             
             <h2>Roof Information</h2>
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                        <label for="roofType">Roof Type *</label>
-                        <select id="roofType" name="roofType" required>
-                            <option value="">Select roof type...</option>
-                            <option value="Asphalt Shingle" selected>Asphalt Shingle</option>
-                            <option value="Architectural Shingle">Architectural Shingle</option>
-                            <option value="3-Tab Shingle">3-Tab Shingle</option>
-                            <option value="Premium Shingle">Premium Shingle</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <label for="roofAge">Roof Age (years) *</label>
-                        <input type="number" id="roofAge" name="roofAge" min="0" max="50" required>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                        <label for="squareFeet">Square Feet *</label>
-                        <input type="number" id="squareFeet" name="squareFeet" min="100" required>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <label for="gonanoProduct">GoNano Product *</label>
-                        <select id="gonanoProduct" name="gonanoProduct" required>
-                            <option value="">Select product...</option>
-                            <option value="GoNano Shingle Saver">GoNano Shingle Saver (roofs 0-7 years)</option>
-                            <option value="GoNano Revive">GoNano Revive (roofs 8-15 years)</option>
-                            <option value="GoNano BioBoost">GoNano BioBoost (roofs 15+ years)</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+            <div id="roofsContainer"></div>
+            <button type="button" id="addRoofBtn" style="background-color: #4CAF50; width: auto; margin-bottom: 20px;">+ Add Another Roof</button>
             
             <div class="form-group">
                 <label for="aerialImage">📸 Aerial Image (Optional)</label>
@@ -346,76 +308,170 @@
     <script>
         document.getElementById('proposalDate').value = new Date().toISOString().split('T')[0];
         
-        document.getElementById('roofAge').addEventListener('change', function() {
-            const age = parseInt(this.value);
-            const productSelect = document.getElementById('gonanoProduct');
-            
-            if (age >= 0 && age <= 7) {
-                productSelect.value = 'GoNano Shingle Saver';
-            } else if (age >= 8 && age <= 15) {
-                productSelect.value = 'GoNano Revive';
-            } else if (age > 15) {
-                productSelect.value = 'GoNano BioBoost';
-            }
-            
-            updatePricing();
-        });
+        let roofCount = 0;
         
-        document.getElementById('gonanoProduct').addEventListener('change', updatePricing);
+        function getProductForAge(age) {
+            if (age >= 0 && age <= 7) return 'GoNano Shingle Saver';
+            if (age >= 8 && age <= 15) return 'GoNano Revive';
+            return 'GoNano BioBoost';
+        }
+        
+        function getPriceForProduct(product) {
+            switch(product) {
+                case 'GoNano Shingle Saver': return 2.50;
+                case 'GoNano Revive': return 2.60;
+                case 'GoNano BioBoost': return 2.85;
+                default: return 2.50;
+            }
+        }
+        
+        function addRoofSection() {
+            roofCount++;
+            const container = document.getElementById('roofsContainer');
+            const roofDiv = document.createElement('div');
+            roofDiv.className = 'custom-service';
+            roofDiv.style.position = 'relative';
+            roofDiv.style.marginBottom = '20px';
+            roofDiv.id = `roof-${roofCount}`;
+            
+            const deleteBtn = roofCount > 1 ? `<button type="button" class="deleteRoofBtn" onclick="deleteRoof(${roofCount})" style="position: absolute; top: 10px; right: 10px; background-color: #f44336; padding: 5px 15px; font-size: 14px; width: auto;">×  Delete</button>` : '';
+            
+            roofDiv.innerHTML = `
+                ${deleteBtn}
+                <h3 style="color: #2E8B57; margin-bottom: 15px;">Roof ${roofCount}</h3>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="roofType_${roofCount}">Roof Type *</label>
+                            <select id="roofType_${roofCount}" name="roofType_${roofCount}" class="roofType" required>
+                                <option value="">Select roof type...</option>
+                                <option value="Asphalt Shingle" selected>Asphalt Shingle</option>
+                                <option value="Architectural Shingle">Architectural Shingle</option>
+                                <option value="3-Tab Shingle">3-Tab Shingle</option>
+                                <option value="Premium Shingle">Premium Shingle</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="roofAge_${roofCount}">Roof Age (years) *</label>
+                            <input type="number" id="roofAge_${roofCount}" name="roofAge_${roofCount}" class="roofAge" min="0" max="50" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="squareFeet_${roofCount}">Square Feet *</label>
+                            <input type="number" id="squareFeet_${roofCount}" name="squareFeet_${roofCount}" class="squareFeet" min="100" required>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="gonanoProduct_${roofCount}">GoNano Product *</label>
+                            <select id="gonanoProduct_${roofCount}" name="gonanoProduct_${roofCount}" class="gonanoProduct" required>
+                                <option value="">Select product...</option>
+                                <option value="GoNano Shingle Saver">GoNano Shingle Saver (roofs 0-7 years)</option>
+                                <option value="GoNano Revive">GoNano Revive (roofs 8-15 years)</option>
+                                <option value="GoNano BioBoost">GoNano BioBoost (roofs 15+ years)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="pricePerSqFt_${roofCount}">Price per Sq Ft ($) *</label>
+                    <input type="number" id="pricePerSqFt_${roofCount}" name="pricePerSqFt_${roofCount}" class="pricePerSqFt" step="0.01" value="2.50" required min="0">
+                </div>
+            `;
+            
+            container.appendChild(roofDiv);
+            
+            // Add event listeners
+            document.getElementById(`roofAge_${roofCount}`).addEventListener('change', function() {
+                const age = parseInt(this.value);
+                const product = getProductForAge(age);
+                const roofNum = this.id.split('_')[1];
+                document.getElementById(`gonanoProduct_${roofNum}`).value = product;
+                document.getElementById(`pricePerSqFt_${roofNum}`).value = getPriceForProduct(product);
+                recalculateTotals();
+            });
+            
+            document.getElementById(`gonanoProduct_${roofCount}`).addEventListener('change', function() {
+                const roofNum = this.id.split('_')[1];
+                document.getElementById(`pricePerSqFt_${roofNum}`).value = getPriceForProduct(this.value);
+                recalculateTotals();
+            });
+            
+            document.getElementById(`squareFeet_${roofCount}`).addEventListener('input', recalculateTotals);
+            document.getElementById(`pricePerSqFt_${roofCount}`).addEventListener('input', recalculateTotals);
+        }
+        
+        function deleteRoof(roofNum) {
+            const roofDiv = document.getElementById(`roof-${roofNum}`);
+            if (roofDiv) {
+                roofDiv.remove();
+                recalculateTotals();
+            }
+        }
+        
+        document.getElementById('addRoofBtn').addEventListener('click', addRoofSection);
+        
+        // Add first roof on page load
+        addRoofSection();
+        
         document.getElementById('service1Price').addEventListener('input', recalculateTotals);
         document.getElementById('service2Price').addEventListener('input', recalculateTotals);
         document.getElementById('service3Price').addEventListener('input', recalculateTotals);
-        document.getElementById('pricePerSqFt').addEventListener('input', recalculateTotals);
-        document.getElementById('squareFeet').addEventListener('input', recalculateTotals);
         document.getElementById('installationCost').addEventListener('input', recalculateTotals);
         document.getElementById('replacementCostPerSqFt').addEventListener('input', recalculateTotals);
         
-        function updatePricing() {
-            const product = document.getElementById('gonanoProduct').value;
-            const priceField = document.getElementById('pricePerSqFt');
-            
-            switch(product) {
-                case 'GoNano Shingle Saver':
-                    priceField.value = '2.50';
-                    break;
-                case 'GoNano Revive':
-                    priceField.value = '2.60';
-                    break;
-                case 'GoNano BioBoost':
-                    priceField.value = '2.85';
-                    break;
-            }
-            
-            recalculateTotals();
-        }
-        
         function recalculateTotals() {
-            const sqft = parseFloat(document.getElementById('squareFeet').value) || 0;
-            const pricePerSqFt = parseFloat(document.getElementById('pricePerSqFt').value) || 0;
             const installCost = parseFloat(document.getElementById('installationCost').value) || 0;
             const replacementPerSqFt = parseFloat(document.getElementById('replacementCostPerSqFt').value) || 0;
-            
             const service1Price = parseFloat(document.getElementById('service1Price').value) || 0;
             const service2Price = parseFloat(document.getElementById('service2Price').value) || 0;
             const service3Price = parseFloat(document.getElementById('service3Price').value) || 0;
             
-            const applicationCost = sqft * pricePerSqFt;
+            let totalApplicationCost = 0;
+            let totalReplacementCost = 0;
+            const roofs = [];
+            
+            // Calculate costs for each roof
+            for (let i = 1; i <= roofCount; i++) {
+                const roofDiv = document.getElementById(`roof-${i}`);
+                if (!roofDiv) continue;
+                
+                const sqft = parseFloat(document.getElementById(`squareFeet_${i}`).value) || 0;
+                const pricePerSqFt = parseFloat(document.getElementById(`pricePerSqFt_${i}`).value) || 0;
+                
+                const roofAppCost = sqft * pricePerSqFt;
+                const roofRepCost = sqft * replacementPerSqFt;
+                
+                totalApplicationCost += roofAppCost;
+                totalReplacementCost += roofRepCost;
+                
+                roofs.push({
+                    num: i,
+                    sqft: sqft,
+                    pricePerSqFt: pricePerSqFt,
+                    applicationCost: roofAppCost
+                });
+            }
+            
             const customServicesTotal = service1Price + service2Price + service3Price;
-            const totalCost = applicationCost + installCost + customServicesTotal;
-            const replacementCost = sqft * replacementPerSqFt;
-            const savingsAmount = replacementCost - totalCost;
+            const totalCost = totalApplicationCost + installCost + customServicesTotal;
+            const savingsAmount = totalReplacementCost - totalCost;
             
             updateCostPreview({
-                sqft: sqft,
-                pricePerSqFt: pricePerSqFt,
-                applicationCost: applicationCost.toFixed(2),
+                roofs: roofs,
+                totalApplicationCost: totalApplicationCost.toFixed(2),
                 installationCost: installCost.toFixed(2),
                 service1Price: service1Price,
                 service2Price: service2Price,
                 service3Price: service3Price,
                 customServicesTotal: customServicesTotal.toFixed(2),
                 totalCost: totalCost.toFixed(2),
-                replacementCost: replacementCost.toFixed(2),
+                replacementCost: totalReplacementCost.toFixed(2),
                 savingsAmount: savingsAmount.toFixed(2)
             });
         }
@@ -428,6 +484,13 @@
                 preview.className = 'cost-display';
                 preview.style.marginTop = '20px';
                 document.querySelector('.container').appendChild(preview);
+            }
+            
+            let roofsHTML = '';
+            if (data.roofs && data.roofs.length > 0) {
+                data.roofs.forEach(roof => {
+                    roofsHTML += `<div class="cost-row"><span>Roof ${roof.num} GoNano Application (${roof.sqft} sq ft × $${roof.pricePerSqFt.toFixed(2)}):</span><strong>$${roof.applicationCost.toFixed(2)}</strong></div>`;
+                });
             }
             
             let servicesHTML = '';
@@ -447,9 +510,11 @@
             
             preview.innerHTML = `
                 <h3 style="color: #2E8B57; margin-bottom: 15px;">💰 Live Cost Preview</h3>
+                ${roofsHTML}
+                ${roofsHTML ? '<div style="border-top: 1px solid #ddd; margin: 10px 0;"></div>' : ''}
                 <div class="cost-row">
-                    <span>GoNano Application (${data.sqft} sq ft × $${data.pricePerSqFt}):</span>
-                    <strong>$${data.applicationCost}</strong>
+                    <span>Total GoNano Application:</span>
+                    <strong>$${data.totalApplicationCost}</strong>
                 </div>
                 <div class="cost-row">
                     <span>Professional Installation:</span>
@@ -487,7 +552,56 @@
             generateBtn.disabled = true;
             generateBtn.textContent = '⏳ Generating proposal...';
             
-            const formData = new FormData(this);
+            const formData = new FormData();
+            
+            // Add customer info
+            formData.append('customerName', document.getElementById('customerName').value);
+            formData.append('proposalDate', document.getElementById('proposalDate').value);
+            formData.append('customerAddress', document.getElementById('customerAddress').value);
+            formData.append('customerCity', document.getElementById('customerCity').value);
+            
+            // Add pricing info
+            formData.append('installationCost', document.getElementById('installationCost').value);
+            formData.append('replacementCostPerSqFt', document.getElementById('replacementCostPerSqFt').value);
+            formData.append('repName', document.getElementById('repName').value);
+            formData.append('notes', document.getElementById('notes').value);
+            
+            // Add optional services
+            if (document.getElementById('service1Description').value) {
+                formData.append('service1Description', document.getElementById('service1Description').value);
+                formData.append('service1Price', document.getElementById('service1Price').value);
+            }
+            if (document.getElementById('service2Description').value) {
+                formData.append('service2Description', document.getElementById('service2Description').value);
+                formData.append('service2Price', document.getElementById('service2Price').value);
+            }
+            if (document.getElementById('service3Description').value) {
+                formData.append('service3Description', document.getElementById('service3Description').value);
+                formData.append('service3Price', document.getElementById('service3Price').value);
+            }
+            
+            // Add aerial image if present
+            const aerialImageFile = document.getElementById('aerialImage').files[0];
+            if (aerialImageFile) {
+                formData.append('aerialImage', aerialImageFile);
+            }
+            
+            // Collect and serialize roofs as JSON
+            const roofs = [];
+            for (let i = 1; i <= roofCount; i++) {
+                const roofDiv = document.getElementById(`roof-${i}`);
+                if (!roofDiv) continue;
+                
+                roofs.push({
+                    roofType: document.getElementById(`roofType_${i}`).value,
+                    roofAge: document.getElementById(`roofAge_${i}`).value,
+                    squareFeet: document.getElementById(`squareFeet_${i}`).value,
+                    gonanoProduct: document.getElementById(`gonanoProduct_${i}`).value,
+                    pricePerSqFt: document.getElementById(`pricePerSqFt_${i}`).value
+                });
+            }
+            
+            formData.append('roofs', JSON.stringify(roofs));
             
             try {
                 const response = await fetch('/api/generate-proposal', {
@@ -503,7 +617,7 @@
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                const customerName = formData.get('customerName') || 'Customer';
+                const customerName = document.getElementById('customerName').value || 'Customer';
                 a.download = `Roof_Recharge_Proposal_${customerName.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.docx`;
                 document.body.appendChild(a);
                 a.click();
