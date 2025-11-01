@@ -2157,7 +2157,15 @@ async function generateProposal(data, aerialImage) {
     const doc = new Document({
         sections: [{
             properties: {
-                titlePage: true
+                titlePage: true,
+                page: {
+                    margin: {
+                        top: 720,
+                        right: 720,
+                        bottom: 720,
+                        left: 720
+                    }
+                }
             },
             footers: {
                 default: new Footer({
