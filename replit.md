@@ -25,12 +25,14 @@ Fully functional web application with:
 **November 1, 2025**
 - Implemented multi-roof support with dynamic "Add Roof" functionality
 - Users can now add unlimited roofs to a single proposal (Roof 1, Roof 2, Roof 3, etc.)
-- Each roof has individual type, age, square footage, and product selection
+- Each roof has individual type, age, square footage, price per sq ft, installation cost, and product selection
+- Removed global pricing section - all pricing now assigned to individual roofs
 - Product auto-selection works independently for each roof based on its age
 - Frontend dynamically generates roof sections with remove buttons
 - Backend parses roofs array with full backward compatibility for single-roof legacy format
 - Refactored calculateCosts() to handle multiple roofs:
-  - Returns per-roof calculations (application cost, replacement cost)
+  - Returns per-roof calculations (application cost, installation cost, replacement cost)
+  - Aggregates totalInstallationCost by summing all roof installation costs
   - Provides aggregate totals across all roofs
   - Maintains roof labels for display (Roof 1, Roof 2, etc.)
 - Updated Project Description table to display all roofs with labeled rows
@@ -38,9 +40,8 @@ Fully functional web application with:
   - Shows separate section for each unique product
   - Lists which roofs use each product
   - Displays correct product image and information for each group
-- Investment & Savings section shows per-roof breakdown:
-  - Individual application costs for each roof
-  - Single installation cost
+- Investment & Savings section shows detailed per-roof breakdown:
+  - Paired rows for each roof showing application cost and installation cost
   - Optional custom services
   - Aggregate totals and savings calculation
 - All sections maintain backward compatibility with single-roof proposals
